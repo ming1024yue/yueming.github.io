@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Thoughts</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="theme-switch">
+        <button onclick="toggleTheme()" aria-label="Toggle theme">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <div class="top-links">
+        <a href="index.html">home</a>
+        <span class="separator">•</span>
+        <a href="thoughts.html">thoughts</a>
+        <span class="separator">•</span>
+        <a href="books.html">books</a>
+    </div>
+
+    <main>
+        <section id="thoughts">
+            <h2>Thoughts</h2>
+            <div class="thoughts-list">
+                <article class="thought">
+                    <div class="thought-header">
+                        <h3>多写作</h3>
+                        <span class="date">2024-03-15</span>
+                    </div>
+                    <p>write as many as possible</p>
+                </article>
+                
+                <article class="thought">
+                    <div class="thought-header">
+                        <h3>Markdown Example</h3>
+                        <span class="date">2024-03-15</span>
+                    </div>
+                    <div class="markdown-content">
+## Subheading
+
+- List item 1
+- List item 2
+- List item 3
+
+```python
+def hello():
+    print("Hello, World!")
+```
+
+> This is a blockquote
+
+[Link example](https://example.com)
+                    </div>
+                </article>
+                <article class="thought">
+                    <div class="thought-header">
+                        <h3>算法</h3>
+                        <span class="date">2025-02-20</span>
+                    </div>
+                    <div class="markdown-content">
+                        **算法**是解决特定问题或执行特定任务的一系列明确步骤
+
+                        ### **1. 算法的定义**
+                        
+                        - **算法** 是一个有限的、明确的、可执行的步骤序列，用于解决某一类问题或完成某一任务。
+                            
+                        - 它可以是数学公式、逻辑规则或计算机程序的一部分。
+                        ### **2. 算法的特性**
+                        
+                        一个有效的算法通常具有以下特性：
+                        
+                        1. **有穷性（Finiteness）:** 算法必须在有限的步骤内完成。
+                            
+                        2. **确定性（Definiteness）:** 每个步骤必须明确，没有歧义。
+                            
+                        3. **输入（Input）:** 算法有零个或多个输入。
+                            
+                        4. **输出（Output）:** 算法至少有一个输出。
+                            
+                        5. **可行性（Effectiveness）:** 每个步骤必须能够在有限时间内完成。
+                        ### **3. 算法的表示方式**
+                        
+                        算法可以用多种方式表示：
+                        
+                        - **自然语言:** 用人类语言描述算法的步骤。
+                            
+                        - **伪代码:** 用类似编程语言的语法描述算法，但不依赖于具体编程语言。
+                            
+                        - **流程图:** 用图形化的方式表示算法的流程。
+                            
+                        - **编程语言:** 用具体的编程语言（如 Python、C++）实现算法。
+                        ### **4. 算法的应用**
+                        
+                        算法广泛应用于各个领域，包括：
+                        
+                        - **计算机科学:** 排序、搜索、图算法、机器学习等。
+                            
+                        - **数学:** 解方程、优化问题、数论算法等。
+                            
+                        - **日常生活:** 导航系统（如 Dijkstra 算法）、推荐系统（如协同过滤算法）等。
+                        ### **5. 算法的分类**
+                        
+                        根据不同的标准，算法可以分为以下几类：
+                        
+                        #### **(1) 按用途分类**
+                        
+                        - **排序算法:** 如快速排序、归并排序。
+                            
+                        - **搜索算法:** 如二分查找、深度优先搜索（DFS）。
+                            
+                        - **图算法:** 如 Dijkstra 算法、Kruskal 算法。
+                            
+                        - **加密算法:** 如 RSA、AES。
+                            
+                        
+                        #### **(2) 按设计方法分类**
+                        
+                        - **分治法:** 将问题分解为多个子问题，递归解决（如归并排序）。
+                            
+                        - **动态规划:** 通过存储子问题的解来避免重复计算（如背包问题）。
+                            
+                        - **贪心算法:** 每一步选择当前最优解，希望最终得到全局最优解（如 Huffman 编码）。
+                            
+                        - **回溯法:** 通过试错法逐步解决问题（如八皇后问题）。
+                            
+                        
+                        #### **(3) 按复杂度分类**
+                        
+                        - **时间复杂度:** 衡量算法运行时间随输入规模增长的变化（如 O(n), O(log n)）。
+                            
+                        - **空间复杂度:** 衡量算法所需内存空间随输入规模增长的变化。
+                    </div>
+                </article>
+
+
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 岳铭. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            const icon = document.querySelector('.theme-switch i');
+            icon.className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial theme
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            const icon = document.querySelector('.theme-switch i');
+            icon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+
+            // Convert markdown content
+            const markdownElements = document.querySelectorAll('.markdown-content');
+            markdownElements.forEach(element => {
+                const markdown = element.innerHTML
+                    .split('\n')
+                    .map(line => line.trim())
+                    .join('\n');
+                element.innerHTML = marked.parse(markdown);
+            });
+
+            // Sort thoughts by date
+            const thoughtsList = document.querySelector('.thoughts-list');
+            const thoughts = Array.from(thoughtsList.getElementsByClassName('thought'));
+            
+            thoughts.sort((a, b) => {
+                const dateA = new Date(a.querySelector('.date').textContent);
+                const dateB = new Date(b.querySelector('.date').textContent);
+                return dateB - dateA;
+            });
+
+            thoughts.forEach(thought => thoughtsList.appendChild(thought));
+        });
+    </script>
+</body>
+</html> 

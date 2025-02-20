@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books I'm Reading</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="theme-switch">
+        <button onclick="toggleTheme()" aria-label="Toggle theme">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <div class="top-links">
+        <a href="index.html">home</a>
+        <span class="separator">•</span>
+        <a href="thoughts.html">thoughts</a>
+        <span class="separator">•</span>
+        <a href="books.html">books</a>
+    </div>
+
+    <main>
+        <section id="books">
+            <h2>阅读</h2>
+            <ul class="book-list">
+                <li>
+                    <div class="book-info">
+                        <div class="book-header">
+                            <span class="book-title">红楼梦</span>
+                            <span class="book-status reading">reading</span>
+                            <span class="date">2024-03</span>
+                        </div>
+                        <span class="book-author">by 曹雪芹</span>
+                        <p class="book-comment">“身后有余忘缩手，眼前无路想回头。”</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="book-info">
+                        <div class="book-header">
+                            <span class="book-title">Walden</span>
+                            <span class="book-status reading">reading</span>
+                            <span class="date">2024-02</span>
+                        </div>
+                        <span class="book-author">by Henry David Thoreau</span>
+                        <p class="book-comment">My thoughts after finishing this book. Key takeaways and memorable quotes.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="book-info">
+                        <div class="book-header">
+                            <span class="book-title">Book Title 3</span>
+                            <span class="book-status want">want</span>
+                            <span class="date">2024-01</span>
+                        </div>
+                        <span class="book-author">by Author Name</span>
+                        <p class="book-comment">Why I'm interested in reading this book. What sparked my curiosity.</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 岳铭. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            const icon = document.querySelector('.theme-switch i');
+            icon.className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            const icon = document.querySelector('.theme-switch i');
+            icon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        });
+    </script>
+</body>
+</html> 
