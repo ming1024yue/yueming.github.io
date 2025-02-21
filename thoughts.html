@@ -25,7 +25,7 @@
 
     <main>
         <section id="thoughts">
-            <h2>Thoughts</h2>
+            <h2>想法</h2>
             <div class="thoughts-list">
                 <!-- Thoughts will be loaded dynamically -->
             </div>
@@ -59,15 +59,60 @@
             // Load and display thoughts
             const thoughtsList = document.querySelector('.thoughts-list');
             
-            // List of thought files with their dates
+            // List of thought files with their dates and tags
             const thoughts = [
-                { file: 'thoughts/2024-03-15-write-more.md', date: '2024-03-15' },
-                { file: 'thoughts/2025-02-20-cursor-thoughts.md', date: '2025-02-20' },
-                { file: 'thoughts/2024-12-22-learn-programming.md', date: '2024-12-22' }
+                { file: 'thoughts/2024-03-15-write-more.md', date: '2024-03-15', tags: ['writing', 'life'] },
+                { file: 'thoughts/2025-02-20-cursor-thoughts.md', date: '2025-02-20', tags: ['tech', 'tools'] },
+                { file: 'thoughts/2024-12-22-learn-programming.md', date: '2024-12-22', tags: ['programming', 'learning'] }
             ];
 
             // Sort thoughts by date
             thoughts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            // Create tag filter section
+            const uniqueTags = [...new Set(thoughts.flatMap(thought => thought.tags))].sort();
+            const tagFilterSection = document.createElement('div');
+            tagFilterSection.className = 'tag-filters';
+            
+            // Add "All" option
+            const allTagHtml = `
+                <span class="tag tag-filter active" data-tag="all">
+                    All
+                </span>
+            `;
+            
+            // Create tag filters HTML
+            const tagFiltersHtml = uniqueTags
+                .map(tag => `
+                    <span class="tag tag-${tag} tag-filter" data-tag="${tag}">
+                        #${tag}
+                    </span>
+                `).join('');
+            
+            tagFilterSection.innerHTML = allTagHtml + tagFiltersHtml;
+            thoughtsList.parentElement.insertBefore(tagFilterSection, thoughtsList);
+
+            // Add click handlers for tag filters
+            const tagFilters = document.querySelectorAll('.tag-filter');
+            tagFilters.forEach(filter => {
+                filter.addEventListener('click', () => {
+                    // Update active state
+                    tagFilters.forEach(f => f.classList.remove('active'));
+                    filter.classList.add('active');
+
+                    const selectedTag = filter.dataset.tag;
+                    const thoughtElements = document.querySelectorAll('.thought');
+                    
+                    thoughtElements.forEach(thought => {
+                        if (selectedTag === 'all') {
+                            thought.style.display = 'block';
+                        } else {
+                            const hasTag = thought.querySelector(`.tag-${selectedTag}`);
+                            thought.style.display = hasTag ? 'block' : 'none';
+                        }
+                    });
+                });
+            });
 
             // Load each thought
             for (const thought of thoughts) {
@@ -85,10 +130,19 @@
                     // Create thought article
                     const article = document.createElement('article');
                     article.className = 'thought';
+                    
+                    // Create tags HTML
+                    const tagsHtml = thought.tags
+                        .map(tag => `<span class="tag tag-${tag}">#${tag}</span>`)
+                        .join('');
+                    
                     article.innerHTML = `
                         <div class="thought-header">
-                            <h3>${title}</h3>
-                            <span class="date">${thought.date}</span>
+                            <div class="title-date">
+                                <h3>${title}</h3>
+                                <span class="date">${thought.date}</span>
+                            </div>
+                            <div class="tags">${tagsHtml}</div>
                         </div>
                         <div class="markdown-content">
                             ${html}

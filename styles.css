@@ -323,11 +323,22 @@ html[lang="zh"] p[data-zh] {
 
 .thought-header {
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
     margin-bottom: 1rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--border-color);
+}
+
+.title-date {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.date {
+    color: var(--text-secondary);
+    font-size: 0.9em;
 }
 
 .thought-header h3 {
@@ -567,4 +578,74 @@ h1, h2, h3 {
     background: var(--text-color);
 }
 
-/* Status colors remain the same for better visibility */ 
+/* Status colors remain the same for better visibility */
+
+.tag {
+    font-size: 0.7em;
+    padding: 0.2rem 0.4rem;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+/* Tag color variants */
+.tag-all {
+    background-color: #f5f5f5;
+    color: #424242;
+}
+
+.tag-writing {
+    background-color: #bbdefb;
+    color: #1565c0;
+}
+
+.tag-life {
+    background-color: #c8e6c9;
+    color: #2e7d32;
+}
+
+.tag-tech {
+    background-color: #e1bee7;
+    color: #6a1b9a;
+}
+
+.tag-tools {
+    background-color: #ffe0b2;
+    color: #e65100;
+}
+
+.tag-programming {
+    background-color: #c5cae9;
+    color: #283593;
+}
+
+.tag-learning {
+    background-color: #f8bbd0;
+    color: #ad1457;
+}
+
+.tag-filter {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tag-filter:hover {
+    opacity: 0.8;
+    transform: translateY(-1px);
+}
+
+.tag-filter.active {
+    box-shadow: 0 0 0 2px currentColor;
+}
+
+.tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tag-filters {
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+} 
