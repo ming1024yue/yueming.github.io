@@ -62,7 +62,8 @@
             // List of thought files with their dates
             const thoughts = [
                 { file: 'thoughts/2024-03-15-write-more.md', date: '2024-03-15' },
-                { file: 'thoughts/2025-02-20-cursor-thoughts.md', date: '2025-02-20' }
+                { file: 'thoughts/2025-02-20-cursor-thoughts.md', date: '2025-02-20' },
+                { file: 'thoughts/2024-12-22-learn-programming.md', date: '2024-12-22' }
             ];
 
             // Sort thoughts by date
@@ -73,11 +74,13 @@
                 try {
                     const response = await fetch(thought.file);
                     const markdown = await response.text();
-                    const html = marked.parse(markdown);
                     
-                    // Extract title from first h1
-                    const titleMatch = html.match(/<h1[^>]*>(.*?)<\/h1>/);
+                    // Extract title from first h1 and remove it from content
+                    const titleMatch = markdown.match(/^#\s+(.*?)(\r?\n|$)/);
                     const title = titleMatch ? titleMatch[1] : 'Untitled';
+                    const contentWithoutTitle = markdown.replace(/^#\s+.*?(\r?\n|$)/, '');
+                    
+                    const html = marked.parse(contentWithoutTitle);
                     
                     // Create thought article
                     const article = document.createElement('article');
