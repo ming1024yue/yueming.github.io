@@ -27,30 +27,7 @@
         <section id="thoughts">
             <h2>Thoughts</h2>
             <div class="thoughts-list">
-                <article class="thought">
-                    <div class="thought-header">
-                        <h3>多写作</h3>
-                        <span class="date">2024-03-15</span>
-                    </div>
-                    <p>write as many as possible</p>
-                </article>
-
-                <article class="thought">
-                    <div class="thought-header">
-                        <h3>Cursor将会是一个颠覆性的产品</h3>
-                        <span class="date">2025-02-20</span>
-                    </div>
-                    <p>
-                        本网站就是cursor完成的。几乎没有写一行代码。从前端到部署，cursor都可以给出很完美的答案。
-                        代码bug很少，对于描述的理解也很精确。代码速度很快，自动补全也很智能。这会大大提高用户的
-                        开发效率和使用黏性，一旦上手就很难离开。我认为会彻底改变软件的开发方式，人们学习编程的方式
-                        也会发生巨大的变化。
-                        
-                    </p>
-                </article>
-
-
-
+                <!-- Thoughts will be loaded dynamically -->
             </div>
         </section>
     </main>
@@ -72,34 +49,54 @@
             icon.className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             // Set initial theme
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
             const icon = document.querySelector('.theme-switch i');
             icon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
 
-            // Convert markdown content
-            const markdownElements = document.querySelectorAll('.markdown-content');
-            markdownElements.forEach(element => {
-                const markdown = element.innerHTML
-                    .split('\n')
-                    .map(line => line.trim())
-                    .join('\n');
-                element.innerHTML = marked.parse(markdown);
-            });
+            // Load and display thoughts
+            const thoughtsList = document.querySelector('.thoughts-list');
+            
+            // List of thought files with their dates
+            const thoughts = [
+                { file: 'thoughts/2024-03-15-write-more.md', date: '2024-03-15' },
+                { file: 'thoughts/2025-02-20-cursor-thoughts.md', date: '2025-02-20' }
+            ];
 
             // Sort thoughts by date
-            const thoughtsList = document.querySelector('.thoughts-list');
-            const thoughts = Array.from(thoughtsList.getElementsByClassName('thought'));
-            
-            thoughts.sort((a, b) => {
-                const dateA = new Date(a.querySelector('.date').textContent);
-                const dateB = new Date(b.querySelector('.date').textContent);
-                return dateB - dateA;
-            });
+            thoughts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-            thoughts.forEach(thought => thoughtsList.appendChild(thought));
+            // Load each thought
+            for (const thought of thoughts) {
+                try {
+                    const response = await fetch(thought.file);
+                    const markdown = await response.text();
+                    const html = marked.parse(markdown);
+                    
+                    // Extract title from first h1
+                    const titleMatch = html.match(/<h1[^>]*>(.*?)<\/h1>/);
+                    const title = titleMatch ? titleMatch[1] : 'Untitled';
+                    
+                    // Create thought article
+                    const article = document.createElement('article');
+                    article.className = 'thought';
+                    article.innerHTML = `
+                        <div class="thought-header">
+                            <h3>${title}</h3>
+                            <span class="date">${thought.date}</span>
+                        </div>
+                        <div class="markdown-content">
+                            ${html}
+                        </div>
+                    `;
+                    
+                    thoughtsList.appendChild(article);
+                } catch (error) {
+                    console.error(`Error loading thought: ${thought.file}`, error);
+                }
+            }
         });
     </script>
 </body>
