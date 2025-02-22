@@ -379,9 +379,8 @@ html[lang="zh"] p[data-zh] {
     padding: 1rem;
     text-align: center;
     z-index: 100;
-    border-bottom: 1px solid var(--border-color);
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 1200px;  /* Match page width */
+    margin: 0 auto;     /* Center the menu */
 }
 
 .top-links a {
