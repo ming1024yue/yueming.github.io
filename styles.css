@@ -76,6 +76,7 @@ main {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
+    padding-top: 4rem;  /* Add padding to account for fixed top links */
 }
 
 section {
@@ -317,8 +318,8 @@ html[lang="zh"] p[data-zh] {
 /* Theme Switch */
 .theme-switch {
     position: fixed;
-    top: 2rem;
-    right: 2rem;
+    top: 0.7rem;
+    right: calc((100% - 1200px) / 2 + 2rem);
     z-index: 1000;
 }
 
@@ -371,8 +372,16 @@ html[lang="zh"] p[data-zh] {
 
 .top-links {
     position: fixed;
-    top: 2rem;
-    right: 5rem;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg-color);
+    padding: 1rem;
+    text-align: center;
+    z-index: 100;
+    border-bottom: 1px solid var(--border-color);
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .top-links a {
@@ -479,6 +488,7 @@ html[lang="zh"] p[data-zh] {
     font-weight: 400;
 }
 
+/* Thoughts Layout */
 .thoughts-list {
     max-width: 800px;
     margin: 0 auto;
@@ -637,26 +647,15 @@ body {
     color: var(--text-color);
 }
 
-/* Theme switch button */
-.theme-switch {
-    position: fixed;
-    top: 2rem;
-    right: 2rem;
-    z-index: 1000;
-}
-
-.theme-switch button {
-    background: none;
-    border: none;
-    color: var(--text-color);
-    cursor: pointer;
-    padding: 0.5rem;
-    font-size: 1.2rem;
-    transition: color 0.3s;
-}
-
-.theme-switch button:hover {
-    color: var(--link-color);
+/* Media query for smaller screens */
+@media (max-width: 1200px) {
+    .top-links {
+        max-width: 100%;
+    }
+    
+    .theme-switch {
+        right: 2rem;
+    }
 }
 
 /* Update existing styles with variables */
@@ -798,4 +797,15 @@ h1, h2, h3 {
 .tag-innovation {
     background-color: #E6E6FA;  /* Lavender */
     color: #483D8B;  /* Dark slate blue */
+}
+
+/* Add these new styles */
+#thoughts, #books {
+    margin-top: 4rem;  /* Adds space at the top like the home page */
+}
+
+.thoughts-grid, .books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
 } 
