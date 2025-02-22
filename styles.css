@@ -373,20 +373,29 @@ html[lang="zh"] p[data-zh] {
 .top-links {
     position: fixed;
     top: 0;
-    left: 0;
-    right: 0;
+    right: 2rem;
     background: var(--bg-color);
     padding: 1rem;
-    text-align: center;
+    text-align: right;
     z-index: 100;
-    max-width: 1200px;  /* Match page width */
-    margin: 0 auto;     /* Center the menu */
 }
 
 .top-links a {
-    text-decoration: none;
     color: var(--text-color);
-    font-size: 1.1rem;
+}
+
+.top-links button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 0;
+    font-size: 1rem;
+    transform: translateY(2px);  /* Move button down slightly */
+}
+
+.top-links button:hover {
+    color: var(--link-color);
 }
 
 .reading-section {
@@ -458,10 +467,6 @@ html[lang="zh"] p[data-zh] {
     text-decoration: none;
     color: #333;
     font-size: 1.1rem;
-}
-
-.top-links a {
-    cursor: pointer;
 }
 
 .book-info {
