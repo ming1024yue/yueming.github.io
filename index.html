@@ -8,18 +8,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="home-page">
-    <div class="theme-switch">
-        <button onclick="toggleTheme()" aria-label="Toggle theme">
-            <i class="fas fa-moon"></i>
-        </button>
-    </div>
+
 
     <div class="top-links">
-        <a href="index.html">home</a>
-        <span class="separator">    </span>
-        <a href="thoughts.html">thoughts</a>
-        <span class="separator">    </span>
-        <a href="books.html">books</a>
+        <div class="menu-group">
+            <a href="index.html">home</a>
+            <a href="thoughts.html">thoughts</a>
+            <a href="books.html">books</a>
+            <button onclick="toggleTheme()" aria-label="Toggle theme">
+               
+                   
+                    <i class="fas fa-moon theme-icon-dark"></i>
+                
+            </button>
+        </div>
     </div>
 
     <main>
@@ -59,6 +61,12 @@
             const icon = document.querySelector('.theme-switch i');
             icon.className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
         }
+
+        // Set initial theme
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        });
 
         // Set initial theme from localStorage
         document.addEventListener('DOMContentLoaded', () => {
