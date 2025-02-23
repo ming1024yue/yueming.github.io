@@ -318,8 +318,8 @@ html[lang="zh"] p[data-zh] {
 /* Theme Switch */
 .theme-switch {
     position: fixed;
-    top: 1.7rem;
-    right: calc((100% - 1200px) / 2 + 1rem);
+    top: 0.7rem;
+    right: calc((100% - 1200px) / 2 + 2rem);
     z-index: 1000;
 }
 
@@ -373,27 +373,15 @@ html[lang="zh"] p[data-zh] {
 .top-links {
     position: fixed;
     top: 0;
-    right: calc((100% - 1200px) / 2 + 3rem);
+    right: 2rem;
     background: var(--bg-color);
     padding: 1rem;
     text-align: right;
     z-index: 100;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
 }
 
 .top-links a {
     color: var(--text-color);
-    text-decoration: none;
-}
-
-.top-links a:hover,
-.top-links a:visited,
-.top-links a:active,
-.top-links a:link {
-    text-decoration: none;
-    color: var(--link-color);
 }
 
 .top-links button {
@@ -403,6 +391,7 @@ html[lang="zh"] p[data-zh] {
     cursor: pointer;
     padding: 0;
     font-size: 1rem;
+    transform: translateY(2px);  /* Move button down slightly */
 }
 
 .top-links button:hover {
@@ -508,22 +497,6 @@ html[lang="zh"] p[data-zh] {
     max-width: 800px;
     margin: 0 auto;
     padding: 0 1rem;
-}
-
-#thoughts h2 {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.tag-filters {
-    margin-bottom: 2rem;
-    display: flex;
-    gap: 0.8rem;
-    flex-wrap: wrap;
-    justify-content: center;  /* Center the tags */
-    max-width: 800px;        /* Match article width */
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .thought {
@@ -681,11 +654,11 @@ body {
 /* Media query for smaller screens */
 @media (max-width: 1200px) {
     .top-links {
-        right: 2rem;
+        max-width: 100%;
     }
     
     .theme-switch {
-        right: 1rem;
+        right: 2rem;
     }
 }
 
@@ -696,7 +669,6 @@ body {
 
 .top-links a {
     color: var(--text-color);
-    text-decoration: none;
 }
 
 h1, h2, h3 {
@@ -840,13 +812,4 @@ h1, h2, h3 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-}
-
-/* Remove any inherited link styles */
-a {
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: none;
 } 
