@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="img-src 'self' data: https: http:;">
     <title>My Thoughts</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-   
+
 </head>
 <body>
     <div class="theme-switch">
@@ -226,6 +227,15 @@
             }
     
     // For dynamically loaded content (if you're loading markdown after page load)
+    document.querySelectorAll('.markdown-content img').forEach(img => {
+        console.log('Image found:', img.src);
+        console.log('Image complete:', img.complete);
+        console.log('Image naturalWidth:', img.naturalWidth);
+        
+        img.onerror = function() {
+            console.error('Error loading image:', img.src);
+        };
+    });
     </script>
     
 </body>
