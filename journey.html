@@ -55,24 +55,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
-            
-            // Load journey articles
-            loadjourneyArticles();
-            
-            // Location filtering
-            document.querySelectorAll('.location-filter').forEach(location => {
-                location.addEventListener('click', function() {
-                    // Remove active class from all locations
-                    document.querySelectorAll('.location-filter').forEach(l => l.classList.remove('active'));
-                    // Add active class to clicked location
-                    this.classList.add('active');
-                    
-                    const selectedLocation = this.getAttribute('data-location');
-                    filterjourneyArticles(selectedLocation);
-                });
-            });
+           
         });
         
+      
         // Load journey articles from markdown files
         async function loadjourneyArticles() {
             const journeyList = document.querySelector('.journey-list');
@@ -82,12 +68,19 @@
                 {
                     title: "环洱海",
                     
-                    date: "2025-02-16",
+                    date: "2025-02-26",
                     location: "云南-大理",
-                    activities: ["自驾"],
+                    activities: ["自驾环洱海"],
                     file: "journey/erhai.md"
+                },
+                {
+                    title: "丽江",
+                 
+                    date: "2025-02-28",
+                    location: "云南-丽江",
+                    activities: ["玉龙雪山"],
+                    file: "journey/lijiang.md"
                 }
-
             ];
             
             // Clear existing content
@@ -166,6 +159,50 @@
                 }
             });
         }
+
+        // Create lightbox elements
+        const lightbox = document.createElement('div');
+        lightbox.className = 'lightbox';
+        const lightboxImg = document.createElement('img');
+        lightboxImg.className = 'lightbox-img';
+        const closeButton = document.createElement('button');
+        closeButton.className = 'lightbox-close';
+        closeButton.innerHTML = '&times;';
+        closeButton.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        lightbox.appendChild(lightboxImg);
+        lightbox.appendChild(closeButton);
+        document.body.appendChild(lightbox);
+        
+        // Close lightbox when clicking outside the image
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Function to set up image click handlers
+        function setupImageLightbox() {
+            const images = document.querySelectorAll('.markdown-content img');
+            images.forEach(img => {
+                img.style.cursor = 'zoom-in';
+                img.addEventListener('click', () => {
+                    lightboxImg.src = img.src;
+                    lightbox.style.display = 'flex';
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling when lightbox is open
+                });
+            });
+        }
+
+        
+        // Call setupImageLightbox after loading articles
+        loadjourneyArticles().then(() => {
+            setupImageLightbox();
+        });
     </script>
     
     <!-- Add the lightbox functionality -->
