@@ -182,7 +182,7 @@
             // Load the map
             const coords = locationCoordinates[location] || { lat: 39.9042, lng: 116.4074, zoom: 10 }; // Default to Beijing if not found
             
-            // Create iframe with OpenStreetMap embed (no API key needed)
+            // Create iframe with 高德地图 embed
             const mapContainer = document.getElementById('map');
             mapContainer.innerHTML = `
                 <iframe
@@ -190,12 +190,12 @@
                     height="100%"
                     frameborder="0"
                     style="border:0"
-                    src="https://www.openstreetmap.org/export/embed.html?bbox=${coords.lng-0.1}%2C${coords.lat-0.1}%2C${coords.lng+0.1}%2C${coords.lat+0.1}&layer=mapnik&marker=${coords.lat}%2C${coords.lng}"
+                    src="https://uri.amap.com/marker?markers=${coords.lng},${coords.lat},marker&zoom=${coords.zoom}"
                     allowfullscreen
                 ></iframe>
                 <small>
-                    <a href="https://www.openstreetmap.org/?mlat=${coords.lat}&mlon=${coords.lng}#map=${coords.zoom}/${coords.lat}/${coords.lng}" target="_blank">
-                        View Larger Map
+                    <a href="https://uri.amap.com/marker?markers=${coords.lng},${coords.lat},marker&zoom=${coords.zoom}" target="_blank">
+                        在高德地图中查看
                     </a>
                 </small>
             `;
