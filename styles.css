@@ -954,3 +954,119 @@ h1, h2, h3 {
     100% { transform: rotate(360deg); }
 }
 
+/* journey Articles */
+.journey-list {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.journey-article {
+    margin-bottom: 3rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    background-color: var(--thought-bg);
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.journey-article h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.journey-article .date {
+    color: var(--secondary-text);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Location styles with pin icon */
+.location {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem 0.3rem 1.8rem;  /* Add left padding for the icon */
+    border-radius: 16px;
+    font-weight: 500;
+    display: inline-block;
+    position: relative;  /* For positioning the icon */
+}
+
+.location::before {
+    content: "\f3c5";  /* Font Awesome map pin icon */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    left: 0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Special case for "All Locations" */
+.location-all::before {
+    content: "\f0ac";  /* Font Awesome globe icon */
+}
+
+
+.article-location {
+    margin-bottom: 0.8rem;
+}
+
+/* Location colors */
+.location-all { background-color: #f5f5f5; color: #424242; }
+.location-washington { background-color: #AED6F1; color: #2874A6; }
+.location-california { background-color: #F5CBA7; color: #A04000; }
+.location-oregon { background-color: #A9DFBF; color: #196F3D; }
+.location-utah { background-color: #D7BDE2; color: #6C3483; }
+.location-colorado { background-color: #F9E79F; color: #B7950B; }
+
+/* Activity tags */
+.activities {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.activity {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 12px;
+    background-color: var(--hover-bg);
+    color: var(--secondary-text);
+}
+
+/* Activity colors */
+.activity-hiking { background-color: #E8F8F5; color: #148F77; }
+.activity-camping { background-color: #FEF9E7; color: #B7950B; }
+.activity-climbing { background-color: #F4ECF7; color: #8E44AD; }
+.activity-photography { background-color: #EBF5FB; color: #2E86C1; }
+.activity-backpacking { background-color: #FDEDEC; color: #CB4335; }
+
+/* Center journey header */
+#journey h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* journey images */
+.journey-article .markdown-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5rem auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    cursor: zoom-in;
+}
+
+/* Add journey to navigation */
+@media (max-width: 768px) {
+    #journey {
+        margin-top: 4rem;
+    }
+    
+    .location-filters {
+        padding: 0 1rem;
+    }
+}
+

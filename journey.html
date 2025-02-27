@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>journey Adventures | Your Name</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="top-links">
+        <div class="menu-group">
+            <a href="index.html">home</a>
+            <a href="thoughts.html">thoughts</a>
+            <a href="books.html">books</a>
+            <a href="journey.html">journey</a>
+            <button onclick="toggleTheme()" aria-label="Toggle theme">
+                <i class="fas fa-moon theme-icon-dark"></i>
+            </button>
+        </div>
+    </div>
+
+    <main>
+        <section id="journey">
+            <h2 data-en>journey</h2>
+            <h2 data-zh>旅行</h2>
+            
+            
+            <div class="journey-list">
+                <!-- journey articles will be loaded here -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <span id="year"></span> Your Name. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Set current year
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Theme toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+        
+        // Set initial theme on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            
+            // Load journey articles
+            loadjourneyArticles();
+            
+            // Location filtering
+            document.querySelectorAll('.location-filter').forEach(location => {
+                location.addEventListener('click', function() {
+                    // Remove active class from all locations
+                    document.querySelectorAll('.location-filter').forEach(l => l.classList.remove('active'));
+                    // Add active class to clicked location
+                    this.classList.add('active');
+                    
+                    const selectedLocation = this.getAttribute('data-location');
+                    filterjourneyArticles(selectedLocation);
+                });
+            });
+        });
+        
+        // Load journey articles from markdown files
+        async function loadjourneyArticles() {
+            const journeyList = document.querySelector('.journey-list');
+            
+            // This would typically come from a JSON file or API
+            const articles = [
+                {
+                    title: "环洱海",
+                    
+                    date: "2025-02-16",
+                    location: "云南-大理",
+                    activities: ["自驾"],
+                    file: "journey/erhai.md"
+                }
+
+            ];
+            
+            // Clear existing content
+            journeyList.innerHTML = '';
+            
+            // Create article elements
+            for (const article of articles) {
+                try {
+                    const response = await fetch(article.file);
+                    if (!response.ok) throw new Error(`Failed to load ${article.file}`);
+                    
+                    const markdown = await response.text();
+                    const articleElement = createjourneyArticle(article, markdown);
+                    journeyList.appendChild(articleElement);
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        }
+        
+        // Create journey article element
+        function createjourneyArticle(article, markdown) {
+            const articleElement = document.createElement('div');
+            articleElement.className = 'journey-article';
+            articleElement.setAttribute('data-location', article.location);
+            
+            const titleElement = document.createElement('h3');
+            titleElement.innerHTML = `
+                <span data-en>${article.title}</span>
+                <span data-zh>${article.titleZh || article.title}</span>
+            `;
+            
+            const dateElement = document.createElement('div');
+            dateElement.className = 'date';
+            dateElement.textContent = article.date;
+            
+            const locationElement = document.createElement('div');
+            locationElement.className = 'article-location';
+            locationElement.innerHTML = `<span class="location location-${article.location}">${article.location.charAt(0).toUpperCase() + article.location.slice(1)}</span>`;
+            
+            const activitiesElement = document.createElement('div');
+            activitiesElement.className = 'activities';
+            for (const activity of article.activities) {
+                const activitySpan = document.createElement('span');
+                activitySpan.className = `activity activity-${activity}`;
+                activitySpan.textContent = activity;
+                activitiesElement.appendChild(activitySpan);
+            }
+            
+            const contentElement = document.createElement('div');
+            contentElement.className = 'markdown-content';
+            
+            // Remove the first heading from markdown content to avoid duplicate titles
+            const processedMarkdown = markdown.replace(/^\s*#\s+.*?\n/, '');
+            contentElement.innerHTML = marked.parse(processedMarkdown);
+            
+            articleElement.appendChild(titleElement);
+            articleElement.appendChild(dateElement);
+            articleElement.appendChild(locationElement);
+            articleElement.appendChild(activitiesElement);
+            articleElement.appendChild(contentElement);
+            
+            return articleElement;
+        }
+        
+        // Filter journey articles by location
+        function filterjourneyArticles(location) {
+            const articles = document.querySelectorAll('.journey-article');
+            
+            articles.forEach(article => {
+                const articleLocation = article.getAttribute('data-location');
+                if (location === 'all' || articleLocation === location) {
+                    article.style.display = '';
+                } else {
+                    article.style.display = 'none';
+                }
+            });
+        }
+    </script>
+    
+    <!-- Add the lightbox functionality -->
+    <script src="scripts.js"></script>
+</body>
+</html> 

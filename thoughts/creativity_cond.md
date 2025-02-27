@@ -5,4 +5,3 @@
 3. 非功利心态
 4. 狂热
 
-![erhai](/images/erhai.png)
