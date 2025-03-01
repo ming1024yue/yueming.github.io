@@ -133,7 +133,7 @@
             locationElement.className = 'article-location';
             locationElement.innerHTML = `
                 <span class="location location-${article.location.split('-')[0]}" data-location="${article.location}">
-                    <i class="fas fa-map-marker-alt"></i> ${article.location}
+                    <i class="fas fa-map-marker-alt"></i> <span>${article.location}</span>
                 </span>
             `;
             
@@ -181,7 +181,7 @@
             // Load the map
             const coords = locationCoordinates[location] || { lat: 39.9042, lng: 116.4074, zoom: 10 }; // Default to Beijing if not found
             
-            // Create iframe with 高德地图 embed
+            // Create iframe with 高德地图 embed - added red marker color
             const mapContainer = document.getElementById('map');
             mapContainer.innerHTML = `
                 <iframe
@@ -189,11 +189,11 @@
                     height="100%"
                     frameborder="0"
                     style="border:0"
-                    src="https://uri.amap.com/marker?markers=${coords.lng},${coords.lat},marker&zoom=${coords.zoom}"
+                    src="https://uri.amap.com/marker?markers=${coords.lng},${coords.lat},red,marker&zoom=${coords.zoom}"
                     allowfullscreen
                 ></iframe>
                 <small>
-                    <a href="https://uri.amap.com/marker?markers=${coords.lng},${coords.lat},marker&zoom=${coords.zoom}" target="_blank">
+                    <a href="https://uri.amap.com/marker?markers=${coords.lng},${coords.lat},red,marker&zoom=${coords.zoom}" target="_blank">
                         在高德地图中查看
                     </a>
                 </small>
