@@ -259,7 +259,7 @@ html[lang="zh"] p[data-zh] {
 
 /* Markdown Content */
 .markdown-content {
-    max-height: 300px;
+    max-height: 800px;  /* Increased from 300px to 800px */
     overflow-y: auto;
     padding-right: 1rem;
     line-height: 1.6;
@@ -546,7 +546,7 @@ html[lang="zh"] p[data-zh] {
     margin-bottom: 3rem;
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 1.5rem;
+    padding: 2rem;  /* Increased padding from 1.5rem to 2rem */
     background-color: var(--thought-bg);
     transition: background-color 0.3s, border-color 0.3s;
 }
@@ -584,7 +584,7 @@ html[lang="zh"] p[data-zh] {
 
 /* Markdown content styles */
 .markdown-content {
-    max-height: 300px;
+    max-height: 800px;  /* Increased from 300px to 800px */
     overflow-y: auto;
     padding-right: 1rem;
     line-height: 1.6;

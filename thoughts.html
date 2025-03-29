@@ -9,7 +9,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        .thought {
+            max-width: 900px;  /* Increased from default width */
+            margin: 0 auto 2rem;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
 
+        .markdown-content {
+            max-height: 1200px;  /* Increase from the current 800px */
+            overflow-y: auto;
+            width: 100%;
+            line-height: 1.6;
+            margin-top: 1.5rem;
+        }
+
+        /* If you want the content to be wider */
+        .thoughts-list {
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
     <div class="theme-switch">
@@ -165,8 +188,8 @@
                 }
             }
         });
-        // Image Lightbox functionality
-        document.addEventListener('DOMContentLoaded', function() {});
+        // Image Lightbox functionality with navigation
+        document.addEventListener('DOMContentLoaded', function() {
             // Create lightbox elements
             const lightbox = document.createElement('div');
             lightbox.id = 'lightbox';
@@ -179,10 +202,24 @@
             closeBtn.className = 'lightbox-close';
             closeBtn.innerHTML = '&times;';
             
+            // Create navigation buttons
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'lightbox-nav lightbox-prev';
+            prevBtn.innerHTML = '&#10094;'; // Left arrow
+            
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'lightbox-nav lightbox-next';
+            nextBtn.innerHTML = '&#10095;'; // Right arrow
+            
             // Append elements to lightbox
             lightbox.appendChild(lightboxImg);
             lightbox.appendChild(closeBtn);
+            lightbox.appendChild(prevBtn);
+            lightbox.appendChild(nextBtn);
             document.body.appendChild(lightbox);
+            
+            let currentImageIndex = 0;
+            let galleryImages = [];
             
             // Function to initialize lightbox for images
             function initLightbox() {
@@ -190,17 +227,82 @@
                 const images = document.querySelectorAll('.markdown-content img');
                 console.log('Found ' + images.length + ' images');
                 
-                images.forEach(img => {
+                images.forEach((img, index) => {
                     img.style.cursor = 'zoom-in';
+                    img.dataset.index = index; // Store the index on the image
                     img.addEventListener('click', function(e) {
                         e.preventDefault();
                         console.log('Image clicked: ' + this.src);
+                        
+                        // Get all images in the current article
+                        const article = this.closest('.thought');
+                        galleryImages = Array.from(article.querySelectorAll('.markdown-content img'));
+                        currentImageIndex = galleryImages.indexOf(this);
+                        
+                        // Show the image
                         lightbox.style.display = 'flex';
                         lightboxImg.src = this.src;
                         document.body.style.overflow = 'hidden'; // Prevent scrolling
+                        
+                        // Update navigation visibility
+                        updateNavButtons();
                     });
                 });
             }
+            
+            // Function to update navigation button visibility
+            function updateNavButtons() {
+                // Only show navigation if there's more than one image
+                if (galleryImages.length <= 1) {
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                    return;
+                }
+                
+                prevBtn.style.display = 'flex';
+                nextBtn.style.display = 'flex';
+                
+                // Disable previous button when at the first image
+                prevBtn.style.opacity = currentImageIndex <= 0 ? '0.3' : '0.7';
+                prevBtn.style.cursor = currentImageIndex <= 0 ? 'default' : 'pointer';
+                
+                // Disable next button when at the last image
+                nextBtn.style.opacity = currentImageIndex >= galleryImages.length - 1 ? '0.3' : '0.7';
+                nextBtn.style.cursor = currentImageIndex >= galleryImages.length - 1 ? 'default' : 'pointer';
+            }
+            
+            // Previous image
+            prevBtn.addEventListener('click', function() {
+                if (currentImageIndex > 0) {
+                    currentImageIndex--;
+                    lightboxImg.src = galleryImages[currentImageIndex].src;
+                    updateNavButtons();
+                }
+            });
+            
+            // Next image
+            nextBtn.addEventListener('click', function() {
+                if (currentImageIndex < galleryImages.length - 1) {
+                    currentImageIndex++;
+                    lightboxImg.src = galleryImages[currentImageIndex].src;
+                    updateNavButtons();
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (lightbox.style.display !== 'flex') return;
+                
+                if (e.key === 'ArrowLeft' && currentImageIndex > 0) {
+                    currentImageIndex--;
+                    lightboxImg.src = galleryImages[currentImageIndex].src;
+                    updateNavButtons();
+                } else if (e.key === 'ArrowRight' && currentImageIndex < galleryImages.length - 1) {
+                    currentImageIndex++;
+                    lightboxImg.src = galleryImages[currentImageIndex].src;
+                    updateNavButtons();
+                }
+            });
             
             // Initialize immediately
             initLightbox();
@@ -227,17 +329,7 @@
                 lightbox.style.display = 'none';
                 document.body.style.overflow = ''; // Restore scrolling
             }
-    
-    // For dynamically loaded content (if you're loading markdown after page load)
-    document.querySelectorAll('.markdown-content img').forEach(img => {
-        console.log('Image found:', img.src);
-        console.log('Image complete:', img.complete);
-        console.log('Image naturalWidth:', img.naturalWidth);
-        
-        img.onerror = function() {
-            console.error('Error loading image:', img.src);
-        };
-    });
+        });
     </script>
     
 </body>
