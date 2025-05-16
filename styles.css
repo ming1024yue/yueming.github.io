@@ -1488,3 +1488,31 @@ h1, h2, h3 {
     }
 }
 
+#knowledge-base {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.knowledge-base-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.knowledge-base-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+    color: var(--link-color);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.knowledge-base-link:hover {
+    background-color: var(--hover-bg);
+    transform: translateY(-2px);
+}
+
