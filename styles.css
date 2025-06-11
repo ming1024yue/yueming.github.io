@@ -227,6 +227,7 @@ html[lang="zh"] p[data-zh] {
 .tag-learning { background-color: #f8bbd0; color: #ad1457; }
 .tag-creative { background-color: #FFB6C1; color: #8B4513; }
 .tag-innovation { background-color: #E6E6FA; color: #483D8B; }
+.tag-productivity { background-color: #77c578; color: #fffcf9; }
 
 /* Tag Interactions */
 .tag-filter {
