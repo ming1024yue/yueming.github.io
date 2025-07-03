@@ -11,26 +11,27 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         .thought {
-            max-width: 900px;  /* Increased from default width */
-            margin: 0 auto 2rem;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: none;
+            margin-bottom: 4rem;
         }
 
         .markdown-content {
-            max-height: 1200px;  /* Increase from the current 800px */
-            overflow-y: auto;
+            max-height: none;
+            overflow-y: visible;
             width: 100%;
-            line-height: 1.6;
-            margin-top: 1.5rem;
         }
 
-        /* If you want the content to be wider */
+        /* 调整内容宽度 */
         .thoughts-list {
-            width: 90%;
-            max-width: 1000px;
+            width: 95%;
             margin: 0 auto;
+        }
+
+        /* 调整图片显示 */
+        .markdown-content img {
+            max-width: 100%;
+            height: auto;
+            margin: 1rem 0;
         }
     </style>
 </head>
