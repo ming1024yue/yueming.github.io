@@ -102,11 +102,19 @@
                 { file: 'thoughts/productivity.md', date: '2025-05-28', tags: ['productivity'] },
                 { file: 'thoughts/focus.md', date: '2025-06-11', tags: ['productivity'] },
                 { file: 'thoughts/hottest_programming.md', date: '2025-06-22', tags: ['programming','idea'] },
-                { file: 'thoughts/create_anything.md', date: '2025-07-08', tags: ['creative', 'innovation'] }
+                { file: 'thoughts/create_anything.md', date: '2025-07-08', tags: ['creative', 'innovation'] },
+                { file: 'thoughts/ask.md', date: '2025-07-08', tags: ['creative', 'innovation'] },
             ];
 
             // Sort thoughts by date
-            thoughts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            thoughts.sort((a, b) => {
+                const dateComparison = new Date(b.date) - new Date(a.date);
+                if (dateComparison === 0) {
+                    // If dates are equal, use the reverse of array position
+                    return -1; // Keep the later item (b) before the earlier item (a)
+                }
+                return dateComparison;
+            });
 
             // Create tag filter section
             const uniqueTags = [...new Set(thoughts.flatMap(thought => thought.tags))].sort();
