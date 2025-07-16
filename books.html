@@ -133,8 +133,16 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', savedTheme);
+            const bookList = document.querySelector('.book-list');
+            const books = Array.from(bookList.children);
+            books.sort((a, b) => {
+                const dateA = a.querySelector('.date').textContent.trim();
+                const dateB = b.querySelector('.date').textContent.trim();
+                const dA = new Date(dateA.length === 7 ? dateA + '-01' : dateA);
+                const dB = new Date(dateB.length === 7 ? dateB + '-01' : dateB);
+                return dB - dA;
+            });
+            books.forEach(book => bookList.appendChild(book));
         });
     </script>
 </body>
