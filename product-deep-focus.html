@@ -17,21 +17,103 @@
     </style>
 </head>
 <body>
+    <div class="top-links">
+        <div class="menu-group">
+            <a href="index.html">首页</a>
+            <a href="thoughts.html">想法</a>
+            <a href="books.html">阅读</a>
+            <a href="products.html">我的产品</a>
+        </div>
+    </div>
     <main>
         <section class="product-detail">
             <h2>Deep Focus 深度对焦</h2>
-            <img src="images/deep_focus.png" alt="Deep Focus封面">
-            <p>这里是 Deep Focus 深度对焦的详细介绍。你可以写产品的功能、特色、适用人群、下载方式、截图等内容。</p>
+            <img src="images/product/deep_focus.png" alt="Deep Focus封面">
+            <p>专注是一种习惯和能力，你可以在这里训练它。</p>
             <ul>
-                <li>专注计时与番茄钟</li>
-                <li>极简界面，沉浸体验</li>
-                <li>数据统计与成长激励</li>
+                <li>一次只能设立一个目标，且不能修改</li>
+                <li>格子化追踪你的进步</li>
+                <li>支持iOS17+, 已上线App store</li>
             </ul>
             <a href="https://apps.apple.com/cn/app/id1234567890" class="product-link" target="_blank">前往 App Store 下载</a>
         </section>
     </main>
     <footer>
+        
         <p>&copy; 2025 岳铭. All rights reserved.</p>
     </footer>
+    <div class="support-coffee-float">
+        <img id="show-alipay-float" class="coffee-btn-img" src="images/buymecoffee.png" alt="Buy Me a Coffee" style="width:240px; height:56px; border-radius:28px; box-shadow:0 2px 8px rgba(0,0,0,0.13); cursor:pointer; background:#fff; object-fit:cover;">
+        <div id="alipay-qr-float" class="coffee-qr-card">
+            <img src="images/ai_tools.png" alt="支付宝支持二维码">
+            <div class="coffee-thank">用支付宝扫码支持我，谢谢您的鼓励！</div>
+        </div>
+    </div>
+    <style>
+    .support-coffee-float {
+        position: fixed;
+        right: 32px;
+        bottom: 32px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    .coffee-btn-img {
+        margin-bottom: 0.5rem;
+        transition: box-shadow 0.2s, transform 0.2s;
+        width: 240px !important;
+        height: 56px !important;
+        border-radius: 28px !important;
+        object-fit: cover;
+    }
+    .coffee-btn-img:hover {
+        box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+        transform: scale(1.08);
+    }
+    .coffee-qr-card {
+        display: none;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+        padding: 1.2rem 1.2rem 0.8rem 1.2rem;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        min-width: 210px;
+        animation: fadeIn 0.2s;
+    }
+    .coffee-qr-card img {
+        width: 150px;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .coffee-thank {
+        margin-top: 0.7rem;
+        color: #888;
+        font-size: 0.98em;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 700px) {
+        .support-coffee-float { right: 10px; bottom: 10px; }
+        .coffee-qr-card { min-width: 140px; padding: 0.7rem 0.7rem 0.5rem 0.7rem; }
+        .coffee-qr-card img { width: 100px; }
+    }
+    </style>
+    <script>
+        const btn = document.getElementById('show-alipay-float');
+        const qr = document.getElementById('alipay-qr-float');
+        btn.onclick = function() {
+            qr.style.display = qr.style.display === 'block' ? 'none' : 'block';
+        };
+        // 点击页面其他地方关闭二维码
+        document.addEventListener('click', function(e) {
+            if (!btn.contains(e.target) && !qr.contains(e.target)) {
+                qr.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html> 
