@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的产品</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .products-showcase {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .products-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+        .product-card {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            width: 300px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+        }
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .product-info {
+            padding: 1.2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .product-tags {
+            margin: 0.5rem 0;
+        }
+        .tag {
+            display: inline-block;
+            background: #f0f4fa;
+            color: #3a6ea5;
+            border-radius: 12px;
+            padding: 0.2em 0.8em;
+            font-size: 0.85em;
+            margin-right: 0.5em;
+        }
+        .product-link {
+            margin-top: 1rem;
+            color: #fff;
+            background: linear-gradient(90deg, #3a6ea5, #5f9ea0);
+            padding: 0.5em 1.2em;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            transition: background 0.2s;
+        }
+        .product-link:hover {
+            background: linear-gradient(90deg, #5f9ea0, #3a6ea5);
+        }
+        @media (max-width: 700px) {
+            .products-list {
+                flex-direction: column;
+                gap: 1.2rem;
+                align-items: center;
+            }
+            .product-card {
+                width: 95vw;
+                max-width: 360px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-links">
+        <div class="menu-group">
+            <a href="index.html">首页</a>
+            <a href="thoughts.html">想法</a>
+            <a href="books.html">阅读</a>
+            <a href="journey.html">旅行</a>
+            <a href="products.html">我的产品</a>
+        </div>
+    </div>
+    <main>
+        <section class="products-showcase">
+            <h2>我的产品</h2>
+           
+            <div class="products-list">
+                <div class="product-card">
+                    <img src="images/deep_focus.png" alt="Deep Focus封面">
+                    <div class="product-info">
+                        <h3>Deep Focus 深度对焦</h3>
+                        <p>一款帮助你高效专注、提升生产力的极简 App。</p>
+                        <div class="product-tags">
+                            <span class="tag">App</span>
+                            <span class="tag">效率</span>
+                        </div>
+                        <a href="product-deep-focus.html" class="product-link">了解更多</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 岳铭. All rights reserved.</p>
+    </footer>
+    <div class="support-coffee-float">
+        <img id="show-alipay-float" class="coffee-btn-img" src="images/buymecoffee.png" alt="Buy Me a Coffee" style="width:240px; height:56px; border-radius:28px; box-shadow:0 2px 8px rgba(0,0,0,0.13); cursor:pointer; background:#fff; object-fit:cover;">
+        <div id="alipay-qr-float" class="coffee-qr-card">
+            <img src="images/ai_tools.png" alt="支付宝支持二维码">
+            <div class="coffee-thank">用支付宝扫码支持我，谢谢您的鼓励！</div>
+        </div>
+    </div>
+    <style>
+    .support-coffee-float {
+        position: fixed;
+        right: 32px;
+        bottom: 32px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    .coffee-btn-img {
+        margin-bottom: 0.5rem;
+        transition: box-shadow 0.2s, transform 0.2s;
+        width: 240px !important;
+        height: 56px !important;
+        border-radius: 28px !important;
+        object-fit: cover;
+    }
+    .coffee-btn-img:hover {
+        box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+        transform: scale(1.08);
+    }
+    .coffee-qr-card {
+        display: none;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+        padding: 1.2rem 1.2rem 0.8rem 1.2rem;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        min-width: 210px;
+        animation: fadeIn 0.2s;
+    }
+    .coffee-qr-card img {
+        width: 150px;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .coffee-thank {
+        margin-top: 0.7rem;
+        color: #888;
+        font-size: 0.98em;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 700px) {
+        .support-coffee-float { right: 10px; bottom: 10px; }
+        .coffee-qr-card { min-width: 140px; padding: 0.7rem 0.7rem 0.5rem 0.7rem; }
+        .coffee-qr-card img { width: 100px; }
+    }
+    </style>
+    <script>
+        const btn = document.getElementById('show-alipay-float');
+        const qr = document.getElementById('alipay-qr-float');
+        btn.onclick = function() {
+            qr.style.display = qr.style.display === 'block' ? 'none' : 'block';
+        };
+        // 点击页面其他地方关闭二维码
+        document.addEventListener('click', function(e) {
+            if (!btn.contains(e.target) && !qr.contains(e.target)) {
+                qr.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html> 
