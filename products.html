@@ -117,11 +117,18 @@
     <div class="support-coffee-float">
         <img id="show-alipay-float" class="coffee-btn-img" src="images/buymecoffee.png" alt="Buy Me a Coffee" style="width:240px; height:56px; border-radius:28px; box-shadow:0 2px 8px rgba(0,0,0,0.13); cursor:pointer; background:#fff; object-fit:cover;">
         <div id="alipay-qr-float" class="coffee-qr-card">
-            <img src="images/ai_tools.png" alt="支付宝支持二维码">
-            <div class="coffee-thank">感谢你阅读到这里！如果你觉得内容有帮助，
+            <img src="images/ai_tools.png" alt="支付宝支持二维码" class="qr-code-img" style="cursor: pointer;">
+            <div class="coffee-thank">如果你喜欢我的作品，
                 欢迎自愿打赏一杯咖啡的钱（建议不超过 10 元）。
                 小小支持，大大鼓励</div>
         </div>
+    </div>
+    
+    <!-- 二维码放大模态框 -->
+    <div id="qr-modal" class="qr-modal">
+        <div class="qr-modal-content">
+            <span class="qr-close">&times;</span>
+            <img src="images/ai_tools.png" alt="支付宝支持二维码" class="qr-modal-img">        </div>
     </div>
     <style>
     .support-coffee-float {
@@ -175,17 +182,108 @@
         .coffee-qr-card { min-width: 140px; padding: 0.7rem 0.7rem 0.5rem 0.7rem; }
         .coffee-qr-card img { width: 100px; }
     }
+    
+    /* 二维码模态框样式 */
+    .qr-modal {
+        display: none;
+        position: fixed;
+        z-index: 10000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.8);
+        backdrop-filter: blur(4px);
+    }
+    
+    .qr-modal-content {
+        position: relative;
+        background-color: #fff;
+        margin: 5% auto;
+        padding: 2rem;
+        border-radius: 16px;
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+        animation: modalFadeIn 0.3s;
+    }
+    
+    .qr-modal-img {
+        width: 100%;
+        max-width: 300px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    
+    .qr-close {
+        position: absolute;
+        right: 1rem;
+        top: 0.5rem;
+        color: #aaa;
+        font-size: 2rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    
+    .qr-close:hover {
+        color: #333;
+    }
+    
+    @keyframes modalFadeIn {
+        from { opacity: 0; transform: scale(0.8); }
+        to { opacity: 1; transform: scale(1); }
+    }
+    
+    @media (max-width: 700px) {
+        .qr-modal-content {
+            margin: 10% auto;
+            padding: 1.05rem;
+            width: 95%;
+        }
+        .qr-modal-img {
+            max-width: 250px;
+        }
+    }
     </style>
     <script>
         const btn = document.getElementById('show-alipay-float');
-        const qr = document.getElementById('alipay-qr-float');
-        btn.onclick = function() {
+        const qr = document.getElementById('alipay-qr-float');       btn.onclick = function() {
             qr.style.display = qr.style.display === 'block' ? 'none' : 'block';
         };
         // 点击页面其他地方关闭二维码
         document.addEventListener('click', function(e) {
             if (!btn.contains(e.target) && !qr.contains(e.target)) {
                 qr.style.display = 'none';
+            }
+        });
+        
+        // 二维码点击放大功能
+        const qrCodeImg = document.querySelector('.qr-code-img');
+        const qrModal = document.getElementById('qr-modal');
+        const qrClose = document.querySelector('.qr-close');
+        
+        // 点击二维码图片显示模态框
+        qrCodeImg.addEventListener('click', function() {
+            qrModal.style.display = 'block';
+        });
+        
+        // 点击关闭按钮关闭模态框
+        qrClose.addEventListener('click', function() {
+            qrModal.style.display = 'none';
+        });
+        
+        // 点击模态框背景关闭模态框
+        qrModal.addEventListener('click', function(e) {
+            if (e.target === qrModal) {
+                qrModal.style.display = 'none';
+            }
+        });
+        
+        // ESC键关闭模态框
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && qrModal.style.display === 'block') {
+                qrModal.style.display = 'none';
             }
         });
     </script>
