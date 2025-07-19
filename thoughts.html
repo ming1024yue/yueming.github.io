@@ -7,6 +7,7 @@
     <title>My Thoughts</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="translations.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
@@ -36,6 +37,12 @@
     </style>
 </head>
 <body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button onclick="setLanguage('zh')" id="lang-zh">中文</button>
+        <button onclick="setLanguage('en')" id="lang-en">English</button>
+    </div>
+
     <div class="top-links">
         <div class="menu-group">
             <a href="index.html">首页</a>
@@ -63,6 +70,15 @@
             // Set initial theme
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
+            
+            // Update language switcher active state
+            const currentLang = getCurrentLanguage();
+            const zhBtn = document.getElementById('lang-zh');
+            const enBtn = document.getElementById('lang-en');
+            if (zhBtn && enBtn) {
+                zhBtn.classList.toggle('active', currentLang === 'zh');
+                enBtn.classList.toggle('active', currentLang === 'en');
+            }
 
             // Load and display thoughts
             const thoughtsList = document.querySelector('.thoughts-list');

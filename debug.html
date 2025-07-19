@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>翻译调试页面</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="translations.js"></script>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button onclick="setLanguage('zh')" id="lang-zh">中文</button>
+        <button onclick="setLanguage('en')" id="lang-en">English</button>
+    </div>
+
+    <div class="top-links">
+        <div class="menu-group">
+            <a href="index.html">首页</a>
+            <a href="thoughts.html">想法</a>
+            <a href="books.html">阅读</a>
+            <a href="products.html">我的产品</a>
+        </div>
+    </div>
+
+    <main>
+        <h1>翻译调试页面</h1>
+        
+        <h2>当前语言状态</h2>
+        <p>当前语言: <span id="current-lang">中文</span></p>
+        <p>语言切换器状态: <span id="switcher-status">检查中...</span></p>
+        
+        <h2>翻译测试</h2>
+        <div id="translation-tests">
+            <p>导航菜单测试:</p>
+            <ul>
+                <li>首页: <span id="nav-home">首页</span></li>
+                <li>想法: <span id="nav-thoughts">想法</span></li>
+                <li>阅读: <span id="nav-books">阅读</span></li>
+                <li>我的产品: <span id="nav-products">我的产品</span></li>
+            </ul>
+            
+            <p>页面标题测试:</p>
+            <ul>
+                <li>首页标题: <span id="home-title">岳铭</span></li>
+                <li>阅读标题: <span id="books-title">阅读列表</span></li>
+                <li>产品标题: <span id="products-title">我的产品</span></li>
+            </ul>
+        </div>
+        
+        <h2>调试信息</h2>
+        <div id="debug-info">
+            <p>页面路径: <span id="page-path"></span></p>
+            <p>localStorage语言: <span id="localstorage-lang"></span></p>
+            <p>HTML lang属性: <span id="html-lang"></span></p>
+        </div>
+        
+        <button onclick="testTranslations()">测试翻译</button>
+        <button onclick="resetLanguage()">重置语言</button>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 岳铭. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function testTranslations() {
+            // 测试翻译函数
+            console.log('Testing translations...');
+            
+            // 更新测试显示
+            document.getElementById('nav-home').textContent = translate('nav.home');
+            document.getElementById('nav-thoughts').textContent = translate('nav.thoughts');
+            document.getElementById('nav-books').textContent = translate('nav.books');
+            document.getElementById('nav-products').textContent = translate('nav.products');
+            
+            document.getElementById('home-title').textContent = translate('home.title');
+            document.getElementById('books-title').textContent = translate('books.title');
+            document.getElementById('products-title').textContent = translate('products.title');
+            
+            // 更新调试信息
+            document.getElementById('page-path').textContent = window.location.pathname;
+            document.getElementById('localstorage-lang').textContent = localStorage.getItem('language') || 'zh';
+            document.getElementById('html-lang').textContent = document.documentElement.lang;
+            
+            console.log('Translation test completed');
+        }
+        
+        function resetLanguage() {
+            localStorage.removeItem('language');
+            location.reload();
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentLang = getCurrentLanguage();
+            document.getElementById('current-lang').textContent = currentLang === 'zh' ? '中文' : 'English';
+            
+            // Update language switcher active state
+            const zhBtn = document.getElementById('lang-zh');
+            const enBtn = document.getElementById('lang-en');
+            if (zhBtn && enBtn) {
+                zhBtn.classList.toggle('active', currentLang === 'zh');
+                enBtn.classList.toggle('active', currentLang === 'en');
+            }
+            
+            // Update switcher status
+            const activeBtn = currentLang === 'zh' ? zhBtn : enBtn;
+            document.getElementById('switcher-status').textContent = 
+                activeBtn ? `${activeBtn.textContent} (激活)` : '未找到按钮';
+            
+            // Run initial translation test
+            testTranslations();
+        });
+    </script>
+</body>
+</html> 

@@ -6,6 +6,7 @@
     <title>Books I'm Reading</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="translations.js"></script>
     <style>
         .cover-image {
             max-width: 100px;
@@ -23,6 +24,12 @@
     </style>
 </head>
 <body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button onclick="setLanguage('zh')" id="lang-zh">中文</button>
+        <button onclick="setLanguage('en')" id="lang-en">English</button>
+    </div>
+
     <div class="theme-switch">
     </div>
 
@@ -133,6 +140,15 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Update language switcher active state
+            const currentLang = getCurrentLanguage();
+            const zhBtn = document.getElementById('lang-zh');
+            const enBtn = document.getElementById('lang-en');
+            if (zhBtn && enBtn) {
+                zhBtn.classList.toggle('active', currentLang === 'zh');
+                enBtn.classList.toggle('active', currentLang === 'en');
+            }
+            
             const bookList = document.querySelector('.book-list');
             const books = Array.from(bookList.children);
             books.sort((a, b) => {

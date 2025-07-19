@@ -7,6 +7,7 @@
     <title>Yue Ming's site</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="translations.js"></script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KX6P75PEJL"></script>
     <script>
@@ -19,6 +20,11 @@
 </head>
 <body class="home-page">
 
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button onclick="setLanguage('zh')" id="lang-zh">中文</button>
+        <button onclick="setLanguage('en')" id="lang-en">English</button>
+    </div>
 
     <div class="top-links">
         <div class="menu-group">
@@ -37,7 +43,7 @@
                     <div class="profile-image">
                         <img src="images/profile.png" alt="岳铭的照片">
                     </div>
-                    <a href="https://www.yueming-notes.top/" target="_blank" class="knowledge-base-link"><i class="fas fa-book"></i> Knowledge base</a>
+
                     <div class="bio">
                         <p>致力于研究方法/工具，思维方式，让每个人都能够学会任何事情，创造属于自己的价值。</p>
                     </div>
@@ -66,12 +72,11 @@
         document.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
-        });
-
-        // Set initial theme from localStorage
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', savedTheme);
+            
+            // Update language switcher active state
+            const currentLang = getCurrentLanguage();
+            document.getElementById('lang-zh').classList.toggle('active', currentLang === 'zh');
+            document.getElementById('lang-en').classList.toggle('active', currentLang === 'en');
         });
     </script>
 </body>

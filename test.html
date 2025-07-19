@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>双语测试页面</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="translations.js"></script>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button onclick="setLanguage('zh')" id="lang-zh">中文</button>
+        <button onclick="setLanguage('en')" id="lang-en">English</button>
+    </div>
+
+    <div class="top-links">
+        <div class="menu-group">
+            <a href="index.html">首页</a>
+            <a href="thoughts.html">想法</a>
+            <a href="books.html">阅读</a>
+            <a href="products.html">我的产品</a>
+        </div>
+    </div>
+
+    <main>
+        <h1>双语功能测试</h1>
+        <p>这个页面用于测试双语切换功能是否正常工作。</p>
+        
+        <h2>测试内容</h2>
+        <ul>
+            <li>导航菜单翻译</li>
+            <li>页面标题翻译</li>
+            <li>语言切换器功能</li>
+        </ul>
+        
+        <p>当前语言: <span id="current-lang">中文</span></p>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 岳铭. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentLang = getCurrentLanguage();
+            document.getElementById('current-lang').textContent = currentLang === 'zh' ? '中文' : 'English';
+            
+            // Update language switcher active state
+            document.getElementById('lang-zh').classList.toggle('active', currentLang === 'zh');
+            document.getElementById('lang-en').classList.toggle('active', currentLang === 'en');
+        });
+    </script>
+</body>
+</html> 

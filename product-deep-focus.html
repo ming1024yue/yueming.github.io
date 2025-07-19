@@ -6,6 +6,7 @@
     <title>Deep Focus 深度对焦 - 产品介绍</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="translations.js"></script>
     <style>
         .product-detail { max-width: 700px; margin: 2rem auto; background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 2rem 2rem 1.5rem 2rem; }
         .product-detail img { display: block; margin: 1.5rem auto; max-width: 320px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
@@ -17,6 +18,12 @@
     </style>
 </head>
 <body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button onclick="setLanguage('zh')" id="lang-zh">中文</button>
+        <button onclick="setLanguage('en')" id="lang-en">English</button>
+    </div>
+
     <div class="top-links">
         <div class="menu-group">
             <a href="index.html">首页</a>
@@ -174,6 +181,17 @@
     }
     </style>
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Update language switcher active state
+            const currentLang = getCurrentLanguage();
+            const zhBtn = document.getElementById('lang-zh');
+            const enBtn = document.getElementById('lang-en');
+            if (zhBtn && enBtn) {
+                zhBtn.classList.toggle('active', currentLang === 'zh');
+                enBtn.classList.toggle('active', currentLang === 'en');
+            }
+        });
+        
         const btn = document.getElementById('show-alipay-float');
         const qr = document.getElementById('alipay-qr-float');       btn.onclick = function() {
             qr.style.display = qr.style.display === 'block' ? 'none' : 'block';
