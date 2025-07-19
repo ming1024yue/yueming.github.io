@@ -100,7 +100,7 @@
     </div>
     <main>
         <section class="products-showcase">
-            <h2>我的产品</h2>
+            <h2 data-translate="products.title">我的产品</h2>
            
             <div class="products-list">
                 <div class="product-card">
@@ -117,7 +117,7 @@
                 </div>
                 
                 <div class="product-card">
-                    <img src="images/product/wordzen.png" alt="WordZen封面">
+                    <img src="images/product/wordZen.png" alt="WordZen封面">
                     <div class="product-info">
                         <h3>WordZen 单词禅</h3>
                         <p>一款专注于学习单词的App，像修禅一样学习单词。</p>
@@ -276,6 +276,9 @@
                 zhBtn.classList.toggle('active', currentLang === 'zh');
                 enBtn.classList.toggle('active', currentLang === 'en');
             }
+            
+            // Update page content based on current language
+            updatePageContent();
         });
         
         const btn = document.getElementById('show-alipay-float');

@@ -231,6 +231,13 @@ function updatePageSpecificContent() {
         const title = document.querySelector('#books h2');
         if (title) title.textContent = translate('books.title');
         
+        // Update elements with data-translate attribute
+        const translatableElements = document.querySelectorAll('[data-translate]');
+        translatableElements.forEach(element => {
+            const key = element.getAttribute('data-translate');
+            element.textContent = translate(key);
+        });
+        
         // Update book statuses
         const statusElements = document.querySelectorAll('.book-status');
         statusElements.forEach(status => {
@@ -338,6 +345,13 @@ function updatePageSpecificContent() {
         // Products page
         const title = document.querySelector('.products-showcase h2');
         if (title) title.textContent = translate('products.title');
+        
+        // Update elements with data-translate attribute
+        const translatableElements = document.querySelectorAll('[data-translate]');
+        translatableElements.forEach(element => {
+            const key = element.getAttribute('data-translate');
+            element.textContent = translate(key);
+        });
         
         // Update Deep Focus product
         const deepFocusTitle = document.querySelector('.product-card h3');

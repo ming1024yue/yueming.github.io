@@ -44,7 +44,7 @@
 
     <main>
         <section id="books">
-            <h2>阅读列表</h2>
+            <h2 data-translate="books.title">阅读列表</h2>
             <ul class="book-list">
                 <li>
                     <div class="book-info">
@@ -148,6 +148,9 @@
                 zhBtn.classList.toggle('active', currentLang === 'zh');
                 enBtn.classList.toggle('active', currentLang === 'en');
             }
+            
+            // Update page content based on current language
+            updatePageContent();
             
             const bookList = document.querySelector('.book-list');
             const books = Array.from(bookList.children);
