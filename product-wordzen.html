@@ -3,84 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的产品</title>
+    <title>WordZen 单词禅 - 产品介绍</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="translations.js"></script>
     <style>
-        .products-showcase {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
-        .products-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            justify-content: center;
-        }
-        .product-card {
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-            width: 300px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        .product-card:hover {
-            transform: translateY(-8px) scale(1.03);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-        }
-        .product-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }
-        .product-info {
-            padding: 1.2rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .product-tags {
-            margin: 0.5rem 0;
-        }
-        .tag {
-            display: inline-block;
-            background: #f0f4fa;
-            color: #3a6ea5;
-            border-radius: 12px;
-            padding: 0.2em 0.8em;
-            font-size: 0.85em;
-            margin-right: 0.5em;
-        }
-        .product-link {
-            margin-top: 1rem;
-            color: #fff;
-            background: linear-gradient(90deg, #3a6ea5, #5f9ea0);
-            padding: 0.5em 1.2em;
-            border-radius: 8px;
-            text-decoration: none;
-            text-align: center;
-            transition: background 0.2s;
-        }
-        .product-link:hover {
-            background: linear-gradient(90deg, #5f9ea0, #3a6ea5);
-        }
-        @media (max-width: 700px) {
-            .products-list {
-                flex-direction: column;
-                gap: 1.2rem;
-                align-items: center;
-            }
-            .product-card {
-                width: 95vw;
-                max-width: 360px;
-            }
-        }
+        .product-detail { max-width: 700px; margin: 2rem auto; background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 2rem 2rem 1.5rem 2rem; }
+        .product-detail img { display: block; margin: 1.5rem auto; max-width: 320px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+        .product-detail h2 { margin-top: 0; }
+        .product-detail ul { margin: 1rem 0 1.5rem 1.2rem; }
+        .product-link { display: inline-block; color: #fff; background: linear-gradient(90deg, #3a6ea5, #5f9ea0); padding: 0.5em 1.2em; border-radius: 8px; text-decoration: none; text-align: center; transition: background 0.2s; margin-top: 1rem; }
+        .product-link:hover { background: linear-gradient(90deg, #5f9ea0, #3a6ea5); }
+        @media (max-width: 700px) { .product-detail { padding: 1rem 0.5rem; } }
     </style>
 </head>
 <body>
@@ -99,48 +33,28 @@
         </div>
     </div>
     <main>
-        <section class="products-showcase">
-            <h2>我的产品</h2>
-           
-            <div class="products-list">
-                <div class="product-card">
-                    <img src="images/product/deep_focus.png" alt="Deep Focus封面">
-                    <div class="product-info">
-                        <h3>Deep Focus 深度对焦</h3>
-                        <p>一款帮助你高效专注、提升生产力的极简 App。</p>
-                        <div class="product-tags">
-                            <span class="tag">App</span>
-                            <span class="tag">效率</span>
-                        </div>
-                        <a href="product-deep-focus.html" class="product-link">了解更多</a>
-                    </div>
-                </div>
-                
-                <div class="product-card">
-                    <img src="images/product/wordzen.png" alt="WordZen封面">
-                    <div class="product-info">
-                        <h3>WordZen 单词禅</h3>
-                        <p>一款专注于学习单词的App，像修禅一样学习单词。</p>
-                        <div class="product-tags">
-                            <span class="tag">App</span>
-                            <span class="tag">学习</span>
-                        </div>
-                        <a href="product-wordzen.html" class="product-link">了解更多</a>
-                    </div>
-                </div>
-            </div>
+        <section class="product-detail">
+            <h2>WordZen 单词禅</h2>
+            <img src="images/product/wordzen.png" alt="WordZen封面">
+            <p>学习单词就像修禅一样，需要专注和坚持。WordZen帮助你以最纯粹的方式学习单词。</p>
+            <ul>
+                <li>每日只学习少量精选单词</li>
+                <li>禅意界面设计，减少干扰</li>
+                <li>支持iOS17+, 已上线App store</li>
+            </ul>
+            <a href="https://apps.apple.com/cn/app/id1234567890" class="product-link" target="_blank">前往 App Store 下载</a>
         </section>
     </main>
     <footer>
+        
         <p>&copy; 2025 岳铭. All rights reserved.</p>
     </footer>
     <div class="support-coffee-float">
         <img id="show-alipay-float" class="coffee-btn-img" src="images/buymecoffee.png" alt="Buy Me a Coffee" style="width:240px; height:56px; border-radius:28px; box-shadow:0 2px 8px rgba(0,0,0,0.13); cursor:pointer; background:#fff; object-fit:cover;">
         <div id="alipay-qr-float" class="coffee-qr-card">
             <img src="images/ai_tools.png" alt="支付宝支持二维码" class="qr-code-img" style="cursor: pointer;">
-            <div class="coffee-thank">如果你喜欢我的作品，
-                欢迎自愿打赏一杯咖啡的钱（建议不超过 10 元）。
-                小小支持，大大鼓励</div>
+            <div class="coffee-thank">如果你喜欢我的作品，欢迎自愿打赏一杯咖啡的钱（建议不超过 10 元）。
+                小小支持，大大鼓励！</div>
         </div>
     </div>
     
@@ -240,7 +154,7 @@
         right: 1rem;
         top: 0.5rem;
         color: #aaa;
-        font-size: 2rem;
+        font-size: 2.5rem;
         font-weight: bold;
         cursor: pointer;
         transition: color 0.2s;
@@ -258,7 +172,7 @@
     @media (max-width: 700px) {
         .qr-modal-content {
             margin: 10% auto;
-            padding: 1.05rem;
+            padding: 1.5rem;
             width: 95%;
         }
         .qr-modal-img {

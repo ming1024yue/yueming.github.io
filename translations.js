@@ -51,6 +51,14 @@ const translations = {
         'products.deepfocus.feature2': '格子化追踪你的进步',
         'products.deepfocus.feature3': '支持iOS17+, 已上线App store',
         'products.deepfocus.download': '前往 App Store 下载',
+        'products.wordzen.title': 'WordZen 单词禅',
+        'products.wordzen.description': '一款专注于学习单词的App，像修禅一样学习单词。',
+        'products.wordzen.description.detail': '学习单词就像修禅一样，需要专注和坚持。WordZen帮助你以最纯粹的方式学习单词。',
+        'products.wordzen.feature1': '每日只学习少量精选单词',
+        'products.wordzen.feature2': '禅意界面设计，减少干扰',
+        'products.wordzen.feature3': '支持iOS17+, 已上线App store',
+        'products.wordzen.download': '前往 App Store 下载',
+        'products.wordzen.cover.alt': 'WordZen封面',
         
         // Footer
         'footer.copyright': '© 2025 岳铭. All rights reserved.',
@@ -118,6 +126,14 @@ const translations = {
         'products.deepfocus.feature2': 'Grid-based progress tracking',
         'products.deepfocus.feature3': 'Supports iOS17+, available on App Store',
         'products.deepfocus.download': 'Download on App Store',
+        'products.wordzen.title': 'WordZen',
+        'products.wordzen.description': 'A vocabulary learning app that focuses on learning words like practicing Zen meditation.',
+        'products.wordzen.description.detail': 'Learning vocabulary is like practicing Zen - it requires focus and persistence. WordZen helps you learn words in the purest way.',
+        'products.wordzen.feature1': 'Learn only a few carefully selected words each day',
+        'products.wordzen.feature2': 'Zen-inspired interface design to reduce distractions',
+        'products.wordzen.feature3': 'Supports iOS17+, available on App Store',
+        'products.wordzen.download': 'Download on App Store',
+        'products.wordzen.cover.alt': 'WordZen cover',
         
         // Footer
         'footer.copyright': '© 2025 Yue Ming. All rights reserved.',
@@ -336,6 +352,19 @@ function updatePageSpecificContent() {
         const deepFocusImg = document.querySelector('.product-card img');
         if (deepFocusImg) deepFocusImg.alt = translate('products.deepfocus.cover.alt');
         
+        // Update WordZen product
+        const wordZenTitle = document.querySelectorAll('.product-card h3')[1];
+        if (wordZenTitle) wordZenTitle.textContent = translate('products.wordzen.title');
+        
+        const wordZenDesc = document.querySelectorAll('.product-card p')[1];
+        if (wordZenDesc) wordZenDesc.textContent = translate('products.wordzen.description');
+        
+        const wordZenLink = document.querySelectorAll('.product-link')[1];
+        if (wordZenLink) wordZenLink.textContent = translate('products.deepfocus.learnmore');
+        
+        const wordZenImg = document.querySelectorAll('.product-card img')[1];
+        if (wordZenImg) wordZenImg.alt = translate('products.wordzen.cover.alt');
+        
         // Update product tags
         const productTags = document.querySelectorAll('.product-tags .tag');
         productTags.forEach(tag => {
@@ -346,6 +375,10 @@ function updatePageSpecificContent() {
                 tag.textContent = currentLang === 'zh' ? '效率' : 'Productivity';
             } else if (tagText === 'Productivity') {
                 tag.textContent = currentLang === 'zh' ? '效率' : 'Productivity';
+            } else if (tagText === '学习') {
+                tag.textContent = currentLang === 'zh' ? '学习' : 'Learning';
+            } else if (tagText === 'Learning') {
+                tag.textContent = currentLang === 'zh' ? '学习' : 'Learning';
             }
         });
         
@@ -379,6 +412,37 @@ function updatePageSpecificContent() {
         
         const productImg = document.querySelector('.product-detail img');
         if (productImg) productImg.alt = translate('products.deepfocus.cover.alt');
+        
+        // Update support section
+        const supportText = document.querySelector('.coffee-thank');
+        if (supportText) supportText.textContent = translate('support.title');
+        
+        const qrImg = document.querySelector('.coffee-qr-card img');
+        if (qrImg) qrImg.alt = translate('support.qr.alt');
+        
+        const buyCoffeeImg = document.querySelector('.coffee-btn-img');
+        if (buyCoffeeImg) buyCoffeeImg.alt = translate('support.buycoffee.alt');
+        
+    } else if (path.includes('product-wordzen.html')) {
+        // WordZen product detail page
+        const title = document.querySelector('.product-detail h2');
+        if (title) title.textContent = translate('products.wordzen.title');
+        
+        const description = document.querySelector('.product-detail p');
+        if (description) description.textContent = translate('products.wordzen.description.detail');
+        
+        const features = document.querySelectorAll('.product-detail ul li');
+        if (features.length >= 3) {
+            features[0].textContent = translate('products.wordzen.feature1');
+            features[1].textContent = translate('products.wordzen.feature2');
+            features[2].textContent = translate('products.wordzen.feature3');
+        }
+        
+        const downloadLink = document.querySelector('.product-link');
+        if (downloadLink) downloadLink.textContent = translate('products.wordzen.download');
+        
+        const productImg = document.querySelector('.product-detail img');
+        if (productImg) productImg.alt = translate('products.wordzen.cover.alt');
         
         // Update support section
         const supportText = document.querySelector('.coffee-thank');
