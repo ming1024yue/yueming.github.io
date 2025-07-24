@@ -1577,7 +1577,7 @@ h1, h2, h3 {
 /* Resume Header Styles */
 .resume-header {
     text-align: left;
-    padding: 4.5rem 1rem 0.5rem 1rem;
+    padding: 8rem 1rem 0.5rem 1rem;
     max-width: 800px;
     margin: 0 auto;
 }
