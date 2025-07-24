@@ -193,7 +193,7 @@ footer p {
 .language-switcher {
     position: fixed;
     top: 120px;
-    left: 20px;
+    right: 20px;
     z-index: 1000;
     background: var(--bg-color);
     border: 1px solid var(--border-color);
@@ -248,7 +248,7 @@ footer p {
 @media (max-width: 768px) {
     .language-switcher {
         top: 80px;
-        left: 10px;
+        right: 10px;
         padding: 2px;
         gap: 2px;
         max-width: none;
