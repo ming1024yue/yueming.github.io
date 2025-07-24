@@ -139,6 +139,12 @@ article, .book {
     margin-bottom: 1rem;
 }
 
+/* Connect Section */
+#connect {
+    margin-top: -1rem;
+    padding-bottom: 1rem;
+}
+
 /* Social Links */
 .social-links {
     display: flex;
@@ -1566,5 +1572,72 @@ h1, h2, h3 {
 .knowledge-base-link:hover {
     background-color: var(--hover-bg);
     transform: translateY(-2px);
+}
+
+/* Resume Header Styles */
+.resume-header {
+    text-align: left;
+    padding: 3.5rem 1rem 0.5rem 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.resume-header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    color: var(--header-color);
+}
+
+.resume-header .intro {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--secondary-text);
+    margin-bottom: 0;
+    max-width: 600px;
+}
+
+.resume-header .intro-list {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    margin: 0;
+    padding-left: 1.5rem;
+    max-width: 700px;
+}
+
+.resume-header .intro-list li {
+    margin-bottom: 0.5rem;
+}
+
+/* Resume Content Styles */
+.resume-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .resume-header h1 {
+        font-size: 1.8rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .resume-header {
+        padding: 2.5rem 1rem 0.5rem 1rem;
+    }
+    
+    .resume-header .intro {
+        font-size: 1rem;
+    }
+    
+    .resume-header .intro-list {
+        font-size: 0.9rem;
+        padding-left: 1.2rem;
+    }
+    
+    .resume-header .intro-list li {
+        margin-bottom: 0.4rem;
+    }
 }
 

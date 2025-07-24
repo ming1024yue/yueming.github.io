@@ -1,15 +1,22 @@
 const translations = {
     zh: {
         // Navigation
-        'nav.home': '首页',
+        'nav.aboutme': '关于我',
         'nav.thoughts': '想法',
         'nav.books': '阅读',
         'nav.products': '我的产品',
         
-        // Home page
-        'home.title': '岳铭',
-        'home.bio': '致力于研究方法/工具，思维方式，让每个人都能够学会任何事情，创造属于自己的价值。',
-        'home.profile.alt': '岳铭的照片',
+        // aboutme page
+        'aboutme.title': '岳铭',
+        'aboutme.bio': '致力于研究方法/工具，思维方式，让每个人都能够学会任何事情，创造属于自己的价值。',
+        'aboutme.profile.alt': '岳铭的照片',
+        'aboutme.intro.education': '我目前从事教育工作。教授中学生数学，物理，计算机（主要是国际学科）。',
+        'aboutme.intro.content': '我是一名Up主（下方的按钮访问bilibili），主要分享AI工具的使用',
+        'aboutme.intro.developer': '同时我还是一名独立开发者，开发游戏，网站，App及其他有意思的内容。',
+        'aboutme.intro.experience': '我之前有游戏引擎开发的经历。我热爱编程!',
+        'aboutme.intro.goal': '我的目标是创立一种全新的教育/学习体系，让每个人都能够享受学习，创造价值',
+        'aboutme.intro.hobbies': '我喜欢阅读和户外运动,以及各种口味的饮料（咖啡，茶，汽水...)',
+        'aboutme.intro.belief': '我不是无神论者',
         
         // Thoughts page
         'thoughts.title': '想法',
@@ -76,15 +83,22 @@ const translations = {
     
     en: {
         // Navigation
-        'nav.home': 'Home',
+        'nav.aboutme': 'about me',
         'nav.thoughts': 'Thoughts',
         'nav.books': 'Books',
         'nav.products': 'Products',
         
-        // Home page
-        'home.title': 'Yue Ming',
-        'home.bio': 'Dedicated to researching methods/tools and ways of thinking, enabling everyone to learn anything and create their own value.',
-        'home.profile.alt': 'Yue Ming\'s photo',
+        // aboutme page
+        'aboutme.title': 'Yue, Ming',
+        'aboutme.bio': 'Dedicated to researching methods/tools and ways of thinking, enabling everyone to learn anything and create their own value.',
+        'aboutme.profile.alt': 'Yue Ming\'s photo',
+        'aboutme.intro.education': 'I currently work in education field, teaching mathematics, physics, and computer science to middle school students (mainly international curricula).',
+        'aboutme.intro.content': 'I am a content creator (you can access my bilibili through the button below), mainly sharing the use of AI tools.',
+        'aboutme.intro.developer': 'I am also an indie developer, creating games, websites, apps, and other interesting content.',
+        'aboutme.intro.experience': 'I have previous experience in game engine development. I love programming!',
+        'aboutme.intro.goal': 'My goal is to create a completely new education/learning system that allows everyone to enjoy learning and create value.',
+        'aboutme.intro.hobbies': 'I enjoy reading and outdoor sports, as well as beverages of all kinds (coffee, tea, soda...).',
+        'aboutme.intro.belief': 'I am <b>not</b> an atheist.',
         
         // Thoughts page
         'thoughts.title': 'Thoughts',
@@ -182,7 +196,7 @@ function updatePageContent() {
     navLinks.forEach(link => {
         const href = link.getAttribute('href');
         if (href === 'index.html') {
-            link.textContent = translate('nav.home');
+            link.textContent = translate('nav.aboutme');
         } else if (href === 'thoughts.html') {
             link.textContent = translate('nav.thoughts');
         } else if (href === 'books.html') {
@@ -207,15 +221,43 @@ function updatePageSpecificContent() {
     const path = window.location.pathname;
     
     if (path.includes('index.html') || path === '/') {
-        // Home page
+        // aboutme page
         const title = document.querySelector('h1');
-        if (title) title.textContent = translate('home.title');
+        if (title) title.textContent = translate('aboutme.title');
         
         const bio = document.querySelector('.bio p');
-        if (bio) bio.textContent = translate('home.bio');
+        if (bio) bio.textContent = translate('aboutme.bio');
         
         const profileImg = document.querySelector('.profile-image img');
-        if (profileImg) profileImg.alt = translate('home.profile.alt');
+        if (profileImg) profileImg.alt = translate('aboutme.profile.alt');
+        
+        // Update intro list
+        const introList = document.querySelector('.intro-list');
+        if (introList) {
+            const listItems = introList.querySelectorAll('li');
+            if (currentLang === 'en') {
+                if (listItems.length >= 7) {
+                    listItems[0].textContent = translate('aboutme.intro.education');
+                    listItems[1].textContent = translate('aboutme.intro.content');
+                    listItems[2].textContent = translate('aboutme.intro.developer');
+                    listItems[3].textContent = translate('aboutme.intro.experience');
+                    listItems[4].textContent = translate('aboutme.intro.goal');
+                    listItems[5].textContent = translate('aboutme.intro.hobbies');
+                    listItems[6].innerHTML = translate('aboutme.intro.belief');
+                }
+            } else {
+                // Reset to Chinese content
+                if (listItems.length >= 7) {
+                    listItems[0].textContent = '我目前从事教育工作。教授中学生数学，物理，计算机（主要是国际学科）。';
+                    listItems[1].textContent = '我是一名Up主（下方的按钮访问bilibili），主要分享AI工具的使用';
+                    listItems[2].textContent = '同时我还是一名独立开发者，开发游戏，网站，App及其他有意思的内容。';
+                    listItems[3].textContent = '我之前有游戏引擎开发的经历。我热爱编程!';
+                    listItems[4].textContent = '我的目标是创立一种全新的教育/学习体系，让每个人都能够享受学习，创造价值';
+                    listItems[5].textContent = '我喜欢阅读和户外运动,以及各种口味的饮料（咖啡，茶，汽水...)';
+                    listItems[6].innerHTML = '我<b>不是</b>无神论者';
+                }
+            }
+        }
         
     } else if (path.includes('thoughts.html')) {
         // Thoughts page
