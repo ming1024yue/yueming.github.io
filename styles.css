@@ -141,7 +141,7 @@ article, .book {
 
 /* Connect Section */
 #connect {
-    margin-top: -1rem;
+    margin-top: -2.5rem;
     padding-bottom: 1rem;
 }
 
@@ -1577,7 +1577,7 @@ h1, h2, h3 {
 /* Resume Header Styles */
 .resume-header {
     text-align: left;
-    padding: 3.5rem 1rem 0.5rem 1rem;
+    padding: 4.5rem 1rem 0.5rem 1rem;
     max-width: 800px;
     margin: 0 auto;
 }
@@ -1624,7 +1624,7 @@ h1, h2, h3 {
     }
     
     .resume-header {
-        padding: 2.5rem 1rem 0.5rem 1rem;
+        padding: 3rem 1rem 0.5rem 1rem;
     }
     
     .resume-header .intro {
