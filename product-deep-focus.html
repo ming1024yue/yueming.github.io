@@ -49,6 +49,7 @@
         
         <p>&copy; 2025 岳铭. All rights reserved.</p>
     </footer>
+    <!--
     <div class="support-coffee-float">
         <img id="show-alipay-float" class="coffee-btn-img" src="images/buymecoffee.png" alt="Buy Me a Coffee" style="width:240px; height:56px; border-radius:28px; box-shadow:0 2px 8px rgba(0,0,0,0.13); cursor:pointer; background:#fff; object-fit:cover;">
         <div id="alipay-qr-float" class="coffee-qr-card">
@@ -58,12 +59,13 @@
         </div>
     </div>
     
-    <!-- 二维码放大模态框 -->
+    <!-- 二维码放大模态框 
     <div id="qr-modal" class="qr-modal">
         <div class="qr-modal-content">
             <span class="qr-close">&times;</span>
             <img src="images/ai_tools.png" alt="支付宝支持二维码" class="qr-modal-img">        </div>
     </div>
+-->
     <style>
     .support-coffee-float {
         position: fixed;
@@ -192,6 +194,7 @@
             }
         });
         
+       
         const btn = document.getElementById('show-alipay-float');
         const qr = document.getElementById('alipay-qr-float');       btn.onclick = function() {
             qr.style.display = qr.style.display === 'block' ? 'none' : 'block';
@@ -231,6 +234,7 @@
                 qrModal.style.display = 'none';
             }
         });
+        
     </script>
 </body>
 </html> 
