@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="img-src 'self' data: https: http:;">
+    <title>Research Detail</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="translations.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        .research-detail {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            color: var(--secondary-text);
+            text-decoration: none;
+            margin-bottom: 3rem;
+            font-weight: 400;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
+        }
+
+        .back-link:hover {
+            color: var(--text-color);
+            border-bottom-color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .research-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 4rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .research-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .research-header > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .research-header.has-image {
+            color: white;
+        }
+
+        .research-header.has-image .research-author,
+        .research-header.has-image .research-date {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .research-header.has-image h1 {
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Default header without image */
+        .research-header:not(.has-image) {
+            background: var(--hover-bg);
+            padding: 2rem 0;
+        }
+
+        .research-header:not(.has-image)::before {
+            display: none;
+        }
+
+        /* Dark theme adjustments */
+        [data-theme="dark"] .research-header:not(.has-image) {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        [data-theme="dark"] .research-image {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .research-header h1 {
+            font-size: 2.5rem;
+            font-weight: 200;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+            line-height: 1.2;
+            letter-spacing: 0.5px;
+        }
+
+        .research-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .research-author {
+            color: var(--secondary-text);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .research-author::before {
+            content: '\f007';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 0.7rem;
+        }
+
+
+
+        .research-date {
+            color: var(--secondary-text);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .research-date::before {
+            content: '\f073';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 0.7rem;
+        }
+
+        .research-content {
+            line-height: 1.8;
+            color: var(--text-color);
+            background: var(--thought-bg);
+            padding: 2rem 0;
+        }
+
+        .research-content h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            margin: 2.5rem 0 1.5rem;
+            color: var(--text-color);
+            position: relative;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .research-content h2 {
+            font-size: 1.6rem;
+            font-weight: 400;
+            margin: 2rem 0 1rem;
+            color: var(--text-color);
+        }
+
+        .research-content h3 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin: 1.5rem 0 1rem;
+            color: var(--text-color);
+        }
+
+        .research-content h4 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 1.2rem 0 0.8rem;
+            color: var(--text-color);
+        }
+
+        .research-content p {
+            margin: 1.2rem 0;
+            text-align: justify;
+        }
+
+        .research-content ul, 
+        .research-content ol {
+            margin: 1.2rem 0;
+            padding-left: 2rem;
+        }
+
+        .research-content li {
+            margin: 0.6rem 0;
+        }
+
+        .research-content blockquote {
+            border-left: 2px solid var(--text-color);
+            margin: 2rem 0;
+            padding: 1rem 1.5rem;
+            background: var(--hover-bg);
+            color: var(--secondary-text);
+            font-style: italic;
+        }
+
+        .research-content code {
+            background: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 2px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9em;
+            border: 1px solid var(--border-color);
+        }
+
+        .research-content pre {
+            background: var(--code-bg);
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .research-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 2.5rem auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .research-content img:hover {
+            transform: scale(1.02);
+        }
+
+        .research-content strong {
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .research-content em {
+            color: var(--secondary-text);
+        }
+
+        /* Table styles */
+        .research-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .research-content th,
+        .research-content td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .research-content th {
+            background: var(--hover-bg);
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .research-content tr:hover {
+            background: var(--hover-bg);
+        }
+
+        /* Progress indicator */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--text-color);
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+
+        /* Interactive section styles */
+        .interactive-section {
+            margin: 3rem 0;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .interactive-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-color);
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .interactive-title::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 2px;
+            background: var(--text-color);
+            margin: 0 auto 1rem;
+        }
+
+        .interactive-container {
+            display: flex;
+            gap: 3rem;
+            align-items: flex-start;
+            margin-bottom: 3rem;
+        }
+
+        .robot-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            position: relative;
+        }
+
+        .robot-svg {
+            width: 350px;
+            height: 500px;
+            margin-bottom: 1rem;
+        }
+
+        .robot-svg:hover {
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }
+
+        .robot-part {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            stroke-width: 2;
+            stroke: var(--text-color);
+        }
+
+        .robot-part:hover {
+            fill-opacity: 0.7;
+            stroke-width: 3;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .robot-part.active {
+            fill-opacity: 0.8;
+            stroke-width: 3;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+        }
+
+        [data-theme="dark"] .robot-part {
+            stroke: #ccc;
+        }
+
+        .info-panel {
+            flex: 1;
+            background: var(--hover-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            min-height: 400px;
+            overflow-y: auto;
+            max-height: 600px;
+        }
+
+        .info-panel::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .info-panel::-webkit-scrollbar-track {
+            background: var(--bg-color);
+            border-radius: 3px;
+        }
+
+        .info-panel::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        .info-panel::-webkit-scrollbar-thumb:hover {
+            background: var(--text-color);
+        }
+
+        .info-panel h3 {
+            margin-top: 0;
+            color: var(--text-color);
+            border-bottom: 2px solid var(--text-color);
+            padding-bottom: 10px;
+        }
+
+        .company-list {
+            margin-top: 20px;
+        }
+
+        .company-category {
+            margin-bottom: 25px;
+        }
+
+        .company-category h4 {
+            color: var(--text-color);
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .company-item {
+            background: var(--bg-color);
+            border-left: 3px solid var(--text-color);
+            border-radius: 0 4px 4px 0;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .company-item:hover {
+            border-left-color: var(--text-color);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            transform: translateX(4px);
+        }
+
+        .company-name {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 4px;
+        }
+
+        .company-desc {
+            font-size: 0.85em;
+            color: var(--secondary-text);
+            line-height: 1.4;
+        }
+
+        .default-info {
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .default-info h3 {
+            margin-top: 0;
+            color: var(--text-color);
+            border-bottom: 2px solid var(--text-color);
+            padding-bottom: 10px;
+        }
+
+        .default-info p {
+            line-height: 1.6;
+            color: var(--secondary-text);
+            margin: 1rem 0;
+        }
+
+        .legend {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--hover-bg);
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .legend h4 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            font-size: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            color: var(--secondary-text);
+        }
+
+        .legend-color {
+            width: 18px;
+            height: 18px;
+            border-radius: 3px;
+            margin-right: 12px;
+            border: 1px solid var(--text-color);
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .research-header {
+                padding: 3rem 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .research-header h1 {
+                font-size: 2rem;
+            }
+            
+            .research-meta {
+                gap: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .research-author {
+                font-size: 0.8rem;
+            }
+            
+            .research-detail {
+                padding: 1rem;
+            }
+
+            .research-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .research-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .research-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .back-link {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .interactive-section {
+                margin: 2rem 0;
+                padding: 1.5rem 0;
+            }
+
+            .interactive-title {
+                font-size: 1.2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .interactive-container {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .robot-container {
+                flex: 1;
+                width: 100%;
+            }
+
+            .robot-svg {
+                width: 280px;
+                height: 380px;
+            }
+
+            .info-panel {
+                min-height: 300px;
+                padding: 1.5rem;
+            }
+
+            .legend {
+                margin-top: 1.5rem;
+                padding: 1rem;
+            }
+
+            .legend-item {
+                font-size: 0.8rem;
+                margin-bottom: 8px;
+            }
+
+            .legend-color {
+                width: 14px;
+                height: 14px;
+                margin-right: 8px;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button onclick="setLanguage('zh')" id="lang-zh">中文</button>
+        <button onclick="setLanguage('en')" id="lang-en">English</button>
+    </div>
+
+    <div class="top-links">
+        <div class="menu-group">
+            <a href="index.html">关于我</a>
+            <a href="thoughts.html">想法</a>
+            <a href="books.html">阅读</a>
+            <a href="research.html">研究</a>
+            <a href="products.html">我的产品</a>
+        </div>
+    </div>
+
+    <!-- Reading progress bar -->
+    <div class="reading-progress" id="reading-progress"></div>
+
+    <main>
+        <div class="research-detail"></div>
+            <a href="research.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                <span>返回研究列表</span>
+            </a>
+            
+            <div class="research-header">
+                <h1 id="research-title">研究标题</h1>
+                <div class="research-meta">
+                    <div class="research-author" id="research-author">岳铭</div>
+                    <div class="research-date">
+                        <span id="research-date">2025-01-01</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Interactive Section for Humanoid Research -->
+            <div class="interactive-section" id="interactive-section" style="display: none;">
+                <h2 class="interactive-title">产业链交互式分析 - 点击机器人部位探索</h2>
+                <div class="interactive-container">
+                    <div class="robot-container">
+                        <svg class="robot-svg" viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+                            <!-- 头部 (大脑系统) -->
+                            <circle cx="200" cy="80" r="50" fill="#e8f4f8" class="robot-part" data-part="brain" />
+                            <circle cx="185" cy="70" r="5" fill="#333" />
+                            <circle cx="215" cy="70" r="5" fill="#333" />
+                            <path d="M 180 90 Q 200 100 220 90" stroke="#333" stroke-width="2" fill="none" />
+                            
+                            <!-- 颈部 -->
+                            <rect x="190" y="130" width="20" height="30" fill="#f0f0f0" stroke="#333" stroke-width="2" />
+                            
+                            <!-- 躯干 -->
+                            <rect x="150" y="160" width="100" height="120" rx="10" fill="#f5f5f5" stroke="#333" stroke-width="2" />
+                            
+                            <!-- 胸部传感器区域 (视觉系统) -->
+                            <rect x="170" y="180" width="60" height="40" rx="5" fill="#f0f8e8" class="robot-part" data-part="vision" stroke="#333" stroke-width="2" />
+                            <circle cx="185" cy="200" r="8" fill="#333" />
+                            <circle cx="215" cy="200" r="8" fill="#333" />
+                            
+                            <!-- 腹部 (动力系统/电池) -->
+                            <rect x="170" y="230" width="60" height="30" rx="5" fill="#fff8e8" class="robot-part" data-part="power" stroke="#333" stroke-width="2" />
+                            
+                            <!-- 左臂 -->
+                            <rect x="100" y="170" width="50" height="20" rx="10" fill="#f8f0f8" class="robot-part" data-part="actuator" stroke="#333" stroke-width="2" />
+                            <rect x="80" y="190" width="20" height="60" rx="10" fill="#f8f0f8" class="robot-part" data-part="actuator" stroke="#333" stroke-width="2" />
+                            <circle cx="90" cy="260" r="15" fill="#f8f0f8" class="robot-part" data-part="sensor" stroke="#333" stroke-width="2" />
+                            
+                            <!-- 右臂 -->
+                            <rect x="250" y="170" width="50" height="20" rx="10" fill="#f8f0f8" class="robot-part" data-part="actuator" stroke="#333" stroke-width="2" />
+                            <rect x="300" y="190" width="20" height="60" rx="10" fill="#f8f0f8" class="robot-part" data-part="actuator" stroke="#333" stroke-width="2" />
+                            <circle cx="310" cy="260" r="15" fill="#f8f0f8" class="robot-part" data-part="sensor" stroke="#333" stroke-width="2" />
+                            
+                            <!-- 腰部 (控制系统) -->
+                            <rect x="160" y="280" width="80" height="30" rx="5" fill="#f8f8e8" class="robot-part" data-part="control" stroke="#333" stroke-width="2" />
+                            
+                            <!-- 左腿 -->
+                            <rect x="160" y="310" width="25" height="80" rx="5" fill="#e8f8f0" class="robot-part" data-part="structure" stroke="#333" stroke-width="2" />
+                            <rect x="160" y="390" width="25" height="60" rx="5" fill="#e8f8f0" class="robot-part" data-part="structure" stroke="#333" stroke-width="2" />
+                            <ellipse cx="172" cy="470" rx="20" ry="10" fill="#e8f8f0" class="robot-part" data-part="structure" stroke="#333" stroke-width="2" />
+                            
+                            <!-- 右腿 -->
+                            <rect x="215" y="310" width="25" height="80" rx="5" fill="#e8f8f0" class="robot-part" data-part="structure" stroke="#333" stroke-width="2" />
+                            <rect x="215" y="390" width="25" height="60" rx="5" fill="#e8f8f0" class="robot-part" data-part="structure" stroke="#333" stroke-width="2" />
+                            <ellipse cx="227" cy="470" rx="20" ry="10" fill="#e8f8f0" class="robot-part" data-part="structure" stroke="#333" stroke-width="2" />
+                            
+                            <!-- 通信天线 -->
+                            <line x1="200" y1="30" x2="200" y2="10" stroke="#333" stroke-width="3" class="robot-part" data-part="communication" />
+                            <circle cx="200" cy="10" r="5" fill="#f0e8f8" class="robot-part" data-part="communication" stroke="#333" stroke-width="2" />
+                        </svg>
+
+                        <div class="legend">
+                            <h4>部件说明</h4>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #e8f4f8;"></div>
+                                <span>大脑系统 - AI芯片与算法</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #f0f8e8;"></div>
+                                <span>视觉系统 - 传感器与图像处理</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #fff8e8;"></div>
+                                <span>动力系统 - 电池与电源管理</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #f8f0f8;"></div>
+                                <span>驱动系统 - 电机与减速器</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #f8f8e8;"></div>
+                                <span>控制系统 - 运动规划与协调</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #e8f8f0;"></div>
+                                <span>结构系统 - 机械本体与材料</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #f0e8f8;"></div>
+                                <span>通信系统 - 连接与交互</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-panel">
+                        <div id="default-info" class="default-info">
+                            <h3>中国人形机器人产业链</h3>
+                            <p>人形机器人作为机器人技术的最高形态，代表了人工智能、机械工程、材料科学等多个领域的技术融合。</p>
+                            <p>本研究以人形机器人的核心构造为框架，深入分析中国在各个关键组件领域的产业布局、技术水平和供应链现状。</p>
+                            <p style="margin-top: 2rem; color: var(--secondary-text); font-size: 0.9rem;"><strong>💡 提示：</strong>点击左侧机器人的不同部位，查看相关产业链公司信息</p>
+                        </div>
+                        <div id="part-info" style="display: none;">
+                            <h3 id="part-title"></h3>
+                            <div id="part-content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="research-content" id="research-content">
+                <!-- Content will be loaded dynamically -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 岳铭. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Global interactive data for humanoid research
+        const partData = {
+            brain: {
+                title: "大脑系统 - AI芯片与算法",
+                categories: [
+                    {
+                        name: "芯片设计",
+                        companies: [
+                            { name: "华为海思", desc: "昇腾系列AI芯片，在端侧推理方面有较强实力" },
+                            { name: "寒武纪", desc: "专注AI芯片设计，MLU系列产品适用于机器人应用" },
+                            { name: "地平线", desc: "征程系列芯片，在边缘AI计算领域领先" },
+                            { name: "黑芝麻智能", desc: "华山系列芯片，专注自动驾驶和机器人视觉" }
+                        ]
+                    },
+                    {
+                        name: "算法与软件",
+                        companies: [
+                            { name: "商汤科技", desc: "计算机视觉算法，人体姿态识别" },
+                            { name: "旷视科技", desc: "Face++平台，人脸识别和行为分析" },
+                            { name: "百度", desc: "飞桨深度学习框架，Apollo自动驾驶技术" },
+                            { name: "腾讯", desc: "腾讯AI Lab，强化学习和机器人控制算法" }
+                        ]
+                    }
+                ]
+            },
+            vision: {
+                title: "视觉系统 - 传感器与图像处理",
+                categories: [
+                    {
+                        name: "摄像头模组",
+                        companies: [
+                            { name: "舜宇光学", desc: "全球领先的光学器件制造商" },
+                            { name: "欧菲光", desc: "摄像头模组和光学器件" },
+                            { name: "丘钛科技", desc: "摄像头模组制造" },
+                            { name: "韦尔股份", desc: "图像传感器芯片设计" }
+                        ]
+                    },
+                    {
+                        name: "激光雷达",
+                        companies: [
+                            { name: "速腾聚创", desc: "固态激光雷达技术领先" },
+                            { name: "禾赛科技", desc: "机械式和混合固态激光雷达" },
+                            { name: "华为", desc: "96线车规级激光雷达" },
+                            { name: "大疆", desc: "Livox系列激光雷达" }
+                        ]
+                    },
+                    {
+                        name: "深度摄像头",
+                        companies: [
+                            { name: "奥比中光", desc: "3D视觉感知技术" },
+                            { name: "海康威视", desc: "工业相机和视觉系统" },
+                            { name: "大华股份", desc: "视频监控和机器视觉" }
+                        ]
+                    }
+                ]
+            },
+            power: {
+                title: "动力系统 - 电池与电源管理",
+                categories: [
+                    {
+                        name: "电池制造",
+                        companies: [
+                            { name: "宁德时代", desc: "全球最大的动力电池制造商" },
+                            { name: "比亚迪", desc: "磷酸铁锂电池技术领先" },
+                            { name: "国轩高科", desc: "专注动力电池和储能电池" },
+                            { name: "亿纬锂能", desc: "消费电池和动力电池" }
+                        ]
+                    },
+                    {
+                        name: "电源管理",
+                        companies: [
+                            { name: "圣邦股份", desc: "模拟芯片和电源管理IC" },
+                            { name: "韦尔股份", desc: "电源管理和信号链芯片" },
+                            { name: "艾为电子", desc: "音频和电源管理芯片" },
+                            { name: "芯朋微", desc: "电源管理芯片设计" }
+                        ]
+                    }
+                ]
+            },
+            actuator: {
+                title: "驱动系统 - 电机与减速器",
+                categories: [
+                    {
+                        name: "伺服电机",
+                        companies: [
+                            { name: "汇川技术", desc: "工业自动化和伺服系统" },
+                            { name: "埃斯顿", desc: "机器人用伺服电机" },
+                            { name: "英威腾", desc: "变频器和伺服驱动器" },
+                            { name: "台达", desc: "伺服电机和驱动器" }
+                        ]
+                    },
+                    {
+                        name: "减速器",
+                        companies: [
+                            { name: "绿的谐波", desc: "谐波减速器领域领先" },
+                            { name: "中大力德", desc: "精密减速器制造" },
+                            { name: "双环传动", desc: "齿轮传动设备" },
+                            { name: "秦川机床", desc: "精密减速器和机床" }
+                        ]
+                    }
+                ]
+            },
+            sensor: {
+                title: "感知系统 - 多元传感器融合",
+                categories: [
+                    {
+                        name: "IMU传感器",
+                        companies: [
+                            { name: "华为海思", desc: "高精度IMU芯片" },
+                            { name: "敏芯股份", desc: "MEMS传感器设计制造" },
+                            { name: "歌尔股份", desc: "MEMS麦克风和传感器" },
+                            { name: "瑞声科技", desc: "声学和传感器解决方案" }
+                        ]
+                    },
+                    {
+                        name: "力觉传感器",
+                        companies: [
+                            { name: "柯力传感", desc: "称重和力学传感器" },
+                            { name: "中航电测", desc: "应变式传感器" },
+                            { name: "华工科技", desc: "激光和传感器技术" }
+                        ]
+                    }
+                ]
+            },
+            structure: {
+                title: "结构系统 - 机械本体与材料",
+                categories: [
+                    {
+                        name: "材料供应",
+                        companies: [
+                            { name: "中复神鹰", desc: "碳纤维材料" },
+                            { name: "光威复材", desc: "碳纤维及复合材料" },
+                            { name: "中国铝业", desc: "高强度铝合金" },
+                            { name: "万华化学", desc: "高性能聚氨酯材料" }
+                        ]
+                    },
+                    {
+                        name: "精密加工",
+                        companies: [
+                            { name: "华中数控", desc: "数控机床和加工中心" },
+                            { name: "沈阳机床", desc: "精密机床制造" },
+                            { name: "先临三维", desc: "3D打印设备和服务" },
+                            { name: "铂力特", desc: "金属3D打印技术" }
+                        ]
+                    }
+                ]
+            },
+            communication: {
+                title: "通信系统 - 连接与交互",
+                categories: [
+                    {
+                        name: "通信芯片",
+                        companies: [
+                            { name: "华为海思", desc: "5G基带和WiFi芯片" },
+                            { name: "紫光展锐", desc: "移动通信芯片" },
+                            { name: "联发科", desc: "WiFi和蓝牙芯片" },
+                            { name: "瑞昱半导体", desc: "网络通信芯片" }
+                        ]
+                    },
+                    {
+                        name: "语音交互",
+                        companies: [
+                            { name: "科大讯飞", desc: "语音识别和合成技术" },
+                            { name: "思必驰", desc: "对话式人工智能" },
+                            { name: "云知声", desc: "物联网AI芯片和算法" },
+                            { name: "出门问问", desc: "语音交互和对话AI" }
+                        ]
+                    }
+                ]
+            },
+            control: {
+                title: "控制系统 - 运动规划与协调",
+                categories: [
+                    {
+                        name: "操作系统",
+                        companies: [
+                            { name: "华为", desc: "鸿蒙OS，适用于物联网设备" },
+                            { name: "阿里巴巴", desc: "AliOS Things，物联网操作系统" },
+                            { name: "腾讯", desc: "TencentOS tiny，物联网终端操作系统" },
+                            { name: "RT-Thread", desc: "开源实时操作系统" }
+                        ]
+                    },
+                    {
+                        name: "控制算法",
+                        companies: [
+                            { name: "大疆", desc: "飞行控制和稳定算法" },
+                            { name: "优必选", desc: "人形机器人控制系统" },
+                            { name: "钢铁侠科技", desc: "外骨骼控制算法" },
+                            { name: "傅利叶智能", desc: "康复机器人控制系统" }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Set initial theme
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            
+            // Update language switcher active state
+            const currentLang = getCurrentLanguage();
+            const zhBtn = document.getElementById('lang-zh');
+            const enBtn = document.getElementById('lang-en');
+            if (zhBtn && enBtn) {
+                zhBtn.classList.toggle('active', currentLang === 'zh');
+                enBtn.classList.toggle('active', currentLang === 'en');
+            }
+
+            // Get research ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const researchId = urlParams.get('id');
+
+            // Research data (same as in research.html)
+            const researchData = {
+                'humanoid_research': {
+                    title: '中国人形机器人产业链研究',
+                    titleEn: 'China Humanoid Robot Industry Chain Research',
+                    author: '岳铭',
+                    authorEn: 'Yue Ming',
+                    date: '2025-12-15',
+                    image: 'images/research/humanoid.jpg',
+                    file: 'research/humanoid_research.md'
+                }
+            };
+
+            if (researchId && researchData[researchId]) {
+                const research = researchData[researchId];
+                
+                // Update page content
+                function updateContent() {
+                    const currentLang = getCurrentLanguage();
+                    const title = currentLang === 'zh' ? research.title : research.titleEn;
+                    const author = currentLang === 'zh' ? research.author : research.authorEn;
+                    
+                    document.getElementById('research-title').textContent = title;
+                    document.getElementById('research-author').textContent = author;
+                    document.getElementById('research-date').textContent = research.date;
+                    document.title = title;
+                    
+                    // Set background image if available
+                    const headerElement = document.querySelector('.research-header');
+                    if (research.image) {
+                        // Test if image loads successfully
+                        const img = new Image();
+                        img.onload = function() {
+                            headerElement.style.backgroundImage = `url(${research.image})`;
+                            headerElement.classList.add('has-image');
+                        };
+                        img.onerror = function() {
+                            // Image failed to load, use default styling
+                            headerElement.classList.remove('has-image');
+                        };
+                        img.src = research.image;
+                    }
+                    
+                    // Update back link text
+                    const backLinkSpan = document.querySelector('.back-link span');
+                    if (backLinkSpan) {
+                        backLinkSpan.textContent = currentLang === 'zh' ? '返回研究列表' : 'Back to Research';
+                    }
+                }
+
+                // Reading progress indicator
+                function updateReadingProgress() {
+                    const content = document.getElementById('research-content');
+                    const progressBar = document.getElementById('reading-progress');
+                    
+                    if (content && progressBar) {
+                        const contentTop = content.offsetTop;
+                        const contentHeight = content.offsetHeight;
+                        const windowHeight = window.innerHeight;
+                        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                        
+                        const progress = Math.min(100, Math.max(0, 
+                            ((scrollTop - contentTop + windowHeight) / contentHeight) * 100
+                        ));
+                        
+                        progressBar.style.width = progress + '%';
+                    }
+                }
+
+                // Add scroll listener for reading progress
+                window.addEventListener('scroll', updateReadingProgress);
+                window.addEventListener('resize', updateReadingProgress);
+                
+                updateContent();
+                
+                // Load markdown content
+                try {
+                    const response = await fetch(research.file);
+                    if (response.ok) {
+                        const markdown = await response.text();
+                        const html = marked.parse(markdown);
+                        document.getElementById('research-content').innerHTML = html;
+                        
+                        // Show interactive section for humanoid research
+                        if (researchId === 'humanoid_research') {
+                            document.getElementById('interactive-section').style.display = 'block';
+                            initializeInteractive();
+                        }
+                    } else {
+                        // Fallback content if file doesn't exist
+                        const currentLang = getCurrentLanguage();
+                        const fallbackContent = currentLang === 'zh' 
+                            ? '<p>研究内容正在整理中，敬请期待...</p>'
+                            : '<p>Research content is being organized, please stay tuned...</p>';
+                        document.getElementById('research-content').innerHTML = fallbackContent;
+                    }
+                } catch (error) {
+                    console.error('Error loading research content:', error);
+                    const currentLang = getCurrentLanguage();
+                    const errorContent = currentLang === 'zh' 
+                        ? '<p>加载研究内容时出错，请稍后再试。</p>'
+                        : '<p>Error loading research content, please try again later.</p>';
+                    document.getElementById('research-content').innerHTML = errorContent;
+                }
+                
+                // Update content when language changes
+                const originalSetLanguage = window.setLanguage;
+                window.setLanguage = function(lang) {
+                    originalSetLanguage(lang);
+                    updateContent();
+                };
+                
+            } else {
+                // Research not found
+                const currentLang = getCurrentLanguage();
+                const notFoundContent = currentLang === 'zh' 
+                    ? '<h1>研究未找到</h1><p>抱歉，您访问的研究内容不存在。</p>'
+                    : '<h1>Research Not Found</h1><p>Sorry, the research content you are looking for does not exist.</p>';
+                document.querySelector('.research-detail').innerHTML = notFoundContent;
+            }
+
+            // Update page content based on current language
+            updatePageContent();
+        });
+
+        // Interactive functionality for humanoid research
+        function initializeInteractive() {
+            const robotParts = document.querySelectorAll('.robot-part');
+            const infoPanelDiv = document.getElementById('part-info');
+            
+            // Add click event listeners to robot parts
+            robotParts.forEach(part => {
+                part.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const partType = this.getAttribute('data-part');
+                    showPartInfo(partType);
+                    
+                    // Remove active state from other parts
+                    robotParts.forEach(p => p.classList.remove('active'));
+                    // Add active state to current part
+                    this.classList.add('active');
+                });
+
+                // Add hover effect
+                part.addEventListener('mouseenter', function() {
+                    if (!this.classList.contains('active')) {
+                        this.style.opacity = '0.8';
+                    }
+                });
+
+                part.addEventListener('mouseleave', function() {
+                    if (!this.classList.contains('active')) {
+                        this.style.opacity = '1';
+                    }
+                });
+            });
+
+            // Reset display when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.robot-part') && !e.target.closest('.info-panel')) {
+                    resetDisplay();
+                }
+            });
+
+            // Prevent reset when clicking inside info panel
+            if (infoPanelDiv) {
+                infoPanelDiv.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+        }
+
+        function showPartInfo(partType) {
+            const data = partData[partType];
+            if (!data) return;
+
+            const defaultInfo = document.getElementById('default-info');
+            const partInfo = document.getElementById('part-info');
+            
+            // Fade out default info
+            if (defaultInfo) {
+                defaultInfo.style.opacity = '0';
+                defaultInfo.style.transition = 'opacity 0.2s ease';
+                setTimeout(() => {
+                    defaultInfo.style.display = 'none';
+                    defaultInfo.style.opacity = '1';
+                }, 200);
+            }
+
+            // Fade in part info
+            if (partInfo) {
+                partInfo.style.display = 'block';
+                partInfo.style.opacity = '0';
+                partInfo.style.transition = 'opacity 0.2s ease';
+                setTimeout(() => {
+                    partInfo.style.opacity = '1';
+                }, 10);
+            }
+            
+            document.getElementById('part-title').textContent = data.title;
+            
+            let content = '';
+            data.categories.forEach(category => {
+                content += `
+                    <div class="company-category">
+                        <h4>${category.name}</h4>
+                        ${category.companies.map(company => `
+                            <div class="company-item">
+                                <div class="company-name">${company.name}</div>
+                                <div class="company-desc">${company.desc}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            });
+            
+            document.getElementById('part-content').innerHTML = content;
+        }
+
+        function resetDisplay() {
+            const defaultInfo = document.getElementById('default-info');
+            const partInfo = document.getElementById('part-info');
+            
+            // Fade out part info
+            if (partInfo) {
+                partInfo.style.opacity = '0';
+                partInfo.style.transition = 'opacity 0.2s ease';
+                setTimeout(() => {
+                    partInfo.style.display = 'none';
+                    partInfo.style.opacity = '1';
+                }, 200);
+            }
+
+            // Fade in default info
+            if (defaultInfo) {
+                defaultInfo.style.display = 'block';
+                defaultInfo.style.opacity = '0';
+                defaultInfo.style.transition = 'opacity 0.2s ease';
+                setTimeout(() => {
+                    defaultInfo.style.opacity = '1';
+                }, 10);
+            }
+
+            document.querySelectorAll('.robot-part').forEach(p => p.classList.remove('active'));
+        }
+    </script>
+</body>
+</html>

@@ -4,6 +4,7 @@ const translations = {
         'nav.aboutme': '关于我',
         'nav.thoughts': '想法',
         'nav.books': '阅读',
+        'nav.research': '研究',
         'nav.products': '我的产品',
         
         // aboutme page
@@ -46,6 +47,10 @@ const translations = {
         'books.source_code.author': 'by Bill Gates',
         'books.source_code.comment': '"The autobiography written by Microsoft founder Bill Gates."',
         
+        // Research page
+        'research.title': '我的研究',
+        'research.readmore': '阅读全文',
+        
         // Products page
         'products.title': '我的产品',
         'products.deepfocus.title': 'Deep Focus 深度对焦',
@@ -86,6 +91,7 @@ const translations = {
         'nav.aboutme': 'about me',
         'nav.thoughts': 'Thoughts',
         'nav.books': 'Books',
+        'nav.research': 'Research',
         'nav.products': 'Products',
         
         // aboutme page
@@ -127,6 +133,10 @@ const translations = {
         'books.source_code.title': 'Source Code-My Beginnings',
         'books.source_code.author': 'by Bill Gates',
         'books.source_code.comment': '"The autobiography written by Microsoft founder Bill Gates."',
+        
+        // Research page
+        'research.title': 'My Research',
+        'research.readmore': 'Read More',
         
         // Products page
         'products.title': 'My Products',
@@ -201,6 +211,8 @@ function updatePageContent() {
             link.textContent = translate('nav.thoughts');
         } else if (href === 'books.html') {
             link.textContent = translate('nav.books');
+        } else if (href === 'research.html') {
+            link.textContent = translate('nav.research');
         } else if (href === 'products.html') {
             link.textContent = translate('nav.products');
         }
@@ -267,6 +279,11 @@ function updatePageSpecificContent() {
         // Update "All" tag
         const allTag = document.querySelector('.tag-filter[data-tag="all"]');
         if (allTag) allTag.textContent = translate('thoughts.all');
+        
+    } else if (path.includes('research.html')) {
+        // Research page
+        const title = document.querySelector('#research h2');
+        if (title) title.textContent = translate('research.title');
         
     } else if (path.includes('books.html')) {
         // Books page

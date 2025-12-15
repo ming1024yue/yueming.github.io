@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="img-src 'self' data: https: http:;">
+    <title>Research</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="translations.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        /* Research page specific styles */
+        #research {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        #research h2 {
+            font-size: 2.5rem;
+            font-weight: 200;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-color);
+            position: relative;
+            letter-spacing: 0.5px;
+        }
+
+        #research h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 1px;
+            background: var(--text-color);
+        }
+
+        .research-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .research-card {
+            background: var(--thought-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .research-card:hover {
+            border-color: var(--text-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+
+
+        .research-content {
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .research-image {
+            width: 120px;
+            height: 80px;
+            border-radius: 6px;
+            object-fit: cover;
+            background: var(--hover-bg);
+            flex-shrink: 0;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .research-card:hover .research-image {
+            transform: scale(1.05);
+        }
+
+        /* Fallback for missing images */
+        .research-image[src=""], 
+        .research-image:not([src]) {
+            display: none;
+        }
+
+        .research-info {
+            flex: 1;
+        }
+
+        .research-title {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--header-color);
+            line-height: 1.3;
+        }
+
+        .research-description {
+            color: var(--secondary-text);
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .research-meta-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .research-author {
+            color: var(--secondary-text);
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .research-author::before {
+            content: '\f007';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 0.7rem;
+        }
+
+        .research-date {
+            color: var(--secondary-text);
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .research-date::before {
+            content: '\f073';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 0.7rem;
+        }
+
+        .research-actions {
+            flex-shrink: 0;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .research-link {
+            background: transparent;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.8rem;
+        }
+
+        .research-link:hover {
+            border-color: var(--text-color);
+            background: var(--hover-bg);
+            text-decoration: none;
+        }
+
+        .interactive-link {
+            background: var(--text-color);
+            color: var(--bg-color);
+            border-color: var(--text-color);
+        }
+
+        .interactive-link:hover {
+            background: var(--hover-bg);
+            color: var(--text-color);
+        }
+
+        /* Field filters */
+
+
+
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            #research {
+                padding: 1rem;
+            }
+
+            #research h2 {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .research-grid {
+                gap: 1rem;
+                margin-top: 2rem;
+            }
+
+            .research-content {
+                padding: 1rem 1.5rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .research-image {
+                width: 100%;
+                height: 120px;
+                order: -1;
+            }
+
+            .research-actions {
+                align-self: flex-end;
+            }
+
+            .research-meta-info {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: flex-start;
+            }
+
+            .research-title {
+                font-size: 1.2rem;
+            }
+
+            .research-description {
+                font-size: 0.85rem;
+            }
+
+            .research-link {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+
+        /* Simple animations */
+        .research-card {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .research-card.fade-in {
+            animation: fadeInUp 0.4s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button onclick="setLanguage('zh')" id="lang-zh">中文</button>
+        <button onclick="setLanguage('en')" id="lang-en">English</button>
+    </div>
+
+    <div class="top-links">
+        <div class="menu-group">
+            <a href="index.html">关于我</a>
+            <a href="thoughts.html">想法</a>
+            <a href="books.html">阅读</a>
+            <a href="research.html">研究</a>
+            <a href="products.html">我的产品</a>
+        </div>
+    </div>
+
+    <main>
+        <section id="research">
+            <h2>我的研究</h2>
+            
+
+            
+            <!-- Research grid -->
+            <div class="research-grid" id="research-grid">
+                <!-- Research cards will be loaded dynamically -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 岳铭. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Set initial theme
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            
+            // Update language switcher active state
+            const currentLang = getCurrentLanguage();
+            const zhBtn = document.getElementById('lang-zh');
+            const enBtn = document.getElementById('lang-en');
+            if (zhBtn && enBtn) {
+                zhBtn.classList.toggle('active', currentLang === 'zh');
+                enBtn.classList.toggle('active', currentLang === 'en');
+            }
+
+            // Research data
+            const researchData = [
+                {
+                    id: 'humanoid_research',
+                    title: '中国人形机器人产业链研究',
+                    titleEn: 'China Humanoid Robot Industry Chain Research',
+                    description: '以人形机器人构造为架构，深入分析中国在各个关键组件领域的产业布局、技术水平和供应链现状。',
+                    descriptionEn: 'Analyzing China\'s industrial layout, technology level and supply chain status in key component areas based on humanoid robot architecture.',
+                    author: '岳铭',
+                    authorEn: 'Yue Ming',
+                    date: '2025-12-15',
+                    image: 'images/research/humanoid.jpg',
+                    file: 'research/humanoid_research.md'
+                }
+            ];
+
+            // Load research cards
+            const researchGrid = document.getElementById('research-grid');
+            
+            function renderResearchCards(data = researchData) {
+                researchGrid.classList.add('loading');
+                researchGrid.innerHTML = '';
+                
+                data.forEach((research, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'research-card';
+                    card.dataset.field = research.field;
+                    
+                    // Add staggered animation delay
+                    setTimeout(() => {
+                        card.classList.add('fade-in');
+                    }, index * 100);
+                    
+                    const currentLang = getCurrentLanguage();
+                    const title = currentLang === 'zh' ? research.title : research.titleEn;
+                    const description = currentLang === 'zh' ? research.description : research.descriptionEn;
+                    const author = currentLang === 'zh' ? research.author : research.authorEn;
+                    const readMore = translate('research.readmore');
+                    
+                    card.innerHTML = `
+                        <div class="research-content">
+                            ${research.image ? `<img src="${research.image}" alt="${title}" class="research-image" onerror="this.style.display='none'">` : ''}
+                            <div class="research-info">
+                                <h3 class="research-title">${title}</h3>
+                                <p class="research-description">${description}</p>
+                                <div class="research-meta-info">
+                                    <div class="research-author">${author}</div>
+                                    <div class="research-date">${research.date}</div>
+                                </div>
+                            </div>
+                            <div class="research-actions">
+                                <a href="research-detail.html?id=${research.id}" class="research-link">
+                                    ${readMore} <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    
+                    researchGrid.appendChild(card);
+                });
+                
+                // Remove loading state after all cards are added
+                setTimeout(() => {
+                    researchGrid.classList.remove('loading');
+                }, data.length * 100 + 200);
+            }
+
+            // Initial render
+            renderResearchCards();
+
+
+
+            // Update page content based on current language
+            updatePageContent();
+            
+            // Re-render cards when language changes
+            const originalSetLanguage = window.setLanguage;
+            window.setLanguage = function(lang) {
+                originalSetLanguage(lang);
+                renderResearchCards();
+            };
+        });
+    </script>
+</body>
+</html>
