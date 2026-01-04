@@ -5,8 +5,14 @@
 具身智能是AI物理层面的延伸。它能解决人类世界更多，更真实的需求，使人们从重复的，危险的工作中解脱出来。在这一领域，中美是主要玩家，其中，中国更是以产业链完整，制造业和材料发达，市场需求旺盛的优势
 逐渐成为头号玩家。
 
-<img src="/images/research/china-robot.png" style="width: 50%;">
-<img src="/images/research/robot-rank.png" style="width: 50%;">
+<div style="display: flex; gap: 1.5rem; margin: 2rem 0; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 300px;">
+        <img src="/images/research/china-robot.png" style="width: 100%; object-fit: cover; border-radius: 8px;">
+    </div>
+    <div style="flex: 1; min-width: 300px;">
+        <img src="/images/research/robot-rank.png" style="width: 100%; object-fit: cover; border-radius: 8px;">
+    </div>
+</div>
 
 *源于Morgan Stanley的报告，过去5年各国有关具身智能的专利统计数据*
 
@@ -18,16 +24,26 @@
 
 以上梳理了国内人形机器人相关产业链公司。中国人形机器人产业链正在快速发展，在制造、应用和市场方面具备优势，但在核心技术和关键器件方面仍需加强。对于整合具身智能企业（以设计，生产，交付商业化机器人的公司）在中国更是如雨后春笋般涌现，目前在数量和质量上，都已经达到了世界第一梯队，主要集中在一线城市，下面是一些主要具身智能公司城市分布图
 
-<img src="/images/research/beijing-robot.jpeg" style="width: 75%;">
-<img src="/images/research/hangzhou-robot.jpeg" style="width: 75%;">
-<img src="/images/research/shanghai-robot.jpeg" style="width: 75%;">
-<img src="/images/research/shenzhen-robot.jpeg" style="width: 75%;">
-
+<div style="display: flex; gap: 1.5rem; margin: 2rem 0; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 500px;">
+        <img src="/images/research/beijing-robot.jpeg" style="width: 100%; object-fit: cover; border-radius: 8px;">
+    </div>
+    <div style="flex: 1; min-width: 500px;">
+        <img src="/images/research/shanghai-robot.jpeg" style="width: 100%; object-fit: cover; border-radius: 8px;">
+    </div>
+        <div style="flex: 1; min-width: 500px;">
+        <img src="/images/research/hangzhou-robot.jpeg" style="width: 100%; object-fit: cover; border-radius: 8px;">
+    </div>
+        <div style="flex: 1; min-width: 500px;">
+        <img src="/images/research/shenzhen-robot.jpeg" style="width: 100%; object-fit: cover; border-radius: 8px;">
+    </div>
+</div>
 ---
+
 
 
 
 ## 最近新闻
 
 马斯克对宇树机器人在王力宏演唱会的表现 - 2025.12.20
-<img src="/images/research/robots_news.png" style="width: 75%;">
+<img src="/images/research/robots_news.png" style="width: 50%;">

@@ -243,10 +243,131 @@
             border-radius: 12px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
             transition: transform 0.3s ease;
+            cursor: zoom-in;
         }
 
         .research-content img:hover {
             transform: scale(1.02);
+        }
+
+        /* Image zoom modal styles */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .image-modal.active {
+            display: flex;
+        }
+
+        .image-modal-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-modal-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            animation: zoomIn 0.3s ease;
+        }
+
+        .image-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s ease;
+            z-index: 2001;
+        }
+
+        .image-modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .image-modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s ease;
+            z-index: 2001;
+        }
+
+        .image-modal-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .image-modal-prev {
+            left: 20px;
+        }
+
+        .image-modal-next {
+            right: 20px;
+        }
+
+        .image-modal-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 0.9rem;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 16px;
+            border-radius: 20px;
+            z-index: 2001;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .research-content strong {
@@ -745,6 +866,17 @@
         <p>&copy; 2025 岳铭. All rights reserved.</p>
     </footer>
 
+    <!-- Image zoom modal -->
+    <div class="image-modal" id="imageModal">
+        <div class="image-modal-content">
+            <button class="image-modal-close" id="closeModal">&times;</button>
+            <button class="image-modal-nav image-modal-prev" id="prevImage" style="display: none;">&#10094;</button>
+            <img class="image-modal-img" id="modalImage" src="" alt="">
+            <button class="image-modal-nav image-modal-next" id="nextImage" style="display: none;">&#10095;</button>
+            <div class="image-modal-counter" id="imageCounter" style="display: none;"></div>
+        </div>
+    </div>
+
     <script>
         // Global interactive data for humanoid research
         const partData = {
@@ -1204,6 +1336,97 @@
 
             document.querySelectorAll('.robot-part').forEach(p => p.classList.remove('active'));
         }
+
+        // Image zoom functionality
+        let currentImageIndex = 0;
+        let allImages = [];
+
+        function initializeImageZoom() {
+            const contentImages = document.querySelectorAll('.research-content img');
+            allImages = Array.from(contentImages);
+            
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const closeBtn = document.getElementById('closeModal');
+            const prevBtn = document.getElementById('prevImage');
+            const nextBtn = document.getElementById('nextImage');
+            const counter = document.getElementById('imageCounter');
+
+            // Add click event to all images
+            allImages.forEach((img, index) => {
+                img.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    currentImageIndex = index;
+                    openImageModal(img.src);
+                });
+            });
+
+            // Close modal
+            closeBtn.addEventListener('click', closeImageModal);
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeImageModal();
+                }
+            });
+
+            // Navigation
+            prevBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                currentImageIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
+                openImageModal(allImages[currentImageIndex].src);
+            });
+
+            nextBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                currentImageIndex = (currentImageIndex + 1) % allImages.length;
+                openImageModal(allImages[currentImageIndex].src);
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (!modal.classList.contains('active')) return;
+                
+                if (e.key === 'Escape') {
+                    closeImageModal();
+                } else if (e.key === 'ArrowLeft') {
+                    currentImageIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
+                    openImageModal(allImages[currentImageIndex].src);
+                } else if (e.key === 'ArrowRight') {
+                    currentImageIndex = (currentImageIndex + 1) % allImages.length;
+                    openImageModal(allImages[currentImageIndex].src);
+                }
+            });
+
+            function openImageModal(src) {
+                modal.classList.add('active');
+                modalImage.src = src;
+                
+                // Show/hide navigation buttons
+                if (allImages.length > 1) {
+                    prevBtn.style.display = 'block';
+                    nextBtn.style.display = 'block';
+                    counter.style.display = 'block';
+                    counter.textContent = `${currentImageIndex + 1} / ${allImages.length}`;
+                } else {
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                    counter.style.display = 'none';
+                }
+                
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeImageModal() {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Initialize image zoom after content is loaded
+        const originalInitializeInteractive = initializeInteractive;
+        window.addEventListener('load', function() {
+            setTimeout(initializeImageZoom, 100);
+        });
     </script>
 </body>
 </html>
