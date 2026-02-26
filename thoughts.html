@@ -34,6 +34,45 @@
             height: auto;
             margin: 1rem 0;
         }
+
+        /* 分页样式 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .pagination a {
+            color: var(--text-color, #333);
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .pagination a:hover:not(.disabled) {
+            opacity: 0.6;
+        }
+
+        .pagination a.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .pagination a.active {
+            font-weight: bold;
+            opacity: 1;
+        }
+
+        .pagination .page-info {
+            color: var(--text-color, #333);
+            font-size: 0.95rem;
+            padding: 0.25rem 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -56,9 +95,11 @@
     <main>
         <section id="thoughts">
             <h2>想法</h2>
+            <div class="pagination" id="pagination-top"></div>
             <div class="thoughts-list">
                 <!-- Thoughts will be loaded dynamically -->
             </div>
+            <div class="pagination" id="pagination-bottom"></div>
         </section>
     </main>
 
@@ -67,6 +108,60 @@
     </footer>
 
     <script>
+        // Global lightbox variables and functions
+        let lightbox, lightboxImg, currentImageIndex = 0, galleryImages = [];
+
+        function initLightbox() {
+            const images = document.querySelectorAll('.markdown-content img');
+            
+            images.forEach((img, index) => {
+                // Remove old listeners by cloning
+                const newImg = img.cloneNode(true);
+                img.parentNode.replaceChild(newImg, img);
+                
+                newImg.style.cursor = 'zoom-in';
+                newImg.dataset.index = index;
+                newImg.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const article = this.closest('.thought');
+                    galleryImages = Array.from(article.querySelectorAll('.markdown-content img'));
+                    currentImageIndex = galleryImages.indexOf(this);
+                    
+                    lightbox.style.display = 'flex';
+                    lightboxImg.src = this.src;
+                    document.body.style.overflow = 'hidden';
+                    
+                    updateNavButtons();
+                });
+            });
+        }
+
+        function updateNavButtons() {
+            const prevBtn = document.querySelector('.lightbox-prev');
+            const nextBtn = document.querySelector('.lightbox-next');
+            
+            if (galleryImages.length <= 1) {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+                return;
+            }
+            
+            prevBtn.style.display = 'flex';
+            nextBtn.style.display = 'flex';
+            
+            prevBtn.style.opacity = currentImageIndex <= 0 ? '0.3' : '0.7';
+            prevBtn.style.cursor = currentImageIndex <= 0 ? 'default' : 'pointer';
+            
+            nextBtn.style.opacity = currentImageIndex >= galleryImages.length - 1 ? '0.3' : '0.7';
+            nextBtn.style.cursor = currentImageIndex >= galleryImages.length - 1 ? 'default' : 'pointer';
+        }
+
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
         document.addEventListener('DOMContentLoaded', async () => {
             // Set initial theme
             const savedTheme = localStorage.getItem('theme') || 'light';
@@ -81,7 +176,77 @@
                 enBtn.classList.toggle('active', currentLang === 'en');
             }
 
-            // Load and display thoughts
+            // Setup lightbox
+            lightbox = document.createElement('div');
+            lightbox.id = 'lightbox';
+            lightbox.className = 'lightbox';
+            
+            lightboxImg = document.createElement('img');
+            lightboxImg.className = 'lightbox-img';
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'lightbox-close';
+            closeBtn.innerHTML = '&times;';
+            
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'lightbox-nav lightbox-prev';
+            prevBtn.innerHTML = '&#10094;';
+            
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'lightbox-nav lightbox-next';
+            nextBtn.innerHTML = '&#10095;';
+            
+            lightbox.appendChild(lightboxImg);
+            lightbox.appendChild(closeBtn);
+            lightbox.appendChild(prevBtn);
+            lightbox.appendChild(nextBtn);
+            document.body.appendChild(lightbox);
+
+            // Lightbox event listeners
+            prevBtn.addEventListener('click', function() {
+                if (currentImageIndex > 0) {
+                    currentImageIndex--;
+                    lightboxImg.src = galleryImages[currentImageIndex].src;
+                    updateNavButtons();
+                }
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                if (currentImageIndex < galleryImages.length - 1) {
+                    currentImageIndex++;
+                    lightboxImg.src = galleryImages[currentImageIndex].src;
+                    updateNavButtons();
+                }
+            });
+
+            closeBtn.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) closeLightbox();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (lightbox.style.display !== 'flex') return;
+                
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft' && currentImageIndex > 0) {
+                    currentImageIndex--;
+                    lightboxImg.src = galleryImages[currentImageIndex].src;
+                    updateNavButtons();
+                } else if (e.key === 'ArrowRight' && currentImageIndex < galleryImages.length - 1) {
+                    currentImageIndex++;
+                    lightboxImg.src = galleryImages[currentImageIndex].src;
+                    updateNavButtons();
+                }
+            });
+
+            // Pagination settings
+            const ITEMS_PER_PAGE = 5;
+            let currentPage = 1;
+            let allThoughts = [];
+            let filteredThoughts = [];
+            let currentTag = 'all';
+
             const thoughtsList = document.querySelector('.thoughts-list');
             
             // List of thought files with their dates and tags
@@ -101,17 +266,15 @@
                 { file: 'thoughts/take_action.md', date: '2025-07-16', tags: ['idea']},
                 { file: 'thoughts/Ai-deepthought.md', date: '2025-09-26', tags: ['idea']},
                 { file: 'thoughts/success_success.md', date: '2025-11-13', tags: ['idea']},
-                {file: 'thoughts/on_writing.md', date: '2026-02-10', tags: ['idea','learning']},
+                { file: 'thoughts/on_writing.md', date: '2026-02-10', tags: ['idea','learning']},
                 { file: 'thoughts/update_os.md', date: '2026-02-20', tags: ['idea','productivity']}
-                
             ];
 
             // Sort thoughts by date
             thoughts.sort((a, b) => {
                 const dateComparison = new Date(b.date) - new Date(a.date);
                 if (dateComparison === 0) {
-                    // If dates are equal, use the reverse of array position
-                    return -1; // Keep the later item (b) before the earlier item (a)
+                    return -1;
                 }
                 return dateComparison;
             });
@@ -121,228 +284,177 @@
             const tagFilterSection = document.createElement('div');
             tagFilterSection.className = 'tag-filters';
             
-            // Add "All" option
-            const allTagHtml = `
-                <span class="tag tag-filter active" data-tag="all">
-                    All
-                </span>
-            `;
-            
-            // Create tag filters HTML
+            const allTagHtml = `<span class="tag tag-filter active" data-tag="all">All</span>`;
             const tagFiltersHtml = uniqueTags
-                .map(tag => `
-                    <span class="tag tag-${tag} tag-filter" data-tag="${tag}">
-                        #${tag}
-                    </span>
-                `).join('');
+                .map(tag => `<span class="tag tag-${tag} tag-filter" data-tag="${tag}">#${tag}</span>`)
+                .join('');
             
             tagFilterSection.innerHTML = allTagHtml + tagFiltersHtml;
             thoughtsList.parentElement.insertBefore(tagFilterSection, thoughtsList);
 
-            // Add click handlers for tag filters
-            const tagFilters = document.querySelectorAll('.tag-filter');
-            tagFilters.forEach(filter => {
-                filter.addEventListener('click', () => {
-                    // Update active state
-                    tagFilters.forEach(f => f.classList.remove('active'));
-                    filter.classList.add('active');
-
-                    const selectedTag = filter.dataset.tag;
-                    const thoughtElements = document.querySelectorAll('.thought');
-                    
-                    thoughtElements.forEach(thought => {
-                        if (selectedTag === 'all') {
-                            thought.style.display = 'block';
-                        } else {
-                            const hasTag = thought.querySelector(`.tag-${selectedTag}`);
-                            thought.style.display = hasTag ? 'block' : 'none';
-                        }
-                    });
-                });
-            });
-
-            // Load each thought
+            // Load all thoughts
             for (const thought of thoughts) {
                 try {
                     const response = await fetch(thought.file);
                     const markdown = await response.text();
                     
-                    // Extract title from first h1 and remove it from content
                     const titleMatch = markdown.match(/^#\s+(.*?)(\r?\n|$)/);
                     const title = titleMatch ? titleMatch[1] : 'Untitled';
                     const contentWithoutTitle = markdown.replace(/^#\s+.*?(\r?\n|$)/, '');
                     
                     const html = marked.parse(contentWithoutTitle);
                     
-                    // Create thought article
-                    const article = document.createElement('article');
-                    article.className = 'thought';
-                    
-                    // Create tags HTML
                     const tagsHtml = thought.tags
                         .map(tag => `<span class="tag tag-${tag}">#${tag}</span>`)
                         .join('');
                     
-                    article.innerHTML = `
-                        <div class="thought-header">
-                            <div class="title-date">
-                                <h3>${title}</h3>
-                                <span class="date">${thought.date}</span>
-                            </div>
-                            <div class="tags">${tagsHtml}</div>
-                        </div>
-                        <div class="markdown-content">
-                            ${html}
-                        </div>
-                    `;
-                    
-                    thoughtsList.appendChild(article);
+                    allThoughts.push({
+                        title,
+                        html,
+                        date: thought.date,
+                        tags: thought.tags,
+                        tagsHtml
+                    });
                 } catch (error) {
                     console.error(`Error loading thought: ${thought.file}`, error);
                 }
             }
-        });
-        // Image Lightbox functionality with navigation
-        document.addEventListener('DOMContentLoaded', function() {
-            // Create lightbox elements
-            const lightbox = document.createElement('div');
-            lightbox.id = 'lightbox';
-            lightbox.className = 'lightbox';
-            
-            const lightboxImg = document.createElement('img');
-            lightboxImg.className = 'lightbox-img';
-            
-            const closeBtn = document.createElement('button');
-            closeBtn.className = 'lightbox-close';
-            closeBtn.innerHTML = '&times;';
-            
-            // Create navigation buttons
-            const prevBtn = document.createElement('button');
-            prevBtn.className = 'lightbox-nav lightbox-prev';
-            prevBtn.innerHTML = '&#10094;'; // Left arrow
-            
-            const nextBtn = document.createElement('button');
-            nextBtn.className = 'lightbox-nav lightbox-next';
-            nextBtn.innerHTML = '&#10095;'; // Right arrow
-            
-            // Append elements to lightbox
-            lightbox.appendChild(lightboxImg);
-            lightbox.appendChild(closeBtn);
-            lightbox.appendChild(prevBtn);
-            lightbox.appendChild(nextBtn);
-            document.body.appendChild(lightbox);
-            
-            let currentImageIndex = 0;
-            let galleryImages = [];
-            
-            // Function to initialize lightbox for images
-            function initLightbox() {
-                console.log('Initializing lightbox for images');
-                const images = document.querySelectorAll('.markdown-content img');
-                console.log('Found ' + images.length + ' images');
+
+            filteredThoughts = [...allThoughts];
+
+            // Function to render thoughts for current page
+            function renderThoughts() {
+                thoughtsList.innerHTML = '';
+                const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+                const endIndex = startIndex + ITEMS_PER_PAGE;
+                const pageThoughts = filteredThoughts.slice(startIndex, endIndex);
+
+                pageThoughts.forEach(thought => {
+                    const article = document.createElement('article');
+                    article.className = 'thought';
+                    article.innerHTML = `
+                        <div class="thought-header">
+                            <div class="title-date">
+                                <h3>${thought.title}</h3>
+                                <span class="date">${thought.date}</span>
+                            </div>
+                            <div class="tags">${thought.tagsHtml}</div>
+                        </div>
+                        <div class="markdown-content">
+                            ${thought.html}
+                        </div>
+                    `;
+                    thoughtsList.appendChild(article);
+                });
+
+                // Re-initialize lightbox for new images
+                setTimeout(initLightbox, 100);
                 
-                images.forEach((img, index) => {
-                    img.style.cursor = 'zoom-in';
-                    img.dataset.index = index; // Store the index on the image
-                    img.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        console.log('Image clicked: ' + this.src);
-                        
-                        // Get all images in the current article
-                        const article = this.closest('.thought');
-                        galleryImages = Array.from(article.querySelectorAll('.markdown-content img'));
-                        currentImageIndex = galleryImages.indexOf(this);
-                        
-                        // Show the image
-                        lightbox.style.display = 'flex';
-                        lightboxImg.src = this.src;
-                        document.body.style.overflow = 'hidden'; // Prevent scrolling
-                        
-                        // Update navigation visibility
-                        updateNavButtons();
-                    });
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Function to render pagination controls
+            function renderPagination() {
+                const totalPages = Math.ceil(filteredThoughts.length / ITEMS_PER_PAGE);
+                const paginationHTML = createPaginationHTML(totalPages);
+                
+                document.getElementById('pagination-top').innerHTML = paginationHTML;
+                document.getElementById('pagination-bottom').innerHTML = paginationHTML;
+                
+                // Add event listeners
+                document.querySelectorAll('.pagination a').forEach(link => {
+                    link.addEventListener('click', handlePaginationClick);
                 });
             }
-            
-            // Function to update navigation button visibility
-            function updateNavButtons() {
-                // Only show navigation if there's more than one image
-                if (galleryImages.length <= 1) {
-                    prevBtn.style.display = 'none';
-                    nextBtn.style.display = 'none';
-                    return;
+
+            // Function to create pagination HTML
+            function createPaginationHTML(totalPages) {
+                if (totalPages <= 1) return '';
+
+                let html = '';
+                
+                // Previous link (left arrow)
+                html += `<a data-page="prev" class="${currentPage === 1 ? 'disabled' : ''}">←</a>`;
+                
+                // Show page numbers with ellipsis
+                const maxVisiblePages = 5;
+                let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+                let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+                
+                if (endPage - startPage < maxVisiblePages - 1) {
+                    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                }
+
+                if (startPage > 1) {
+                    html += `<a data-page="1" class="${currentPage === 1 ? 'active' : ''}">1</a>`;
+                    if (startPage > 2) {
+                        html += `<span class="page-info">...</span>`;
+                    }
+                }
+
+                for (let i = startPage; i <= endPage; i++) {
+                    html += `<a data-page="${i}" class="${i === currentPage ? 'active' : ''}">${i}</a>`;
+                }
+
+                if (endPage < totalPages) {
+                    if (endPage < totalPages - 1) {
+                        html += `<span class="page-info">...</span>`;
+                    }
+                    html += `<a data-page="${totalPages}" class="${currentPage === totalPages ? 'active' : ''}">${totalPages}</a>`;
                 }
                 
-                prevBtn.style.display = 'flex';
-                nextBtn.style.display = 'flex';
-                
-                // Disable previous button when at the first image
-                prevBtn.style.opacity = currentImageIndex <= 0 ? '0.3' : '0.7';
-                prevBtn.style.cursor = currentImageIndex <= 0 ? 'default' : 'pointer';
-                
-                // Disable next button when at the last image
-                nextBtn.style.opacity = currentImageIndex >= galleryImages.length - 1 ? '0.3' : '0.7';
-                nextBtn.style.cursor = currentImageIndex >= galleryImages.length - 1 ? 'default' : 'pointer';
+                // Next link (right arrow)
+                html += `<a data-page="next" class="${currentPage === totalPages ? 'disabled' : ''}">→</a>`;
+
+                return html;
             }
-            
-            // Previous image
-            prevBtn.addEventListener('click', function() {
-                if (currentImageIndex > 0) {
-                    currentImageIndex--;
-                    lightboxImg.src = galleryImages[currentImageIndex].src;
-                    updateNavButtons();
+
+            // Handle pagination button clicks
+            function handlePaginationClick(e) {
+                const page = e.target.dataset.page;
+                if (!page) return;
+
+                const totalPages = Math.ceil(filteredThoughts.length / ITEMS_PER_PAGE);
+
+                if (page === 'prev' && currentPage > 1) {
+                    currentPage--;
+                } else if (page === 'next' && currentPage < totalPages) {
+                    currentPage++;
+                } else if (!isNaN(page)) {
+                    currentPage = parseInt(page);
                 }
-            });
-            
-            // Next image
-            nextBtn.addEventListener('click', function() {
-                if (currentImageIndex < galleryImages.length - 1) {
-                    currentImageIndex++;
-                    lightboxImg.src = galleryImages[currentImageIndex].src;
-                    updateNavButtons();
-                }
-            });
-            
-            // Keyboard navigation
-            document.addEventListener('keydown', function(e) {
-                if (lightbox.style.display !== 'flex') return;
-                
-                if (e.key === 'ArrowLeft' && currentImageIndex > 0) {
-                    currentImageIndex--;
-                    lightboxImg.src = galleryImages[currentImageIndex].src;
-                    updateNavButtons();
-                } else if (e.key === 'ArrowRight' && currentImageIndex < galleryImages.length - 1) {
-                    currentImageIndex++;
-                    lightboxImg.src = galleryImages[currentImageIndex].src;
-                    updateNavButtons();
-                }
-            });
-            
-            // Initialize immediately
-            initLightbox();
-            
-            // Also initialize after a short delay to catch dynamically loaded content
-            setTimeout(initLightbox, 1000);
-            
-            // Close lightbox when clicking close button or outside the image
-            closeBtn.addEventListener('click', closeLightbox);
-            lightbox.addEventListener('click', function(e) {
-                if (e.target === lightbox) {
-                    closeLightbox();
-                }
-            });
-            
-            // Close with Escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && lightbox.style.display === 'flex') {
-                    closeLightbox();
-                }
-            });
-            
-            function closeLightbox() {
-                lightbox.style.display = 'none';
-                document.body.style.overflow = ''; // Restore scrolling
+
+                renderThoughts();
+                renderPagination();
             }
+
+            // Add click handlers for tag filters
+            const tagFilters = document.querySelectorAll('.tag-filter');
+            tagFilters.forEach(filter => {
+                filter.addEventListener('click', () => {
+                    tagFilters.forEach(f => f.classList.remove('active'));
+                    filter.classList.add('active');
+
+                    currentTag = filter.dataset.tag;
+                    currentPage = 1;
+
+                    if (currentTag === 'all') {
+                        filteredThoughts = [...allThoughts];
+                    } else {
+                        filteredThoughts = allThoughts.filter(thought => 
+                            thought.tags.includes(currentTag)
+                        );
+                    }
+
+                    renderThoughts();
+                    renderPagination();
+                });
+            });
+
+            // Initial render
+            renderThoughts();
+            renderPagination();
         });
     </script>
     
