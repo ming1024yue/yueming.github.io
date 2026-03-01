@@ -246,6 +246,7 @@
             let allThoughts = [];
             let filteredThoughts = [];
             let currentTag = 'all';
+            let isLoading = false;
 
             const thoughtsList = document.querySelector('.thoughts-list');
             
@@ -292,8 +293,8 @@
             tagFilterSection.innerHTML = allTagHtml + tagFiltersHtml;
             thoughtsList.parentElement.insertBefore(tagFilterSection, thoughtsList);
 
-            // Load all thoughts
-            for (const thought of thoughts) {
+            // Function to load a single thought
+            async function loadThought(thought) {
                 try {
                     const response = await fetch(thought.file);
                     const markdown = await response.text();
@@ -308,19 +309,50 @@
                         .map(tag => `<span class="tag tag-${tag}">#${tag}</span>`)
                         .join('');
                     
-                    allThoughts.push({
+                    return {
                         title,
                         html,
                         date: thought.date,
                         tags: thought.tags,
                         tagsHtml
-                    });
+                    };
                 } catch (error) {
                     console.error(`Error loading thought: ${thought.file}`, error);
+                    return null;
                 }
             }
 
-            filteredThoughts = [...allThoughts];
+            // Load all thoughts in background
+            async function loadAllThoughts() {
+                isLoading = true;
+                
+                // Load first page immediately
+                const firstPageThoughts = thoughts.slice(0, ITEMS_PER_PAGE);
+                for (const thought of firstPageThoughts) {
+                    const loadedThought = await loadThought(thought);
+                    if (loadedThought) {
+                        allThoughts.push(loadedThought);
+                    }
+                }
+                
+                filteredThoughts = [...allThoughts];
+                renderThoughts();
+                renderPagination();
+                
+                // Load remaining thoughts in background
+                const remainingThoughts = thoughts.slice(ITEMS_PER_PAGE);
+                for (const thought of remainingThoughts) {
+                    const loadedThought = await loadThought(thought);
+                    if (loadedThought) {
+                        allThoughts.push(loadedThought);
+                        filteredThoughts = [...allThoughts];
+                        // Update pagination if needed
+                        renderPagination();
+                    }
+                }
+                
+                isLoading = false;
+            }
 
             // Function to render thoughts for current page
             function renderThoughts() {
@@ -452,9 +484,8 @@
                 });
             });
 
-            // Initial render
-            renderThoughts();
-            renderPagination();
+            // Start loading thoughts
+            loadAllThoughts();
         });
     </script>
     
