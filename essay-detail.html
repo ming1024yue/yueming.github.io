@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="img-src 'self' data: https: http:;">
-    <title>Research Detail</title>
+    <title>essay Detail</title>
     <link rel="icon" href="data:,">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="translations.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
-        .research-detail {
+        .essay-detail {
             max-width: 900px;
             margin: 0 auto;
             padding: 2rem 1rem;
@@ -40,7 +40,7 @@
             text-decoration: none;
         }
 
-        .research-header {
+        .essay-header {
             text-align: center;
             margin-bottom: 4rem;
             padding: 4rem 2rem;
@@ -53,7 +53,7 @@
             overflow: hidden;
         }
 
-        .research-header::before {
+        .essay-header::before {
             content: '';
             position: absolute;
             top: 0;
@@ -64,45 +64,45 @@
             z-index: 1;
         }
 
-        .research-header > * {
+        .essay-header > * {
             position: relative;
             z-index: 2;
         }
 
-        .research-header.has-image {
+        .essay-header.has-image {
             color: white;
         }
 
-        .research-header.has-image .research-author,
-        .research-header.has-image .research-date {
+        .essay-header.has-image .essay-author,
+        .essay-header.has-image .essay-date {
             color: rgba(255, 255, 255, 0.8);
         }
 
-        .research-header.has-image h1 {
+        .essay-header.has-image h1 {
             color: white;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         /* Default header without image */
-        .research-header:not(.has-image) {
+        .essay-header:not(.has-image) {
             background: var(--hover-bg);
             padding: 2rem 0;
         }
 
-        .research-header:not(.has-image)::before {
+        .essay-header:not(.has-image)::before {
             display: none;
         }
 
         /* Dark theme adjustments */
-        [data-theme="dark"] .research-header:not(.has-image) {
+        [data-theme="dark"] .essay-header:not(.has-image) {
             background: rgba(255, 255, 255, 0.05);
         }
 
-        [data-theme="dark"] .research-image {
+        [data-theme="dark"] .essay-image {
             border-color: rgba(255, 255, 255, 0.1);
         }
 
-        .research-header h1 {
+        .essay-header h1 {
             font-size: 2.5rem;
             font-weight: 200;
             margin-bottom: 1.5rem;
@@ -111,7 +111,7 @@
             letter-spacing: 0.5px;
         }
 
-        .research-meta {
+        .essay-meta {
             display: flex;
             justify-content: center;
             gap: 2rem;
@@ -119,7 +119,7 @@
             flex-wrap: wrap;
         }
 
-        .research-author {
+        .essay-author {
             color: var(--secondary-text);
             font-size: 0.85rem;
             display: flex;
@@ -129,7 +129,7 @@
             letter-spacing: 0.5px;
         }
 
-        .research-author::before {
+        .essay-author::before {
             content: '\f007';
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
@@ -138,7 +138,7 @@
 
 
 
-        .research-date {
+        .essay-date {
             color: var(--secondary-text);
             font-size: 0.85rem;
             display: flex;
@@ -148,21 +148,21 @@
             letter-spacing: 0.5px;
         }
 
-        .research-date::before {
+        .essay-date::before {
             content: '\f073';
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
             font-size: 0.7rem;
         }
 
-        .research-content {
+        .essay-content {
             line-height: 1.8;
             color: var(--text-color);
             background: var(--thought-bg);
             padding: 2rem 0;
         }
 
-        .research-content h1 {
+        .essay-content h1 {
             font-size: 2rem;
             font-weight: 300;
             margin: 2.5rem 0 1.5rem;
@@ -172,43 +172,43 @@
             border-bottom: 1px solid var(--border-color);
         }
 
-        .research-content h2 {
+        .essay-content h2 {
             font-size: 1.6rem;
             font-weight: 400;
             margin: 2rem 0 1rem;
             color: var(--text-color);
         }
 
-        .research-content h3 {
+        .essay-content h3 {
             font-size: 1.3rem;
             font-weight: 500;
             margin: 1.5rem 0 1rem;
             color: var(--text-color);
         }
 
-        .research-content h4 {
+        .essay-content h4 {
             font-size: 1.1rem;
             font-weight: 500;
             margin: 1.2rem 0 0.8rem;
             color: var(--text-color);
         }
 
-        .research-content p {
+        .essay-content p {
             margin: 1.2rem 0;
             text-align: justify;
         }
 
-        .research-content ul, 
-        .research-content ol {
+        .essay-content ul, 
+        .essay-content ol {
             margin: 1.2rem 0;
             padding-left: 2rem;
         }
 
-        .research-content li {
+        .essay-content li {
             margin: 0.6rem 0;
         }
 
-        .research-content blockquote {
+        .essay-content blockquote {
             border-left: 2px solid var(--text-color);
             margin: 2rem 0;
             padding: 1rem 1.5rem;
@@ -217,7 +217,7 @@
             font-style: italic;
         }
 
-        .research-content code {
+        .essay-content code {
             background: var(--code-bg);
             padding: 0.2rem 0.4rem;
             border-radius: 2px;
@@ -226,7 +226,7 @@
             border: 1px solid var(--border-color);
         }
 
-        .research-content pre {
+        .essay-content pre {
             background: var(--code-bg);
             padding: 1rem;
             border-radius: 4px;
@@ -235,7 +235,7 @@
             border: 1px solid var(--border-color);
         }
 
-        .research-content img {
+        .essay-content img {
             max-width: 100%;
             height: auto;
             display: block;
@@ -246,7 +246,7 @@
             cursor: zoom-in;
         }
 
-        .research-content img:hover {
+        .essay-content img:hover {
             transform: scale(1.02);
         }
 
@@ -370,17 +370,17 @@
             }
         }
 
-        .research-content strong {
+        .essay-content strong {
             color: var(--text-color);
             font-weight: 600;
         }
 
-        .research-content em {
+        .essay-content em {
             color: var(--secondary-text);
         }
 
         /* Table styles */
-        .research-content table {
+        .essay-content table {
             width: 100%;
             border-collapse: collapse;
             margin: 2rem 0;
@@ -388,20 +388,20 @@
             border: 1px solid var(--border-color);
         }
 
-        .research-content th,
-        .research-content td {
+        .essay-content th,
+        .essay-content td {
             padding: 0.75rem;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
         }
 
-        .research-content th {
+        .essay-content th {
             background: var(--hover-bg);
             color: var(--text-color);
             font-weight: 500;
         }
 
-        .research-content tr:hover {
+        .essay-content tr:hover {
             background: var(--hover-bg);
         }
 
@@ -627,38 +627,38 @@
         }
 
         @media (max-width: 768px) {
-            .research-header {
+            .essay-header {
                 padding: 3rem 1rem;
                 margin-bottom: 2rem;
             }
 
-            .research-header h1 {
+            .essay-header h1 {
                 font-size: 2rem;
             }
             
-            .research-meta {
+            .essay-meta {
                 gap: 1rem;
                 flex-direction: column;
                 align-items: center;
             }
 
-            .research-author {
+            .essay-author {
                 font-size: 0.8rem;
             }
             
-            .research-detail {
+            .essay-detail {
                 padding: 1rem;
             }
 
-            .research-content {
+            .essay-content {
                 padding: 2rem 1.5rem;
             }
 
-            .research-content h1 {
+            .essay-content h1 {
                 font-size: 1.8rem;
             }
 
-            .research-content h2 {
+            .essay-content h2 {
                 font-size: 1.5rem;
             }
 
@@ -729,7 +729,7 @@
             <a href="index.html">关于我</a>
             <a href="thoughts.html">想法</a>
             <a href="books.html">阅读</a>
-            <a href="research.html">研究</a>
+            <a href="essay.html">文章</a>
             <a href="products.html">我的产品</a>
         </div>
     </div>
@@ -738,23 +738,23 @@
     <div class="reading-progress" id="reading-progress"></div>
 
     <main>
-        <div class="research-detail"></div>
-            <a href="research.html" class="back-link">
+        <div class="essay-detail"></div>
+            <a href="essay.html" class="back-link">
                 <i class="fas fa-arrow-left"></i>
-                <span>返回研究列表</span>
+                <span>返回文章列表</span>
             </a>
             
-            <div class="research-header">
-                <h1 id="research-title">研究标题</h1>
-                <div class="research-meta">
-                    <div class="research-author" id="research-author">岳铭</div>
-                    <div class="research-date">
-                        <span id="research-date">2025-01-01</span>
+            <div class="essay-header">
+                <h1 id="essay-title">文章标题</h1>
+                <div class="essay-meta">
+                    <div class="essay-author" id="essay-author">岳铭</div>
+                    <div class="essay-date">
+                        <span id="essay-date">2025-01-01</span>
                     </div>
                 </div>
             </div>
             
-            <!-- Interactive Section for Humanoid Research -->
+            <!-- Interactive Section for Humanoid essay -->
             <div class="interactive-section" id="interactive-section" style="display: none;">
                 <h2 class="interactive-title">产业链交互式分析 - 点击机器人部位探索</h2>
                 <div class="interactive-container">
@@ -856,7 +856,7 @@
                 </div>
             </div>
             
-            <div class="research-content" id="research-content">
+            <div class="essay-content" id="essay-content">
                 <!-- Content will be loaded dynamically -->
             </div>
         </div>
@@ -878,7 +878,7 @@
     </div>
 
     <script>
-        // Global interactive data for humanoid research
+        // Global interactive data for humanoid essay
         const partData = {
             brain: {
                 title: "大脑系统 - AI芯片与算法",
@@ -1087,63 +1087,72 @@
                 enBtn.classList.toggle('active', currentLang === 'en');
             }
 
-            // Get research ID from URL
+            // Get essay ID from URL
             const urlParams = new URLSearchParams(window.location.search);
-            const researchId = urlParams.get('id');
+            const essayId = urlParams.get('id');
 
-            // Research data (same as in research.html)
-            const researchData = {
-                'humanoid_research': {
+            // essay data (same as in essay.html)
+            const essayData = {
+                'humanoid_essay': {
                     title: '中国人形机器人产业链研究',
-                    titleEn: 'China Humanoid Robot Industry Chain Research',
+                    titleEn: 'China Humanoid Robot Industry Chain Essay',
                     author: '岳铭',
                     authorEn: 'Yue Ming',
                     date: '2025-12-15',
                     image: 'images/research/humanoid.jpg',
-                    file: 'research/humanoid_research.md'
+                    file: 'essay/humanoid_research.md'
+                },
+                'how_to_learn_programming': {
+                    title: '如何学会编程',
+                    titleEn: 'How to Learn Programming',
+                    author: '岳铭',
+                    authorEn: 'Yue Ming',
+                    date: '2024-12-24',
+                    image: 'images/research/programming.png',
+                    file: 'essay/how_to_learn_programming.md'
                 }
             };
 
-            if (researchId && researchData[researchId]) {
-                const research = researchData[researchId];
+            if (essayId && essayData[essayId]) {
+                const essay = essayData[essayId];
                 
                 // Update page content
                 function updateContent() {
                     const currentLang = getCurrentLanguage();
-                    const title = currentLang === 'zh' ? research.title : research.titleEn;
-                    const author = currentLang === 'zh' ? research.author : research.authorEn;
+                    const title = currentLang === 'zh' ? essay.title : essay.titleEn;
+                    const author = currentLang === 'zh' ? essay.author : essay.authorEn;
                     
-                    document.getElementById('research-title').textContent = title;
-                    document.getElementById('research-author').textContent = author;
-                    document.getElementById('research-date').textContent = research.date;
+                    document.getElementById('essay-title').textContent = title;
+                    document.getElementById('essay-author').textContent = author;
+                    document.getElementById('essay-date').textContent = essay.date;
                     document.title = title;
                     
                     // Set background image if available
-                    const headerElement = document.querySelector('.research-header');
-                    if (research.image) {
+                    const headerElement = document.querySelector('.essay-header');
+                    if (essay.image) {
                         // Test if image loads successfully
                         const img = new Image();
                         img.onload = function() {
-                            headerElement.style.backgroundImage = `url(${research.image})`;
+                            headerElement.style.backgroundImage = `url(${essay.image})`;
                             headerElement.classList.add('has-image');
                         };
                         img.onerror = function() {
                             // Image failed to load, use default styling
                             headerElement.classList.remove('has-image');
                         };
-                        img.src = research.image;
+                        img.src = essay.image;
                     }
                     
                     // Update back link text
                     const backLinkSpan = document.querySelector('.back-link span');
                     if (backLinkSpan) {
-                        backLinkSpan.textContent = currentLang === 'zh' ? '返回研究列表' : 'Back to Research';
+                        backLinkSpan.textContent = currentLang === 'zh' ? '返回文章列表' : 'Back to Essays';
                     }
                 }
 
                 // Reading progress indicator
                 function updateReadingProgress() {
-                    const content = document.getElementById('research-content');
+                    const content = document.getElementById('essay-content');
                     const progressBar = document.getElementById('reading-progress');
                     
                     if (content && progressBar) {
@@ -1168,14 +1177,14 @@
                 
                 // Load markdown content
                 try {
-                    const response = await fetch(research.file);
+                    const response = await fetch(essay.file);
                     if (response.ok) {
                         const markdown = await response.text();
                         const html = marked.parse(markdown);
-                        document.getElementById('research-content').innerHTML = html;
+                        document.getElementById('essay-content').innerHTML = html;
                         
-                        // Show interactive section for humanoid research
-                        if (researchId === 'humanoid_research') {
+                        // Show interactive section for humanoid essay
+                        if (essayId === 'humanoid_essay') {
                             document.getElementById('interactive-section').style.display = 'block';
                             initializeInteractive();
                         }
@@ -1183,17 +1192,17 @@
                         // Fallback content if file doesn't exist
                         const currentLang = getCurrentLanguage();
                         const fallbackContent = currentLang === 'zh' 
-                            ? '<p>研究内容正在整理中，敬请期待...</p>'
-                            : '<p>Research content is being organized, please stay tuned...</p>';
-                        document.getElementById('research-content').innerHTML = fallbackContent;
+                            ? '<p>文章内容正在整理中，敬请期待...</p>'
+                            : '<p>Essay content is being organized, please stay tuned...</p>';
+                        document.getElementById('essay-content').innerHTML = fallbackContent;
                     }
                 } catch (error) {
-                    console.error('Error loading research content:', error);
+                    console.error('Error loading essay content:', error);
                     const currentLang = getCurrentLanguage();
                     const errorContent = currentLang === 'zh' 
-                        ? '<p>加载研究内容时出错，请稍后再试。</p>'
-                        : '<p>Error loading research content, please try again later.</p>';
-                    document.getElementById('research-content').innerHTML = errorContent;
+                        ? '<p>加载文章内容时出错，请稍后再试。</p>'
+                        : '<p>Error loading essay content, please try again later.</p>';
+                    document.getElementById('essay-content').innerHTML = errorContent;
                 }
                 
                 // Update content when language changes
@@ -1204,19 +1213,19 @@
                 };
                 
             } else {
-                // Research not found
+                // essay not found
                 const currentLang = getCurrentLanguage();
                 const notFoundContent = currentLang === 'zh' 
-                    ? '<h1>研究未找到</h1><p>抱歉，您访问的研究内容不存在。</p>'
-                    : '<h1>Research Not Found</h1><p>Sorry, the research content you are looking for does not exist.</p>';
-                document.querySelector('.research-detail').innerHTML = notFoundContent;
+                    ? '<h1>文章未找到</h1><p>抱歉，您访问的文章内容不存在。</p>'
+                    : '<h1>Essay Not Found</h1><p>Sorry, the essay content you are looking for does not exist.</p>';
+                document.querySelector('.essay-detail').innerHTML = notFoundContent;
             }
 
             // Update page content based on current language
             updatePageContent();
         });
 
-        // Interactive functionality for humanoid research
+        // Interactive functionality for humanoid essay
         function initializeInteractive() {
             const robotParts = document.querySelectorAll('.robot-part');
             const infoPanelDiv = document.getElementById('part-info');
@@ -1342,7 +1351,7 @@
         let allImages = [];
 
         function initializeImageZoom() {
-            const contentImages = document.querySelectorAll('.research-content img');
+            const contentImages = document.querySelectorAll('.essay-content img');
             allImages = Array.from(contentImages);
             
             const modal = document.getElementById('imageModal');

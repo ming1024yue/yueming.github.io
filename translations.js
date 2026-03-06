@@ -4,7 +4,7 @@ const translations = {
         'nav.aboutme': '关于我',
         'nav.thoughts': '想法',
         'nav.books': '阅读',
-        'nav.research': '研究',
+        'nav.research': '文章',
         'nav.products': '我的产品',
         
         // aboutme page
@@ -48,7 +48,7 @@ const translations = {
         'books.source_code.comment': '"The autobiography written by Microsoft founder Bill Gates."',
         
         // Research page
-        'research.title': '我的研究',
+        'research.title': '我的文章',
         'research.readmore': '阅读全文',
         
         // Products page
@@ -91,7 +91,7 @@ const translations = {
         'nav.aboutme': 'about me',
         'nav.thoughts': 'Thoughts',
         'nav.books': 'Books',
-        'nav.research': 'Research',
+        'nav.research': 'Essays',
         'nav.products': 'Products',
         
         // aboutme page
@@ -135,7 +135,7 @@ const translations = {
         'books.source_code.comment': '"The autobiography written by Microsoft founder Bill Gates."',
         
         // Research page
-        'research.title': 'My Research',
+        'research.title': 'My Essays',
         'research.readmore': 'Read More',
         
         // Products page
@@ -211,7 +211,7 @@ function updatePageContent() {
             link.textContent = translate('nav.thoughts');
         } else if (href === 'books.html') {
             link.textContent = translate('nav.books');
-        } else if (href === 'research.html') {
+        } else if (href === 'essay.html') {
             link.textContent = translate('nav.research');
         } else if (href === 'products.html') {
             link.textContent = translate('nav.products');
