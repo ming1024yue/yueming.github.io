@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All write 写作 - 产品介绍</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="translations.js"></script>
+    <style>
+        .product-detail { max-width: 700px; margin: 2rem auto; background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 2rem 2rem 1.5rem 2rem; }
+        .product-detail img { display: block; margin: 1.5rem auto; max-width: 320px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+        .product-detail h2 { margin-top: 0; }
+        .product-detail ul { margin: 1rem 0 1.5rem 1.2rem; }
+        .product-link { display: inline-block; color: #fff; background: linear-gradient(90deg, #3a6ea5, #5f9ea0); padding: 0.5em 1.2em; border-radius: 8px; text-decoration: none; text-align: center; transition: background 0.2s; margin-top: 1rem; }
+        .product-link:hover { background: linear-gradient(90deg, #5f9ea0, #3a6ea5); }
+        @media (max-width: 700px) { .product-detail { padding: 1rem 0.5rem; } }
+    </style>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button onclick="setLanguage('zh')" id="lang-zh">中文</button>
+        <button onclick="setLanguage('en')" id="lang-en">English</button>
+    </div>
+
+    <div class="top-links">
+        <div class="menu-group">
+            <a href="index.html">关于我</a>
+            <a href="thoughts.html">想法</a>
+            <a href="books.html">阅读</a>
+            <a href="products.html">我的产品</a>
+        </div>
+    </div>
+    <main>
+        <section class="product-detail">
+            <h2>All write 写作</h2>
+            <img src="images/product/all_write.png" alt="All write封面">
+            <p>一款专为 Mac 平台设计的写作软件，专注为严肃写作者打造，提供沉浸式创作环境与高效流程。</p>
+            <ul>
+                <li>无干扰专注写作，防止注意力被打断</li>
+                <li>独特的校读功能，让每一个句子精雕细琢</li>
+                <li>深色/明亮主题、字体排版优化，减少视觉疲劳</li>
+                <li>支持 Markdown</li>
+            </ul>
+            <a href="https://apps.apple.com/cn/app/all-write/id6760831427?mt=12" class="product-link" target="_blank">前往 App Store 下载</a>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 岳铭. All rights reserved.</p>
+    </footer>
+</body>
+</html>
