@@ -18,6 +18,7 @@ const translations = {
         'aboutme.intro.goal': '我的目标是创立一种全新的教育/学习体系，让每个人都能够享受学习，创造价值',
         'aboutme.intro.hobbies': '我喜欢阅读和户外运动,以及各种口味的饮料（咖啡，茶，汽水...）',
         'aboutme.intro.belief': '我<b>不是</b>无神论者',
+        'aboutme.intro.quote': '做正确的事',
         
         // Thoughts page
         'thoughts.title': '想法',
@@ -105,6 +106,7 @@ const translations = {
         'aboutme.intro.goal': 'My goal is to create a completely new education/learning system that allows everyone to enjoy learning and create value.',
         'aboutme.intro.hobbies': 'I enjoy reading and outdoor sports, as well as beverages of all kinds (coffee, tea, soda...).',
         'aboutme.intro.belief': 'I am <b>not</b> an atheist.',
+        'aboutme.intro.quote': 'Do the right thing.',
         
         // Thoughts page
         'thoughts.title': 'Thoughts',
