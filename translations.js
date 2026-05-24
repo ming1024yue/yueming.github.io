@@ -74,7 +74,7 @@ const translations = {
         'products.wordzen.cover.alt': 'WordZen封面',
         
         // Footer
-        'footer.copyright': '© 2025 岳铭. All rights reserved.',
+        'footer.copyright': '© 2026 岳铭. All rights reserved.',
         
         // Support section
         'support.title': '如果你喜欢我的作品，欢迎自愿打赏一杯咖啡的钱（建议不超过 10 元）。小小支持，大大鼓励',
@@ -162,7 +162,7 @@ const translations = {
         'products.wordzen.cover.alt': 'WordZen cover',
         
         // Footer
-        'footer.copyright': '© 2025 Yue Ming. All rights reserved.',
+        'footer.copyright': '© 2026 Yue Ming. All rights reserved.',
         
         // Support section
         'support.title': 'If you like my work, feel free to buy me a coffee (suggested amount: no more than ¥10). Small support, big encouragement.',
