@@ -84,9 +84,15 @@ section {
 }
 
 footer {
-    margin-top: 4rem;
-    padding: 2rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-top: 0;
+    padding: 1rem 2rem;
     transition: color 0.3s;
+    background: var(--bg-color);
+    z-index: 99;
 }
 
 /* Navigation */
@@ -141,8 +147,12 @@ article, .book {
 
 /* Connect Section */
 #connect {
-    margin-top: 0rem;
-    padding-bottom: 0rem;
+    position: fixed;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1rem 0;
 }
 
 /* Social Links */
@@ -156,18 +166,55 @@ article, .book {
 .social-links a {
     color: #333;
     transition: color 0.3s;
+    background: var(--bg-color);
+    padding: 0.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
 }
 
 .social-links a:hover {
     color: #007bff;
 }
 
+/* 响应式设计 */
+@media (max-width: 768px) {
+    #connect {
+        bottom: 50px;
+    }
+    
+    .social-links {
+        gap: 1.5rem;
+        font-size: 1.3rem;
+    }
+    
+    .social-links a {
+        width: 45px;
+        height: 45px;
+    }
+}
+
 /* Footer */
 footer p {
     text-align: center;
     color: var(--footer-text);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     margin: 0;
+}
+
+/* 响应式 footer */
+@media (max-width: 768px) {
+    footer {
+        padding: 0.8rem 1rem;
+    }
+    
+    footer p {
+        font-size: 0.75rem;
+    }
+}
 }
 
 /* Responsive Design */
