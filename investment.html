@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="img-src 'self' data: https: http:;">
+    <title>我的投资 - Investment Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="translations.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <style>
+        #investment {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        #investment h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+        }
+
+        /* Timeline Navigation */
+        .timeline-nav {
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+
+        .timeline-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        /* Timeline line */
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #e0e0e0;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        /* Timeline dots container */
+        .timeline-dots {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2;
+        }
+
+        /* Timeline dot */
+        .timeline-dot {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dot-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--bg-color);
+            border: 3px solid #000000;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 3;
+        }
+
+        .timeline-dot:hover .dot-circle {
+            transform: scale(1.2);
+            background: #f5f5f5;
+        }
+
+        .timeline-dot.active .dot-circle {
+            background: #000000;
+            border-color: #000000;
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
+            transform: scale(1.3);
+        }
+
+        .dot-label {
+            position: absolute;
+            top: -45px;
+            white-space: nowrap;
+            font-size: 0.9rem;
+            color: #666666;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .timeline-dot:hover .dot-label,
+        .timeline-dot.active .dot-label {
+            color: #000000;
+            font-weight: 600;
+        }
+
+        .timeline-info {
+            text-align: center;
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-container {
+                max-width: 100%;
+                padding: 2rem 1rem;
+            }
+
+            .dot-label {
+                font-size: 0.75rem;
+                top: -40px;
+            }
+
+            .dot-circle {
+                width: 16px;
+                height: 16px;
+            }
+
+            .timeline-dot.active .dot-circle {
+                transform: scale(1.2);
+            }
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: var(--thought-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .chart-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--header-color);
+            text-align: center;
+        }
+
+        .chart-subtitle {
+            text-align: center;
+            color: var(--secondary-text);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 450px;
+            margin-bottom: 2rem;
+        }
+
+        /* Custom Legend with Logos */
+        .custom-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            padding: 1rem 0;
+            margin-left: 2rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .legend-item:hover {
+            transform: translateX(5px);
+        }
+
+        .legend-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            object-fit: contain;
+            background: #f8f8f8;
+            padding: 4px;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .legend-item:hover .legend-logo {
+            border-color: var(--link-color);
+        }
+
+        .legend-info {
+            flex: 1;
+        }
+
+        .legend-company {
+            font-weight: 600;
+            color: var(--header-color);
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .legend-ticker {
+            font-size: 0.85rem;
+            color: var(--secondary-text);
+        }
+
+        .legend-percentage {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-left: auto;
+        }
+
+        .chart-canvas-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .chart-canvas {
+            flex: 0 0 400px;
+            height: 400px;
+        }
+
+        .bar-chart-wrapper {
+            position: relative;
+            height: 300px;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .chart-canvas-container {
+                flex-direction: column;
+            }
+
+            .chart-canvas {
+                flex: 1 1 auto;
+                width: 100%;
+                max-width: 350px;
+            }
+
+            .custom-legend {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .legend-logo {
+                width: 40px;
+                height: 40px;
+            }
+
+            .bar-chart-wrapper {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #investment {
+                padding: 0 1rem;
+            }
+
+            .chart-wrapper {
+                height: 350px;
+            }
+
+            #investment h2 {
+                font-size: 2rem;
+            }
+
+            .timeline-buttons {
+                gap: 0.5rem;
+            }
+
+            .quarter-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .bar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button onclick="setLanguage('zh')" id="lang-zh">中文</button>
+        <button onclick="setLanguage('en')" id="lang-en">English</button>
+    </div>
+
+    <div class="top-links">
+        <div class="menu-group">
+            <a href="index.html">关于我</a>
+            <a href="thoughts.html">想法</a>
+            <a href="books.html">阅读</a>
+            <a href="essay.html">文章</a>
+            <a href="products.html">我的产品</a>
+            <a href="investment.html">投资</a>
+        </div>
+    </div>
+
+    <main>
+        <section id="investment">
+            <h2>我的投资组合</h2>
+
+            <!-- Timeline Navigation -->
+            <div class="timeline-nav">
+                <div class="timeline-container">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-dots" id="timeline-dots">
+                        <!-- Timeline dots will be generated dynamically -->
+                    </div>
+                </div>
+                <div class="timeline-info">
+                    点击时间轴上的节点查看该季度的持仓情况
+                </div>
+            </div>
+
+            <!-- Chart Container -->
+            <div class="chart-container">
+                <h3 class="chart-title" id="chart-title">持仓分布</h3>
+                <div class="chart-subtitle" id="chart-subtitle"></div>
+                <div class="chart-wrapper">
+                    <div class="chart-canvas-container">
+                        <div class="chart-canvas">
+                            <canvas id="doughnutChart"></canvas>
+                        </div>
+                        <div class="custom-legend" id="custom-legend">
+                            <!-- Legend will be generated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sector Bar Chart -->
+            <div class="chart-container">
+                <h3 class="chart-title">行业分布</h3>
+                <div class="chart-subtitle" id="sector-subtitle"></div>
+                <div class="bar-chart-wrapper">
+                    <canvas id="sectorChart"></canvas>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 岳铭. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Portfolio data by quarter - Add your quarterly holdings here
+        const quarterlyData = {
+            '2026-Q2': [
+                { company: "比亚迪", ticker: "002594", percentage: 81.0, sector: "tech", color: "#E60012", logo: "images/company/byd.jpg" },
+                { company: "英伟达", ticker: "NVDA", percentage: 13.6, sector: "tech", color: "#76B900", logo: "images/company/nvdia.jpg" },
+                { company: "SpaceX", ticker: "SPCX", percentage: 5.4, sector: "tech", color: "#000000", logo: "images/company/spacex.jpg" }
+            ]
+            // 继续添加更多季度...
+            // 示例：多行业数据
+            // '2026-Q3': [
+            //     { company: "比亚迪", ticker: "002594", percentage: 40.0, sector: "tech", color: "#E60012", logo: "images/company/byd.jpg" },
+            //     { company: "英伟达", ticker: "NVDA", percentage: 25.0, sector: "tech", color: "#76B900", logo: "images/company/nvdia.jpg" },
+            //     { company: "招商银行", ticker: "600036", percentage: 20.0, sector: "finance", color: "#1E88E5", logo: "images/company/cmb.jpg" },
+            //     { company: "茅台", ticker: "600519", percentage: 10.0, sector: "consumer", color: "#D32F2F", logo: "images/company/moutai.jpg" },
+            //     { company: "SpaceX", ticker: "SPCX", percentage: 5.0, sector: "tech", color: "#000000", logo: "images/company/spacex.jpg" }
+            // ]
+        };
+
+        // Sector names in Chinese
+        const sectorNames = {
+            tech: "科技",
+            finance: "金融",
+            consumer: "消费",
+            healthcare: "医疗",
+            energy: "能源"
+        };
+
+        let currentChart = null;
+        let sectorChart = null;
+        let currentQuarter = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial theme
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            
+            // Update language switcher active state
+            const currentLang = getCurrentLanguage();
+            document.getElementById('lang-zh').classList.toggle('active', currentLang === 'zh');
+            document.getElementById('lang-en').classList.toggle('active', currentLang === 'en');
+
+            // Initialize timeline
+            initializeTimeline();
+        });
+
+        function initializeTimeline() {
+            const quarters = Object.keys(quarterlyData).sort().reverse();
+            const dotsContainer = document.getElementById('timeline-dots');
+            
+            // Create timeline dots
+            quarters.forEach((quarter, index) => {
+                const dot = document.createElement('div');
+                dot.className = 'timeline-dot';
+                dot.dataset.quarter = quarter;
+                
+                const label = document.createElement('div');
+                label.className = 'dot-label';
+                label.textContent = formatQuarterShort(quarter);
+                
+                const circle = document.createElement('div');
+                circle.className = 'dot-circle';
+                
+                dot.appendChild(label);
+                dot.appendChild(circle);
+                
+                dot.addEventListener('click', () => {
+                    loadQuarter(quarter);
+                });
+                
+                dotsContainer.appendChild(dot);
+                
+                // Load the most recent quarter by default
+                if (index === 0) {
+                    dot.classList.add('active');
+                    currentQuarter = quarter;
+                }
+            });
+            
+            // Load the initial quarter
+            if (currentQuarter) {
+                loadQuarter(currentQuarter);
+            }
+        }
+
+        function formatQuarter(quarter) {
+            const [year, q] = quarter.split('-');
+            const quarterNum = q.replace('Q', '');
+            return `${year}年 第${quarterNum}季度`;
+        }
+
+        function formatQuarterShort(quarter) {
+            const [year, q] = quarter.split('-');
+            return `${year}\n${q}`;
+        }
+
+        function loadQuarter(quarter) {
+            // Update active dot
+            document.querySelectorAll('.timeline-dot').forEach(dot => {
+                dot.classList.toggle('active', dot.dataset.quarter === quarter);
+            });
+            
+            currentQuarter = quarter;
+            const data = quarterlyData[quarter];
+            
+            // Update chart title
+            document.getElementById('chart-title').textContent = `持仓分布 - ${formatQuarter(quarter)}`;
+            
+            // Calculate total companies and sectors
+            const totalCompanies = data.length;
+            const uniqueSectors = new Set(data.map(h => h.sector)).size;
+            document.getElementById('chart-subtitle').textContent = 
+                `共 ${totalCompanies} 家公司 · ${uniqueSectors} 个行业`;
+            
+            // Update charts
+            updateChart(data);
+            updateSectorChart(data);
+        }
+
+        function updateSectorChart(data) {
+            const ctx = document.getElementById('sectorChart').getContext('2d');
+            
+            // Destroy existing chart if any
+            if (sectorChart) {
+                sectorChart.destroy();
+            }
+
+            // Calculate sector distribution
+            const sectorData = {};
+            const sectorCompanies = {};
+            
+            data.forEach(holding => {
+                if (!sectorData[holding.sector]) {
+                    sectorData[holding.sector] = 0;
+                    sectorCompanies[holding.sector] = [];
+                }
+                sectorData[holding.sector] += holding.percentage;
+                sectorCompanies[holding.sector].push(holding.company);
+            });
+
+            // Sort by percentage (descending - highest to lowest from left to right)
+            const sortedSectors = Object.keys(sectorData).sort((a, b) => sectorData[b] - sectorData[a]);
+            
+            // Colors for different sectors
+            const sectorColors = {
+                tech: '#4285F4',
+                finance: '#34A853',
+                consumer: '#FBBC05',
+                healthcare: '#EA4335',
+                energy: '#9AA0A6'
+            };
+
+            sectorChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: sortedSectors.map(sector => sectorNames[sector]),
+                    datasets: [{
+                        label: '持仓比例 (%)',
+                        data: sortedSectors.map(sector => sectorData[sector]),
+                        backgroundColor: sortedSectors.map(sector => sectorColors[sector] || '#999999'),
+                        borderColor: sortedSectors.map(sector => sectorColors[sector] || '#999999'),
+                        borderWidth: 1,
+                        borderRadius: 8,
+                        borderSkipped: false,
+                        barThickness: 60,  // 设置固定柱子宽度
+                        maxBarThickness: 80,  // 最大柱子宽度
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            categoryPercentage: 0.6,  // 控制类别间距
+                            barPercentage: 0.8,  // 控制柱子在类别中的占比
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: function(context) {
+                                    const sectorKey = sortedSectors[context[0].dataIndex];
+                                    return sectorNames[sectorKey];
+                                },
+                                label: function(context) {
+                                    const sectorKey = sortedSectors[context.dataIndex];
+                                    const companies = sectorCompanies[sectorKey];
+                                    const percentage = context.parsed.y;
+                                    
+                                    return [
+                                        `持仓比例: ${percentage.toFixed(1)}%`,
+                                        `公司数量: ${companies.length}家`,
+                                        `包含: ${companies.join('、')}`
+                                    ];
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Update sector subtitle
+            document.getElementById('sector-subtitle').textContent = 
+                `按行业分组的持仓比例分布`;
+        }
+
+        function updateChart(data) {
+            const ctx = document.getElementById('doughnutChart').getContext('2d');
+            
+            // Destroy existing chart if any
+            if (currentChart) {
+                currentChart.destroy();
+            }
+            
+            // Extract colors from data, using brand colors if available
+            const colors = data.map(h => h.color || '#999999');
+            
+            currentChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: data.map(h => `${h.company}`),
+                    datasets: [{
+                        data: data.map(h => h.percentage),
+                        backgroundColor: colors,
+                        borderWidth: 3,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false  // Hide default legend, we'll use custom one
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const holding = data[context.dataIndex];
+                                    return [
+                                        `${holding.company} (${holding.ticker})`,
+                                        `持仓比例: ${context.parsed}%`,
+                                        `行业: ${sectorNames[holding.sector]}`
+                                    ];
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Generate custom legend with logos
+            generateCustomLegend(data);
+        }
+
+        function generateCustomLegend(data) {
+            const legendContainer = document.getElementById('custom-legend');
+            legendContainer.innerHTML = '';
+
+            data.forEach((holding, index) => {
+                const legendItem = document.createElement('div');
+                legendItem.className = 'legend-item';
+                
+                legendItem.innerHTML = `
+                    <img src="${holding.logo}" alt="${holding.company}" class="legend-logo">
+                    <div class="legend-info">
+                        <div class="legend-company">${holding.company}</div>
+                        <div class="legend-ticker">${holding.ticker}</div>
+                    </div>
+                    <div class="legend-percentage" style="color: ${holding.color}">${holding.percentage}%</div>
+                `;
+                
+                // Add click event to toggle chart segment
+                legendItem.addEventListener('click', () => {
+                    if (currentChart) {
+                        const meta = currentChart.getDatasetMeta(0);
+                        meta.data[index].hidden = !meta.data[index].hidden;
+                        currentChart.update();
+                    }
+                });
+                
+                legendContainer.appendChild(legendItem);
+            });
+        }
+    </script>
+</body>
+</html>
