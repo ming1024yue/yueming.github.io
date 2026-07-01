@@ -481,30 +481,41 @@
     <script>
         // Portfolio data by quarter - Add your quarterly holdings here
         const quarterlyData = {
+            '2026-Q3': [
+                { company: "比亚迪", ticker: "002594", percentage: 61.1, sector: "tech", color: "#E60012", logo: "images/company/byd.jpg" },
+                { company: "英伟达", ticker: "NVDA", percentage: 20.8, sector: "tech", color: "#76B900", logo: "images/company/nvdia.jpg" },
+                { company: "谷歌", ticker: "GOOG", percentage: 9.2, sector: "tech", color: "#4285F4", logo: "images/company/goog.png" },
+                { company: "SpaceX", ticker: "SPCX", percentage: 8.9, sector: "tech", color: "#000000", logo: "images/company/spacex.jpg" }
+            ],
             '2026-Q2': [
                 { company: "比亚迪", ticker: "002594", percentage: 67.9, sector: "tech", color: "#E60012", logo: "images/company/byd.jpg" },
                 { company: "英伟达", ticker: "NVDA", percentage: 22.6, sector: "tech", color: "#76B900", logo: "images/company/nvdia.jpg" },
                 { company: "SpaceX", ticker: "SPCX", percentage: 9.5, sector: "tech", color: "#000000", logo: "images/company/spacex.jpg" }
             ]
-            // 继续添加更多季度...
-            // 示例：多行业数据
-            // '2026-Q3': [
-            //     { company: "比亚迪", ticker: "002594", percentage: 40.0, sector: "tech", color: "#E60012", logo: "images/company/byd.jpg" },
-            //     { company: "英伟达", ticker: "NVDA", percentage: 25.0, sector: "tech", color: "#76B900", logo: "images/company/nvdia.jpg" },
-            //     { company: "招商银行", ticker: "600036", percentage: 20.0, sector: "finance", color: "#1E88E5", logo: "images/company/cmb.jpg" },
-            //     { company: "茅台", ticker: "600519", percentage: 10.0, sector: "consumer", color: "#D32F2F", logo: "images/company/moutai.jpg" },
-            //     { company: "SpaceX", ticker: "SPCX", percentage: 5.0, sector: "tech", color: "#000000", logo: "images/company/spacex.jpg" }
-            // ]
         };
 
-        // Sector names in Chinese
+        // Sector names in Chinese and English
         const sectorNames = {
-            tech: "科技",
-            finance: "金融",
-            consumer: "消费",
-            healthcare: "医疗",
-            energy: "能源"
+            zh: {
+                tech: "科技",
+                finance: "金融",
+                consumer: "消费",
+                healthcare: "医疗",
+                energy: "能源"
+            },
+            en: {
+                tech: "Technology",
+                finance: "Finance",
+                consumer: "Consumer",
+                healthcare: "Healthcare",
+                energy: "Energy"
+            }
         };
+
+        function getSectorName(sector) {
+            const currentLang = getCurrentLanguage();
+            return sectorNames[currentLang][sector] || sector;
+        }
 
         let currentChart = null;
         let sectorChart = null;
@@ -522,7 +533,86 @@
 
             // Initialize timeline
             initializeTimeline();
+            
+            // Apply initial language settings
+            updateInvestmentPageLanguage();
         });
+
+        // Override setLanguage function for investment page
+        const originalSetLanguage = window.setLanguage;
+        window.setLanguage = function(lang) {
+            if (originalSetLanguage) {
+                originalSetLanguage(lang);
+            } else {
+                localStorage.setItem('language', lang);
+                document.documentElement.lang = lang;
+                
+                // Update language switcher active state
+                const zhBtn = document.getElementById('lang-zh');
+                const enBtn = document.getElementById('lang-en');
+                if (zhBtn && enBtn) {
+                    zhBtn.classList.toggle('active', lang === 'zh');
+                    enBtn.classList.toggle('active', lang === 'en');
+                }
+            }
+            
+            // Update investment page content
+            updateInvestmentPageLanguage();
+            
+            // Reload current quarter data to update chart labels
+            if (currentQuarter) {
+                loadQuarter(currentQuarter);
+            }
+        };
+
+        function updateInvestmentPageLanguage() {
+            const currentLang = getCurrentLanguage();
+            
+            // Update page title
+            const title = document.querySelector('#investment h2');
+            if (title) {
+                title.textContent = currentLang === 'zh' ? '我的投资组合' : 'My Investment Portfolio';
+            }
+            
+            // Update timeline info
+            const timelineInfo = document.querySelector('.timeline-info');
+            if (timelineInfo) {
+                timelineInfo.textContent = currentLang === 'zh' ? 
+                    '点击时间轴上的节点查看该季度的持仓情况' : 
+                    'Click on the timeline nodes to view holdings for that quarter';
+            }
+            
+            // Update mobile legend title
+            const detailsTitle = document.querySelector('#mobile-legend-container h3');
+            if (detailsTitle) {
+                detailsTitle.textContent = currentLang === 'zh' ? '持仓详情' : 'Holdings Details';
+            }
+            
+            // Update sector chart title
+            const sectorTitle = document.querySelector('#sector-container h3');
+            if (sectorTitle) {
+                sectorTitle.textContent = currentLang === 'zh' ? '行业分布' : 'Sector Distribution';
+            }
+            
+            // Update navigation links
+            const navLinks = document.querySelectorAll('.menu-group a');
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === 'index.html') {
+                    link.textContent = currentLang === 'zh' ? '关于我' : 'about me';
+                } else if (href === 'thoughts.html') {
+                    link.textContent = currentLang === 'zh' ? '想法' : 'Thoughts';
+                } else if (href === 'books.html') {
+                    link.textContent = currentLang === 'zh' ? '阅读' : 'Books';
+                } else if (href === 'essay.html') {
+                    link.textContent = currentLang === 'zh' ? '文章' : 'Essays';
+                } else if (href === 'products.html') {
+                    link.textContent = currentLang === 'zh' ? '我的产品' : 'Products';
+                } else if (href === 'investment.html') {
+                    link.textContent = currentLang === 'zh' ? '投资' : 'Investment';
+                }
+            });
+        }
 
         function initializeTimeline() {
             const quarters = Object.keys(quarterlyData).sort().reverse();
@@ -566,7 +656,12 @@
         function formatQuarter(quarter) {
             const [year, q] = quarter.split('-');
             const quarterNum = q.replace('Q', '');
-            return `${year}年 第${quarterNum}季度`;
+            const currentLang = getCurrentLanguage();
+            if (currentLang === 'zh') {
+                return `${year}年 第${quarterNum}季度`;
+            } else {
+                return `${year} Q${quarterNum}`;
+            }
         }
 
         function formatQuarterShort(quarter) {
@@ -582,15 +677,21 @@
             
             currentQuarter = quarter;
             const data = quarterlyData[quarter];
+            const currentLang = getCurrentLanguage();
             
             // Update chart title
-            document.getElementById('chart-title').textContent = `持仓分布 - ${formatQuarter(quarter)}`;
+            const portfolioTitle = currentLang === 'zh' ? '持仓分布' : 'Portfolio Allocation';
+            document.getElementById('chart-title').textContent = `${portfolioTitle} - ${formatQuarter(quarter)}`;
             
             // Calculate total companies and sectors
             const totalCompanies = data.length;
             const uniqueSectors = new Set(data.map(h => h.sector)).size;
+            const companiesText = currentLang === 'zh' ? '家公司' : 'companies';
+            const sectorsText = currentLang === 'zh' ? '个行业' : 'sectors';
             document.getElementById('chart-subtitle').textContent = 
-                `共 ${totalCompanies} 家公司 · ${uniqueSectors} 个行业`;
+                currentLang === 'zh' ? 
+                `共 ${totalCompanies} ${companiesText} · ${uniqueSectors} ${sectorsText}` :
+                `${totalCompanies} ${companiesText} · ${uniqueSectors} ${sectorsText}`;
             
             // Update charts
             updateChart(data);
@@ -633,9 +734,9 @@
             sectorChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: sortedSectors.map(sector => sectorNames[sector]),
+                    labels: sortedSectors.map(sector => getSectorName(sector)),
                     datasets: [{
-                        label: '持仓比例 (%)',
+                        label: getCurrentLanguage() === 'zh' ? '持仓比例 (%)' : 'Holdings (%)',
                         data: sortedSectors.map(sector => sectorData[sector]),
                         backgroundColor: sortedSectors.map(sector => sectorColors[sector] || '#999999'),
                         borderColor: sortedSectors.map(sector => sectorColors[sector] || '#999999'),
@@ -678,18 +779,27 @@
                             callbacks: {
                                 title: function(context) {
                                     const sectorKey = sortedSectors[context[0].dataIndex];
-                                    return sectorNames[sectorKey];
+                                    return getSectorName(sectorKey);
                                 },
                                 label: function(context) {
                                     const sectorKey = sortedSectors[context.dataIndex];
                                     const companies = sectorCompanies[sectorKey];
                                     const percentage = context.parsed.y;
+                                    const currentLang = getCurrentLanguage();
                                     
-                                    return [
-                                        `持仓比例: ${percentage.toFixed(1)}%`,
-                                        `公司数量: ${companies.length}家`,
-                                        `包含: ${companies.join('、')}`
-                                    ];
+                                    if (currentLang === 'zh') {
+                                        return [
+                                            `持仓比例: ${percentage.toFixed(1)}%`,
+                                            `公司数量: ${companies.length}家`,
+                                            `包含: ${companies.join('、')}`
+                                        ];
+                                    } else {
+                                        return [
+                                            `Holdings: ${percentage.toFixed(1)}%`,
+                                            `Companies: ${companies.length}`,
+                                            `Includes: ${companies.join(', ')}`
+                                        ];
+                                    }
                                 }
                             }
                         }
@@ -698,8 +808,9 @@
             });
 
             // Update sector subtitle
+            const currentLang = getCurrentLanguage();
             document.getElementById('sector-subtitle').textContent = 
-                `按行业分组的持仓比例分布`;
+                currentLang === 'zh' ? '按行业分组的持仓比例分布' : 'Portfolio allocation grouped by sectors';
         }
 
         function updateChart(data) {
@@ -735,11 +846,20 @@
                             callbacks: {
                                 label: function(context) {
                                     const holding = data[context.dataIndex];
-                                    return [
-                                        `${holding.company} (${holding.ticker})`,
-                                        `持仓比例: ${context.parsed}%`,
-                                        `行业: ${sectorNames[holding.sector]}`
-                                    ];
+                                    const currentLang = getCurrentLanguage();
+                                    if (currentLang === 'zh') {
+                                        return [
+                                            `${holding.company} (${holding.ticker})`,
+                                            `持仓比例: ${context.parsed}%`,
+                                            `行业: ${getSectorName(holding.sector)}`
+                                        ];
+                                    } else {
+                                        return [
+                                            `${holding.company} (${holding.ticker})`,
+                                            `Holdings: ${context.parsed}%`,
+                                            `Sector: ${getSectorName(holding.sector)}`
+                                        ];
+                                    }
                                 }
                             }
                         }
