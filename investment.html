@@ -471,19 +471,6 @@
                     <canvas id="sectorChart"></canvas>
                 </div>
             </div>
-
-            <!-- Market Distribution Chart -->
-            <div class="chart-container" id="market-container">
-                <h3 class="chart-title">市场分布</h3>
-                <div class="chart-subtitle" id="market-subtitle"></div>
-                <div class="chart-wrapper">
-                    <div class="chart-canvas-container">
-                        <div class="chart-canvas">
-                            <canvas id="marketChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </section>
     </main>
 
@@ -495,10 +482,9 @@
         // Portfolio data by quarter - Add your quarterly holdings here
         const quarterlyData = {
             '2026-Q3': [
-                { company: "比亚迪", ticker: "002594", percentage: 34.8, sector: "tech", market: "A股", color: "#E60012", logo: "images/company/byd.jpg" },
-                { company: "英伟达", ticker: "NVDA", percentage: 27.0, sector: "tech", market: "美股", color: "#76B900", logo: "images/company/nvdia.jpg" },
-                { company: "泡泡玛特", ticker: "HK9992", percentage: 25.3, sector: "consumer", market: "港股", color: "#F58220", logo: "images/company/pop_mart.png" },
-                { company: "可口可乐", ticker: "KO", percentage: 12.9, sector: "consumer", market: "美股", color: "#000000", logo: "images/company/coca.jpeg" }
+                { company: "英伟达", ticker: "NVDA", percentage: 41.4, sector: "tech", market: "美股", color: "#76B900", logo: "images/company/nvdia.jpg" },
+                { company: "泡泡玛特", ticker: "HK9992", percentage: 38.8, sector: "consumer", market: "港股", color: "#F58220", logo: "images/company/pop_mart.png" },
+                { company: "可口可乐", ticker: "KO", percentage: 19.8, sector: "consumer", market: "美股", color: "#000000", logo: "images/company/coca.jpeg" }
             ],
             '2026-Q2': [
                 { company: "比亚迪", ticker: "002594", percentage: 67.9, sector: "tech", market: "A股", color: "#E60012", logo: "images/company/byd.jpg" },
@@ -525,20 +511,6 @@
             }
         };
 
-        // Market names in Chinese and English
-        const marketNames = {
-            zh: {
-                "A股": "A股",
-                "港股": "港股", 
-                "美股": "美股"
-            },
-            en: {
-                "A股": "A-shares",
-                "港股": "HK Stocks",
-                "美股": "US Stocks"
-            }
-        };
-
 
 
         function getSectorName(sector) {
@@ -546,14 +518,8 @@
             return sectorNames[currentLang][sector] || sector;
         }
 
-        function getMarketName(market) {
-            const currentLang = getCurrentLanguage();
-            return marketNames[currentLang][market] || market;
-        }
-
         let currentChart = null;
         let sectorChart = null;
-        let marketChart = null;
         let currentQuarter = null;
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -627,12 +593,6 @@
             const sectorTitle = document.querySelector('#sector-container h3');
             if (sectorTitle) {
                 sectorTitle.textContent = currentLang === 'zh' ? '行业分布' : 'Sector Distribution';
-            }
-            
-            // Update market chart title
-            const marketTitle = document.querySelector('#market-container h3');
-            if (marketTitle) {
-                marketTitle.textContent = currentLang === 'zh' ? '市场分布' : 'Market Distribution';
             }
             
             // Update navigation links
@@ -737,7 +697,6 @@
             // Update charts
             updateChart(data);
             updateSectorChart(data);
-            updateMarketChart(data);
         }
 
         function updateSectorChart(data) {
@@ -855,8 +814,8 @@
                 currentLang === 'zh' ? '按行业分组的持仓比例分布' : 'Portfolio allocation grouped by sectors';
         }
 
-        function updateMarketChart(data) {
-            const ctx = document.getElementById('marketChart').getContext('2d');
+        function updateChart(data) {
+            const ctx = document.getElementById('doughnutChart').getContext('2d');
             
             // Destroy existing chart if any
             if (marketChart) {
