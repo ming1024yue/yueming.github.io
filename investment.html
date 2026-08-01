@@ -482,9 +482,10 @@
         // Portfolio data by quarter - Add your quarterly holdings here
         const quarterlyData = {
             '2026-Q3': [
-                { company: "英伟达", ticker: "NVDA", percentage: 29.1, sector: "tech", market: "美股", color: "#76B900", logo: "images/company/nvdia.jpg" },
-                { company: "泡泡玛特", ticker: "HK9992", percentage: 44.3, sector: "consumer", market: "港股", color: "#F58220", logo: "images/company/pop_mart.png" },
-                { company: "可口可乐", ticker: "KO", percentage: 26.6, sector: "consumer", market: "美股", color: "#000000", logo: "images/company/coca.jpeg" }
+                { company: "泡泡玛特", ticker: "HK9992", percentage: 36.9, sector: "consumer", market: "港股", color: "#F58220", logo: "images/company/pop_mart.png" },
+                { company: "可口可乐", ticker: "KO", percentage: 24.0, sector: "consumer", market: "美股", color: "#000000", logo: "images/company/coca.jpeg" },
+                { company: "标普500ETF", ticker: "VOO", percentage: 20.9, sector: "etf", market: "美股", color: "#8A2423", logo: "images/company/voo.svg" },
+                { company: "英伟达", ticker: "NVDA", percentage: 18.3, sector: "tech", market: "美股", color: "#76B900", logo: "images/company/nvdia.jpg" }
             ],
             '2026-Q2': [
                 { company: "比亚迪", ticker: "002594", percentage: 67.9, sector: "tech", market: "A股", color: "#E60012", logo: "images/company/byd.jpg" },
@@ -500,14 +501,16 @@
                 finance: "金融",
                 consumer: "消费",
                 healthcare: "医疗",
-                energy: "能源"
+                energy: "能源",
+                etf: "ETF"
             },
             en: {
                 tech: "Technology",
                 finance: "Finance",
                 consumer: "Consumer",
                 healthcare: "Healthcare",
-                energy: "Energy"
+                energy: "Energy",
+                etf: "ETF"
             }
         };
 
@@ -1110,25 +1113,28 @@
                             display: false  // Hide default legend, we'll use custom one
                         },
                         tooltip: {
+                            backgroundColor: 'rgba(255,255,255,0.95)',
+                            titleColor: '#1F2937',
+                            bodyColor: '#374151',
+                            borderColor: '#E5E7EB',
+                            borderWidth: 1,
+                            cornerRadius: 8,
+                            displayColors: true,
+                            boxWidth: 10,
+                            boxHeight: 10,
+                            padding: 10,
+                            titleFont: { size: 14, weight: 'bold' },
+                            bodyFont: { size: 13 },
                             callbacks: {
+                                title: function(context) {
+                                    return data[context[0].dataIndex].company;
+                                },
                                 label: function(context) {
                                     const holding = data[context.dataIndex];
                                     const currentLang = getCurrentLanguage();
-                                    if (currentLang === 'zh') {
-                                        return [
-                                            `${holding.company} (${holding.ticker})`,
-                                            `持仓比例: ${context.parsed}%`,
-                                            `行业: ${getSectorName(holding.sector)}`,
-                                            `市场: ${getMarketName(holding.market)}`
-                                        ];
-                                    } else {
-                                        return [
-                                            `${holding.company} (${holding.ticker})`,
-                                            `Holdings: ${context.parsed}%`,
-                                            `Sector: ${getSectorName(holding.sector)}`,
-                                            `Market: ${getMarketName(holding.market)}`
-                                        ];
-                                    }
+                                    return currentLang === 'zh'
+                                        ? [`${holding.ticker}`, `持仓比例: ${context.parsed}%`]
+                                        : [`${holding.ticker}`, `Holdings: ${context.parsed}%`];
                                 }
                             }
                         }
