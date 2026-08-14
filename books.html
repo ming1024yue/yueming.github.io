@@ -8,18 +8,215 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="translations.js"></script>
     <style>
-        .cover-image {
-            max-width: 100px;
-            height: auto;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin: 8px 0;
+        #books {
+            max-width: 1120px;
+            padding: 2rem 1rem;
         }
-        
-        .book-cover {
+
+        .books-heading {
             display: flex;
-            justify-content: flex-start;
-            margin-bottom: 10px;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .books-heading h2 {
+            margin-bottom: 0;
+        }
+
+        .book-counts {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--secondary-text);
+            font-size: 0.76rem;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+
+        .book-counts-separator {
+            color: var(--border-color);
+        }
+
+        .book-list {
+            display: grid;
+            grid-template-columns: repeat(5, 106px);
+            justify-content: center;
+            grid-auto-rows: 286px;
+            align-items: start;
+            margin: 0;
+            padding: 2rem 11rem 0 1rem;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-color) transparent;
+            background: transparent;
+        }
+
+        .book-list > li {
+            position: relative;
+            z-index: 1;
+            width: 140px;
+            height: 198px;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            border-radius: 6px;
+            background: transparent;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .book-list > li:hover,
+        .book-list > li:focus-visible,
+        .book-list > li.is-active {
+            z-index: 20;
+        }
+
+        .book-info {
+            display: grid;
+            grid-template-columns: 140px 180px;
+            grid-template-rows: auto auto 1fr;
+            width: 140px;
+            height: 198px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            border-radius: 6px;
+            background: var(--thought-bg);
+            box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.18);
+            transition: width 0.28s ease, transform 0.28s ease, box-shadow 0.28s ease;
+        }
+
+        .book-list > li:hover .book-info,
+        .book-list > li:focus-visible .book-info,
+        .book-list > li.is-active .book-info {
+            width: 320px;
+            transform: translateY(-18px);
+            box-shadow: 10px 16px 28px rgba(0, 0, 0, 0.28);
+        }
+
+        .book-cover {
+            grid-column: 1;
+            grid-row: 1 / 4;
+            display: block;
+            margin: 0;
+        }
+
+        .cover-image {
+            display: block;
+            width: 140px;
+            height: 198px;
+            margin: 0;
+            object-fit: cover;
+            border-radius: 5px 0 0 5px;
+            box-shadow: none;
+        }
+
+        .book-header {
+            grid-column: 2;
+            grid-row: 1;
+            align-items: flex-start;
+            gap: 0.45rem;
+            padding: 1rem 0.9rem 0;
+            flex-wrap: wrap;
+        }
+
+        .book-title {
+            width: 100%;
+            font-size: 1rem;
+            line-height: 1.35;
+        }
+
+        .book-author {
+            grid-column: 2;
+            grid-row: 2;
+            padding: 0.55rem 0.9rem 0;
+            font-size: 0.8rem;
+            line-height: 1.35;
+        }
+
+        .book-comment {
+            grid-column: 2;
+            grid-row: 3;
+            display: -webkit-box;
+            align-self: start;
+            margin: 0;
+            padding: 0.7rem 0.9rem;
+            overflow: hidden;
+            font-size: 0.78rem;
+            line-height: 1.45;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 4;
+            line-clamp: 4;
+        }
+
+        @media (max-width: 600px) {
+            #books {
+                padding: 1rem 0;
+            }
+
+            .books-heading {
+                align-items: flex-end;
+                gap: 0.7rem;
+                padding: 0 0.5rem;
+            }
+
+            .book-counts {
+                padding-bottom: 0.2rem;
+                font-size: 0.7rem;
+            }
+
+            .book-list {
+                grid-template-columns: repeat(5, 84px);
+                justify-content: start;
+                grid-auto-rows: 244px;
+                padding: 2rem 9rem 0 0.5rem;
+                background: transparent;
+            }
+
+            .book-list > li {
+                width: 112px;
+                height: 158px;
+            }
+
+            .book-info {
+                grid-template-columns: 112px 168px;
+                width: 112px;
+                height: 158px;
+            }
+
+            .book-list > li:hover .book-info,
+            .book-list > li:focus-visible .book-info,
+            .book-list > li.is-active .book-info {
+                width: 280px;
+                transform: translateY(-14px);
+            }
+
+            .cover-image {
+                width: 112px;
+                height: 158px;
+            }
+
+            .book-header {
+                padding: 0.7rem 0.7rem 0;
+            }
+
+            .book-title {
+                font-size: 0.88rem;
+            }
+
+            .book-author {
+                padding: 0.4rem 0.7rem 0;
+                font-size: 0.72rem;
+            }
+
+            .book-comment {
+                padding: 0.5rem 0.7rem;
+                font-size: 0.7rem;
+                -webkit-line-clamp: 3;
+                line-clamp: 3;
+            }
         }
     </style>
 </head>
@@ -46,7 +243,14 @@
 
     <main>
         <section id="books">
-            <h2 data-translate="books.title">阅读列表</h2>
+            <div class="books-heading">
+                <h2 data-translate="books.title">阅读列表</h2>
+                <div class="book-counts" aria-live="polite">
+                    <span id="reading-count"></span>
+                    <span class="book-counts-separator" aria-hidden="true">·</span>
+                    <span id="finished-count"></span>
+                </div>
+            </div>
             <ul class="book-list">
                 <li>
                     <div class="book-info">
@@ -490,7 +694,78 @@
                 return dB - dA;
             });
             books.forEach(book => bookList.appendChild(book));
+
+            function updateBookCounts() {
+                const readingCount = bookList.querySelectorAll('.book-status.reading').length;
+                const finishedCount = bookList.querySelectorAll('.book-status.finished').length;
+                const isChinese = getCurrentLanguage() === 'zh';
+
+                document.getElementById('reading-count').textContent = isChinese
+                    ? `正在读 ${readingCount}`
+                    : `Reading ${readingCount}`;
+                document.getElementById('finished-count').textContent = isChinese
+                    ? `已读 ${finishedCount}`
+                    : `Finished ${finishedCount}`;
+            }
+
+            updateBookCounts();
+
+            const originalSetLanguage = window.setLanguage;
+            window.setLanguage = function(lang) {
+                originalSetLanguage(lang);
+                updateBookCounts();
+            };
+
+            function setActiveBook(selectedBook) {
+                books.forEach(book => {
+                    const isActive = book === selectedBook;
+                    book.classList.toggle('is-active', isActive);
+                    book.setAttribute('aria-expanded', String(isActive));
+                });
+
+                if (selectedBook) {
+                    if (window.matchMedia('(max-width: 600px)').matches) {
+                        bookList.scrollTo({
+                            left: Math.max(0, selectedBook.offsetLeft - bookList.offsetLeft - 8),
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        selectedBook.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'nearest',
+                            inline: 'center'
+                        });
+                    }
+                }
+            }
+
+            books.forEach(book => {
+                const title = book.querySelector('.book-title')?.textContent.trim() || 'Book';
+                book.tabIndex = 0;
+                book.setAttribute('role', 'button');
+                book.setAttribute('aria-label', `查看《${title}》详情`);
+                book.setAttribute('aria-expanded', 'false');
+
+                book.addEventListener('click', event => {
+                    event.stopPropagation();
+                    setActiveBook(book.classList.contains('is-active') ? null : book);
+                });
+
+                book.addEventListener('keydown', event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        setActiveBook(book.classList.contains('is-active') ? null : book);
+                    }
+                });
+            });
+
+            document.addEventListener('click', () => setActiveBook(null));
+            document.addEventListener('keydown', event => {
+                if (event.key === 'Escape') {
+                    setActiveBook(null);
+                }
+            });
         });
     </script>
 </body>
-</html> 
+</html>

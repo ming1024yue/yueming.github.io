@@ -39,12 +39,20 @@
 }
 
 /* Typography */
+html,
+body {
+    min-height: 100%;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--bg-color);
     transition: background-color 0.3s, color 0.3s;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 h1 {
@@ -74,9 +82,11 @@ nav {
 
 main {
     max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     padding: 2rem;
     padding-top: 4rem;  /* Add padding to account for fixed top links */
+    flex: 1 0 auto;
 }
 
 section {
@@ -84,11 +94,8 @@ section {
 }
 
 footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin-top: 0;
+    position: static;
+    margin-top: auto;
     padding: 1rem 2rem;
     transition: color 0.3s;
     background: var(--bg-color);
@@ -215,8 +222,6 @@ footer p {
         font-size: 0.75rem;
     }
 }
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
     .bio {
@@ -581,11 +586,6 @@ html[lang="zh"] p[data-zh] {
 .book-status.finished {
     background-color: #e8f5e9;
     color: #2e7d32;
-}
-
-.book-status.want {
-    background-color: #fff3e0;
-    color: #f57c00;
 }
 
 #books {
@@ -1663,6 +1663,80 @@ h1, h2, h3 {
     padding: 1rem;
 }
 
+/* Consolidated responsive layout rules */
+@media (max-width: 768px) {
+    main {
+        padding: 4rem 1rem 2rem;
+    }
+
+    .top-links {
+        position: sticky;
+        top: 0;
+        right: auto;
+        width: 100%;
+        padding: 0.75rem 1rem;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .top-links::-webkit-scrollbar {
+        display: none;
+    }
+
+    .menu-group {
+        width: max-content;
+        min-width: 100%;
+        margin-left: 0;
+        justify-content: center;
+        gap: 1rem;
+        white-space: nowrap;
+    }
+
+    .top-links a {
+        flex: 0 0 auto;
+    }
+
+    .language-switcher {
+        top: 4.25rem;
+        right: 1rem;
+        height: 30px;
+    }
+
+    .language-switcher button {
+        min-width: 32px;
+        height: 24px;
+        padding: 2px 5px;
+        font-size: 0.75rem;
+    }
+
+    #thoughts,
+    #books {
+        width: 100%;
+        margin-top: 0;
+        padding: 0;
+    }
+
+    .thoughts-list {
+        width: 100%;
+    }
+
+    .essay-content p {
+        text-align: left;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu-group {
+        justify-content: flex-start;
+        gap: 0.9rem;
+    }
+
+    .top-links a {
+        font-size: 0.9rem;
+    }
+
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .resume-header h1 {
@@ -1687,4 +1761,3 @@ h1, h2, h3 {
         margin-bottom: 0.4rem;
     }
 }
-

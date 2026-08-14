@@ -29,7 +29,6 @@ const translations = {
         'books.title': '阅读列表',
         'books.status.finished': '已读完',
         'books.status.reading': '正在读',
-        'books.status.want': '想读',
         'books.hongloumeng.title': '红楼梦',
         'books.hongloumeng.author': 'by 曹雪芹',
         'books.hongloumeng.comment': '"身后有余忘缩手，眼前无路想回头。"',
@@ -140,7 +139,6 @@ const translations = {
         'books.title': 'Reading List',
         'books.status.finished': 'Finished',
         'books.status.reading': 'Reading',
-        'books.status.want': 'Want to Read',
         'books.hongloumeng.title': 'Dream of the Red Chamber',
         'books.hongloumeng.author': 'by Cao Xueqin',
         'books.hongloumeng.comment': '"Behind there is plenty, yet forget to withdraw your hand; before there is no way, yet want to turn back."',
@@ -355,8 +353,6 @@ function updatePageSpecificContent() {
                 status.textContent = translate('books.status.finished');
             } else if (statusClass.includes('reading')) {
                 status.textContent = translate('books.status.reading');
-            } else if (statusClass.includes('want')) {
-                status.textContent = translate('books.status.want');
             }
         });
         
@@ -620,4 +616,4 @@ document.addEventListener('DOMContentLoaded', () => {
         zhBtn.classList.toggle('active', savedLang === 'zh');
         enBtn.classList.toggle('active', savedLang === 'en');
     }
-}); 
+});
