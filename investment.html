@@ -106,6 +106,15 @@
             font-weight: 600;
         }
 
+        [data-theme="dark"] .dot-label {
+            color: var(--secondary-text);
+        }
+
+        [data-theme="dark"] .timeline-dot:hover .dot-label,
+        [data-theme="dark"] .timeline-dot.active .dot-label {
+            color: var(--text-color);
+        }
+
         .timeline-info {
             text-align: center;
             color: var(--secondary-text);
@@ -416,7 +425,6 @@
             <a href="index.html">关于我</a>
             <a href="thoughts.html">想法</a>
             <a href="books.html">阅读</a>
-            <a href="essay.html">文章</a>
             <a href="products.html">我的产品</a>
             <a href="investment.html">投资</a>
         </div>
@@ -608,8 +616,6 @@
                     link.textContent = currentLang === 'zh' ? '想法' : 'Thoughts';
                 } else if (href === 'books.html') {
                     link.textContent = currentLang === 'zh' ? '阅读' : 'Books';
-                } else if (href === 'essay.html') {
-                    link.textContent = currentLang === 'zh' ? '文章' : 'Essays';
                 } else if (href === 'products.html') {
                     link.textContent = currentLang === 'zh' ? '我的产品' : 'Products';
                 } else if (href === 'investment.html') {

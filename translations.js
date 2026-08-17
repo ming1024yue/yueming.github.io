@@ -1,10 +1,51 @@
+// Apply the saved theme before the page renders to reduce color flashing.
+document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+
+function getCurrentTheme() {
+    return document.documentElement.getAttribute('data-theme') || 'light';
+}
+
+function updateThemeToggle() {
+    const button = document.querySelector('.theme-toggle');
+    if (!button) return;
+
+    const isDark = getCurrentTheme() === 'dark';
+    const isChinese = getCurrentLanguage() === 'zh';
+    const label = isDark
+        ? (isChinese ? '切换到浅色主题' : 'Switch to light theme')
+        : (isChinese ? '切换到深色主题' : 'Switch to dark theme');
+
+    button.textContent = isDark ? '☀' : '☾';
+    button.setAttribute('aria-label', label);
+    button.setAttribute('title', label);
+    button.setAttribute('aria-pressed', String(isDark));
+}
+
+function toggleTheme() {
+    const nextTheme = getCurrentTheme() === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nextTheme);
+    localStorage.setItem('theme', nextTheme);
+    updateThemeToggle();
+}
+
+function initializeThemeToggle() {
+    const menu = document.querySelector('.menu-group');
+    if (!menu || menu.querySelector('.theme-toggle')) return;
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'theme-toggle';
+    button.addEventListener('click', toggleTheme);
+    menu.appendChild(button);
+    updateThemeToggle();
+}
+
 const translations = {
     zh: {
         // Navigation
         'nav.aboutme': '关于我',
         'nav.thoughts': '想法',
         'nav.books': '阅读',
-        'nav.research': '文章',
         'nav.products': '我的产品',
         'nav.investment': '投资',
         
@@ -114,7 +155,6 @@ const translations = {
         'nav.aboutme': 'about me',
         'nav.thoughts': 'Thoughts',
         'nav.books': 'Books',
-        'nav.research': 'Essays',
         'nav.products': 'Products',
         'nav.investment': 'Investment',
         
@@ -237,6 +277,7 @@ function setLanguage(lang) {
         zhBtn.classList.toggle('active', lang === 'zh');
         enBtn.classList.toggle('active', lang === 'en');
     }
+    updateThemeToggle();
 }
 
 function translate(key) {
@@ -257,8 +298,6 @@ function updatePageContent() {
             link.textContent = translate('nav.thoughts');
         } else if (href === 'books.html') {
             link.textContent = translate('nav.books');
-        } else if (href === 'essay.html') {
-            link.textContent = translate('nav.research');
         } else if (href === 'products.html') {
             link.textContent = translate('nav.products');
         } else if (href === 'investment.html') {
@@ -605,6 +644,7 @@ function updatePageSpecificContent() {
 
 // Initialize language on page load
 document.addEventListener('DOMContentLoaded', () => {
+    initializeThemeToggle();
     const savedLang = getCurrentLanguage();
     document.documentElement.lang = savedLang;
     updatePageContent();

@@ -9,6 +9,120 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="translations.js"></script>
+    <style>
+        .home-page main {
+            max-width: 1120px;
+            padding: 2rem 1rem 3rem;
+        }
+
+        .home-page .resume-header {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 6rem 0 2.5rem;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .home-page .resume-header h1,
+        .home-page .resume-header .intro-text {
+            text-align: left;
+        }
+
+        .home-articles {
+            margin-bottom: 2.5rem;
+        }
+
+        .home-articles h2 {
+            margin-bottom: 1.25rem;
+            font-size: 1.35rem;
+            font-weight: 500;
+        }
+
+        .home-essay-list {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 2.75rem 1.5rem;
+        }
+
+        .home-essay-link {
+            display: block;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .home-essay-link:hover {
+            text-decoration: none;
+        }
+
+        .home-essay-image-wrap {
+            aspect-ratio: 16 / 10;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--thought-bg);
+        }
+
+        .home-essay-image {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.35s ease;
+        }
+
+        .home-essay-link:hover .home-essay-image {
+            transform: scale(1.025);
+        }
+
+        .home-essay-date {
+            display: block;
+            margin-bottom: 0.55rem;
+            color: var(--secondary-text);
+            font-family: monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.04em;
+        }
+
+        .home-essay-title {
+            margin: 0;
+            font-size: 1.08rem;
+            font-weight: 500;
+            line-height: 1.45;
+        }
+
+        .home-essay-description {
+            margin: 0.45rem 0 0;
+            color: var(--secondary-text);
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+
+        .home-page #connect {
+            position: static;
+            margin: 1rem 0 0;
+            padding: 1rem 0 0;
+        }
+
+        @media (max-width: 820px) {
+            .home-essay-list {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 560px) {
+            .home-page main {
+                padding-top: 1.5rem;
+            }
+
+            .home-essay-list {
+                grid-template-columns: 1fr;
+                gap: 2.25rem;
+            }
+        }
+    </style>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KX6P75PEJL"></script>
     <script>
@@ -32,25 +146,22 @@
             <a href="index.html">关于我</a>
             <a href="thoughts.html">想法</a>
             <a href="books.html">阅读</a>
-            <a href="essay.html">文章</a>
             <a href="products.html">我的产品</a>
             <a href="investment.html">投资</a>
         </div>
     </div>
 
-    <div class="resume-header">
-     
-        <h1>岳铭</h1>
-        
-        <div class="intro-text">
-
-            做正确的事情
-
-        </div>
-    
-    </div>
-
     <main>
+        <div class="resume-header">
+            <h1>岳铭</h1>
+            <div class="intro-text">做正确的事情</div>
+        </div>
+
+        <section id="articles" class="home-articles">
+            <h2 id="home-articles-title">我的文章</h2>
+            <div id="home-essay-list" class="home-essay-list"></div>
+        </section>
+
         <section id="connect">
             <div class="social-links">
                 <a href="https://github.com/ming1024yue" target="_blank"><i class="fab fa-github"></i></a>
@@ -77,6 +188,80 @@
             const currentLang = getCurrentLanguage();
             document.getElementById('lang-zh').classList.toggle('active', currentLang === 'zh');
             document.getElementById('lang-en').classList.toggle('active', currentLang === 'en');
+
+            const homeEssays = [
+                {
+                    id: 'sp500',
+                    title: '为什么投资标普500',
+                    titleEn: 'Why I Invest in the S&P 500',
+                    description: '我投资标普500的原因、买入策略与长期持有思路。',
+                    descriptionEn: 'My reasons, buying strategy, and long-term approach to investing in the S&P 500.',
+                    date: '2026-08-17',
+                    image: 'images/research/sp500.png'
+                },
+                {
+                    id: 'invest_speculate',
+                    title: '投资和投机',
+                    titleEn: 'Investment and Speculation',
+                    description: '个人对投资和投机的理解。',
+                    descriptionEn: 'My understanding of investment and speculation.',
+                    date: '2026-08-09',
+                    image: 'images/research/invest_speculate.jpg'
+                },
+                {
+                    id: 'popmart',
+                    title: '泡泡玛特凭什么',
+                    titleEn: 'Why Pop Mart',
+                    description: '泡泡玛特的商业模式、核心护城河以及未来发展的机会与风险。',
+                    descriptionEn: 'Pop Mart’s business model, moat, opportunities, and risks.',
+                    date: '2026-05-20',
+                    image: 'images/research/pop.jpg'
+                },
+                {
+                    id: 'pangdonglai',
+                    title: '我对胖东来的理解',
+                    titleEn: 'My Understanding of Pangdonglai',
+                    description: '对于胖东来商超商业模式的分析。',
+                    descriptionEn: 'An analysis of Pangdonglai’s supermarket business model.',
+                    date: '2026-04-12',
+                    image: 'images/research/dl.jpeg'
+                },
+                {
+                    id: 'how_to_learn_programming',
+                    title: '如何学会编程',
+                    titleEn: 'How to Learn Programming',
+                    description: '如何成为一个真正的 programmer。',
+                    descriptionEn: 'How to become a real programmer.',
+                    date: '2024-12-24',
+                    image: 'images/research/programming.jpg'
+                }
+            ];
+
+            function renderHomeEssays() {
+                const isChinese = getCurrentLanguage() === 'zh';
+                document.getElementById('home-articles-title').textContent = isChinese
+                    ? '我的文章'
+                    : 'My Essays';
+
+                document.getElementById('home-essay-list').innerHTML = homeEssays.map(essay => `
+                    <a class="home-essay-link" href="essay-detail.html?id=${essay.id}">
+                        <div class="home-essay-image-wrap">
+                            <img class="home-essay-image" src="${essay.image}" alt="${isChinese ? essay.title : essay.titleEn}" loading="lazy">
+                        </div>
+                        <time class="home-essay-date" datetime="${essay.date}">${essay.date}</time>
+                        <h3 class="home-essay-title">${isChinese ? essay.title : essay.titleEn}</h3>
+                        <p class="home-essay-description">${isChinese ? essay.description : essay.descriptionEn}</p>
+                    </a>
+                `).join('');
+            }
+
+            renderHomeEssays();
+
+            const originalSetLanguage = window.setLanguage;
+            window.setLanguage = function(lang) {
+                originalSetLanguage(lang);
+                renderHomeEssays();
+            };
         });
     </script>
 </body>

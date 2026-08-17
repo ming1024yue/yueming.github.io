@@ -102,6 +102,10 @@
             border-color: rgba(255, 255, 255, 0.1);
         }
 
+        [data-theme="dark"] .essay-content {
+            background: transparent;
+        }
+
         .essay-header h1 {
             font-size: 2.5rem;
             font-weight: 200;
@@ -348,6 +352,64 @@
             padding: 8px 16px;
             border-radius: 20px;
             z-index: 2001;
+        }
+
+        @media (max-width: 768px) {
+            .essay-content img {
+                cursor: zoom-in;
+                touch-action: manipulation;
+            }
+
+            .essay-content img:hover {
+                transform: none;
+            }
+
+            .image-modal {
+                padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+                touch-action: pan-y;
+            }
+
+            .image-modal-content {
+                width: 100vw;
+                height: 100dvh;
+                max-width: 100vw;
+                max-height: 100dvh;
+                padding: 4rem 0 4.5rem;
+            }
+
+            .image-modal-img {
+                max-width: 100vw;
+                max-height: calc(100dvh - 8.5rem);
+                border-radius: 0;
+            }
+
+            .image-modal-close {
+                position: fixed;
+                top: max(12px, env(safe-area-inset-top));
+                right: 12px;
+                width: 48px;
+                height: 48px;
+                font-size: 2.2rem;
+                background: rgba(0, 0, 0, 0.35);
+            }
+
+            .image-modal-nav {
+                width: 44px;
+                height: 56px;
+                padding: 0;
+            }
+
+            .image-modal-prev {
+                left: 6px;
+            }
+
+            .image-modal-next {
+                right: 6px;
+            }
+
+            .image-modal-counter {
+                bottom: max(14px, env(safe-area-inset-bottom));
+            }
         }
 
         @keyframes fadeIn {
@@ -729,8 +791,8 @@
             <a href="index.html">关于我</a>
             <a href="thoughts.html">想法</a>
             <a href="books.html">阅读</a>
-            <a href="essay.html">文章</a>
             <a href="products.html">我的产品</a>
+            <a href="investment.html">投资</a>
         </div>
     </div>
 
@@ -739,7 +801,7 @@
 
     <main>
         <div class="essay-detail">
-            <a href="essay.html" class="back-link">
+            <a href="index.html#articles" class="back-link">
                 <i class="fas fa-arrow-left"></i>
                 <span>返回文章列表</span>
             </a>
@@ -1094,6 +1156,15 @@
             // essay data (same as in essay.html)
             const essayData = {
 
+                'sp500': {
+                    title: '为什么投资标普500',
+                    titleEn: 'Why I Invest in the S&P 500',
+                    author: '岳铭',
+                    authorEn: 'Yue Ming',
+                    date: '2026-08-17',
+                    image: 'images/research/sp500.png',
+                    file: 'essay/sp500.md'
+                },
                 'invest_speculate': {
                     title: '投资和投机',
                     titleEn: 'Investment and speculation',
@@ -1147,7 +1218,7 @@
                     document.getElementById('essay-author').textContent = author;
                     document.getElementById('essay-date').textContent = essay.date;
                     document.title = title;
-                    
+
                     // Set background image if available
                     const headerElement = document.querySelector('.essay-header');
                     if (essay.image) {
@@ -1203,6 +1274,7 @@
                         const markdown = await response.text();
                         const html = marked.parse(markdown);
                         document.getElementById('essay-content').innerHTML = html;
+                        initializeImageZoom();
                         
                         // Show interactive section for humanoid essay
                         if (essayId === 'humanoid_essay') {
@@ -1370,10 +1442,14 @@
         // Image zoom functionality
         let currentImageIndex = 0;
         let allImages = [];
+        let imageZoomInitialized = false;
 
         function initializeImageZoom() {
             const contentImages = document.querySelectorAll('.essay-content img');
             allImages = Array.from(contentImages);
+
+            if (imageZoomInitialized || allImages.length === 0) return;
+            imageZoomInitialized = true;
             
             const modal = document.getElementById('imageModal');
             const modalImage = document.getElementById('modalImage');
@@ -1412,6 +1488,23 @@
                 openImageModal(allImages[currentImageIndex].src);
             });
 
+            // Swipe left or right to navigate on touch devices
+            let touchStartX = 0;
+            modal.addEventListener('touchstart', function(e) {
+                touchStartX = e.changedTouches[0].clientX;
+            }, { passive: true });
+
+            modal.addEventListener('touchend', function(e) {
+                if (!modal.classList.contains('active') || allImages.length < 2) return;
+                const distance = e.changedTouches[0].clientX - touchStartX;
+                if (Math.abs(distance) < 50) return;
+
+                currentImageIndex = distance > 0
+                    ? (currentImageIndex - 1 + allImages.length) % allImages.length
+                    : (currentImageIndex + 1) % allImages.length;
+                openImageModal(allImages[currentImageIndex].src);
+            }, { passive: true });
+
             // Keyboard navigation
             document.addEventListener('keydown', function(e) {
                 if (!modal.classList.contains('active')) return;
@@ -1448,15 +1541,10 @@
 
             function closeImageModal() {
                 modal.classList.remove('active');
-                document.body.style.overflow = 'auto';
+                modalImage.src = '';
+                document.body.style.overflow = '';
             }
         }
-
-        // Initialize image zoom after content is loaded
-        const originalInitializeInteractive = initializeInteractive;
-        window.addEventListener('load', function() {
-            setTimeout(initializeImageZoom, 100);
-        });
     </script>
 </body>
 </html>

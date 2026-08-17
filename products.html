@@ -13,62 +13,102 @@
             margin: 0 auto;
             padding: 2rem 1rem;
         }
+
+        .products-showcase h2 {
+            margin-bottom: 2.25rem;
+            font-weight: 400;
+        }
+
         .products-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 2rem;
+            gap: 1.5rem;
             justify-content: center;
         }
+
         .product-card {
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            background: var(--thought-bg);
+            border: 1px solid #d8d8d8;
+            border-radius: 8px;
+            box-shadow: none;
             width: 300px;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s ease, border-color 0.2s ease;
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
+
         .product-card:hover {
-            transform: translateY(-8px) scale(1.03);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            transform: translateY(-3px);
+            border-color: #999;
         }
+
+        [data-theme="dark"] .product-card {
+            border-color: #444;
+        }
+
+        [data-theme="dark"] .product-card:hover {
+            border-color: #777;
+        }
+
         .product-card img {
             width: 100%;
             height: 180px;
             object-fit: cover;
+            border-bottom: 1px solid var(--border-color);
         }
+
         .product-info {
-            padding: 1.2rem;
+            padding: 1.25rem;
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
         }
+
+        .product-info h3 {
+            margin-bottom: 0.6rem;
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+
+        .product-info p {
+            flex: 1;
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+            line-height: 1.65;
+        }
+
         .product-tags {
-            margin: 0.5rem 0;
+            margin: 0.9rem 0 0;
         }
+
         .tag {
             display: inline-block;
-            background: #f0f4fa;
-            color: #3a6ea5;
-            border-radius: 12px;
-            padding: 0.2em 0.8em;
-            font-size: 0.85em;
+            background: transparent;
+            color: var(--secondary-text);
+            border: 1px solid var(--border-color);
+            border-radius: 999px;
+            padding: 0.15rem 0.55rem;
+            font-size: 0.72rem;
             margin-right: 0.5em;
         }
+
         .product-link {
             margin-top: 1rem;
-            color: #fff;
-            background: linear-gradient(90deg, #3a6ea5, #5f9ea0);
-            padding: 0.5em 1.2em;
-            border-radius: 8px;
+            color: var(--text-color);
+            background: transparent;
+            border: 1px solid var(--border-color);
+            padding: 0.55rem 1rem;
+            border-radius: 4px;
             text-decoration: none;
             text-align: center;
-            transition: background 0.2s;
+            font-size: 0.85rem;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
         }
+
         .product-link:hover {
-            background: linear-gradient(90deg, #5f9ea0, #3a6ea5);
+            background: var(--hover-bg);
+            border-color: var(--secondary-text);
         }
         @media (max-width: 700px) {
             .products-list {
@@ -95,7 +135,6 @@
             <a href="index.html">关于我</a>
             <a href="thoughts.html">想法</a>
             <a href="books.html">阅读</a>
-            <a href="essay.html">文章</a>
             <a href="products.html">我的产品</a>
             <a href="investment.html">投资</a>
         </div>
