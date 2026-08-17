@@ -311,6 +311,22 @@ article, .book {
     outline-offset: 2px;
 }
 
+@media (max-width: 768px) {
+    .top-links.top-links {
+        padding-right: 4rem;
+    }
+
+    .top-links .menu-group .theme-toggle {
+        position: fixed;
+        top: 0.7rem;
+        right: 1rem;
+        left: auto;
+        z-index: 102;
+        margin: 0;
+        background: var(--bg-color);
+    }
+}
+
 /* Footer */
 footer p {
     text-align: center;

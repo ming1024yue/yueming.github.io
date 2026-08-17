@@ -8,8 +8,11 @@
     <link rel="icon" href="data:,">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
     <script src="translations.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script>
     <style>
         .essay-detail {
             max-width: 900px;
@@ -237,6 +240,18 @@
             overflow-x: auto;
             margin: 1.5rem 0;
             border: 1px solid var(--border-color);
+        }
+
+        .essay-content .katex-display {
+            margin: 1.75rem 0;
+            padding: 0.5rem 0;
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+
+        .essay-content .katex {
+            color: var(--text-color);
+            font-size: 1.05em;
         }
 
         .essay-content img {
@@ -1272,8 +1287,34 @@
                     const response = await fetch(essay.file);
                     if (response.ok) {
                         const markdown = await response.text();
-                        const html = marked.parse(markdown);
-                        document.getElementById('essay-content').innerHTML = html;
+                        const mathExpressions = [];
+                        const protectedMarkdown = markdown.replace(
+                            /\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)/g,
+                            expression => {
+                                const index = mathExpressions.push(expression) - 1;
+                                return `KATEXMATHPLACEHOLDER${index}END`;
+                            }
+                        );
+                        let html = marked.parse(protectedMarkdown);
+                        html = html.replace(/KATEXMATHPLACEHOLDER(\d+)END/g, (_, index) =>
+                            mathExpressions[Number(index)]
+                                .replace(/&/g, '&amp;')
+                                .replace(/</g, '&lt;')
+                                .replace(/>/g, '&gt;')
+                        );
+                        const essayContent = document.getElementById('essay-content');
+                        essayContent.innerHTML = html;
+
+                        if (typeof renderMathInElement === 'function') {
+                            renderMathInElement(essayContent, {
+                                delimiters: [
+                                    { left: '$$', right: '$$', display: true },
+                                    { left: '\\[', right: '\\]', display: true },
+                                    { left: '\\(', right: '\\)', display: false }
+                                ],
+                                throwOnError: false
+                            });
+                        }
                         initializeImageZoom();
                         
                         // Show interactive section for humanoid essay
