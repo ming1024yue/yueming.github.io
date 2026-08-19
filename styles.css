@@ -279,6 +279,13 @@ article, .book {
 }
 
 /* Theme toggle placed at the end of the main menu */
+.top-links .menu-group .menu-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex: 0 0 auto;
+}
+
 .top-links .menu-group .theme-toggle {
     position: static;
     flex: 0 0 auto;
@@ -300,6 +307,62 @@ article, .book {
     transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
+.top-links .menu-group .theme-toggle::before {
+    content: '';
+    width: 13px;
+    height: 13px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    background: linear-gradient(90deg, transparent 50%, currentColor 50%);
+    transition: transform 0.25s ease;
+}
+
+[data-theme="dark"] .top-links .menu-group .theme-toggle::before {
+    transform: rotate(180deg);
+}
+
+.top-links .menu-group .menu-language-switcher {
+    position: static;
+    width: auto;
+    min-width: 0;
+    height: 30px;
+    margin: 0;
+    padding: 2px;
+    display: inline-flex;
+    gap: 0;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    box-shadow: none;
+}
+
+.top-links .menu-group .menu-language-switcher:hover {
+    box-shadow: none;
+}
+
+.top-links .menu-group .menu-language-switcher button {
+    position: static;
+    min-width: 27px;
+    width: 27px;
+    height: 24px;
+    margin: 0;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-text);
+    background: transparent;
+    border: 0;
+    border-radius: 12px;
+    font-size: 0.65rem;
+    line-height: 1;
+}
+
+.top-links .menu-group .menu-language-switcher button.active {
+    color: var(--bg-color);
+    background: var(--text-color);
+}
+
 .top-links .menu-group .theme-toggle:hover {
     color: var(--text-color);
     background: var(--hover-bg);
@@ -313,17 +376,24 @@ article, .book {
 
 @media (max-width: 768px) {
     .top-links.top-links {
-        padding-right: 4rem;
+        padding-right: 7.5rem;
     }
 
-    .top-links .menu-group .theme-toggle {
+    .top-links .menu-group .menu-controls {
         position: fixed;
         top: 0.7rem;
         right: 1rem;
         left: auto;
         z-index: 102;
         margin: 0;
+        padding-left: 0.4rem;
         background: var(--bg-color);
+    }
+
+    .top-links .menu-group .theme-toggle,
+    .top-links .menu-group .menu-language-switcher,
+    .top-links .menu-group .menu-language-switcher button {
+        position: static;
     }
 }
 

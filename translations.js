@@ -15,7 +15,7 @@ function updateThemeToggle() {
         ? (isChinese ? '切换到浅色主题' : 'Switch to light theme')
         : (isChinese ? '切换到深色主题' : 'Switch to dark theme');
 
-    button.textContent = isDark ? '☀' : '☾';
+    button.textContent = '';
     button.setAttribute('aria-label', label);
     button.setAttribute('title', label);
     button.setAttribute('aria-pressed', String(isDark));
@@ -32,11 +32,26 @@ function initializeThemeToggle() {
     const menu = document.querySelector('.menu-group');
     if (!menu || menu.querySelector('.theme-toggle')) return;
 
+    const controls = document.createElement('div');
+    controls.className = 'menu-controls';
+
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'theme-toggle';
     button.addEventListener('click', toggleTheme);
-    menu.appendChild(button);
+    controls.appendChild(button);
+
+    const languageSwitcher = document.querySelector('.language-switcher');
+    if (languageSwitcher) {
+        languageSwitcher.classList.add('menu-language-switcher');
+        const zhButton = languageSwitcher.querySelector('#lang-zh');
+        const enButton = languageSwitcher.querySelector('#lang-en');
+        if (zhButton) zhButton.textContent = '中';
+        if (enButton) enButton.textContent = 'EN';
+        controls.appendChild(languageSwitcher);
+    }
+
+    menu.appendChild(controls);
     updateThemeToggle();
 }
 
