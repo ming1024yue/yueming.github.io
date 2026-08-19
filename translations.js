@@ -75,7 +75,7 @@ const translations = {
         'aboutme.intro.goal': '我的目标是创立一种全新的教育/学习体系，让每个人都能够享受学习，创造价值',
         'aboutme.intro.hobbies': '我喜欢阅读和户外运动,以及各种口味的饮料（咖啡，茶，汽水...）',
         'aboutme.intro.belief': '我<b>不是</b>无神论者',
-        'aboutme.intro.quote': '做正确的事',
+        'aboutme.intro.quote': '做正确的事情',
         
         // Thoughts page
         'thoughts.title': '想法',
@@ -338,6 +338,9 @@ function updatePageSpecificContent() {
         // aboutme page
         const title = document.querySelector('h1');
         if (title) title.textContent = translate('aboutme.title');
+
+        const introQuote = document.querySelector('.intro-text');
+        if (introQuote) introQuote.textContent = translate('aboutme.intro.quote');
         
         const bio = document.querySelector('.bio p');
         if (bio) bio.textContent = translate('aboutme.bio');

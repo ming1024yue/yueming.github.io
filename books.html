@@ -38,6 +38,72 @@
             color: var(--border-color);
         }
 
+        .books-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 150px;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .year-timeline {
+            position: sticky;
+            top: 5rem;
+            padding: 2rem 0 0 1.25rem;
+        }
+
+        .year-timeline-list {
+            position: relative;
+            margin: 0;
+            padding: 0 0 0 1.15rem;
+            list-style: none;
+        }
+
+        .year-timeline-list::before {
+            content: '';
+            position: absolute;
+            top: 0.35rem;
+            bottom: 0.35rem;
+            left: 2px;
+            width: 1px;
+            background: var(--border-color);
+        }
+
+        .year-timeline-item {
+            position: relative;
+            margin: 0 0 1.8rem;
+        }
+
+        .year-timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .year-timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 0.35rem;
+            left: calc(-1.15rem - 2px);
+            width: 5px;
+            height: 5px;
+            border: 1px solid var(--secondary-text);
+            border-radius: 50%;
+            background: var(--bg-color);
+        }
+
+        .year-timeline-year {
+            display: block;
+            margin-bottom: 0.15rem;
+            font-family: monospace;
+            font-size: 0.82rem;
+            font-weight: 500;
+        }
+
+        .year-timeline-count {
+            display: block;
+            color: var(--secondary-text);
+            font-size: 0.7rem;
+            white-space: nowrap;
+        }
+
         .book-list {
             display: grid;
             grid-template-columns: repeat(5, 106px);
@@ -167,6 +233,32 @@
                 font-size: 0.7rem;
             }
 
+            .books-layout {
+                grid-template-columns: minmax(0, 1fr) 88px;
+                gap: 0.25rem;
+            }
+
+            .year-timeline {
+                top: 4rem;
+                padding: 2rem 0 0 0.35rem;
+            }
+
+            .year-timeline-list {
+                padding-left: 0.9rem;
+            }
+
+            .year-timeline-item::before {
+                left: calc(-0.9rem - 2px);
+            }
+
+            .year-timeline-year {
+                font-size: 0.74rem;
+            }
+
+            .year-timeline-count {
+                font-size: 0.62rem;
+            }
+
             .book-list {
                 grid-template-columns: repeat(5, 84px);
                 justify-content: start;
@@ -250,6 +342,7 @@
                     <span id="finished-count"></span>
                 </div>
             </div>
+            <div class="books-layout">
             <ul class="book-list">
                 <li>
                     <div class="book-info">
@@ -677,6 +770,10 @@
                     </div>
                 </li>
             </ul>
+                <aside class="year-timeline" aria-label="年度阅读统计">
+                    <ol class="year-timeline-list" id="year-timeline-list"></ol>
+                </aside>
+            </div>
 
         </section>
     </main>
@@ -723,12 +820,36 @@
                     : `Finished ${finishedCount}`;
             }
 
+            function updateYearTimeline() {
+                const isChinese = getCurrentLanguage() === 'zh';
+                const yearCounts = books.reduce((counts, book) => {
+                    const year = book.querySelector('.date')?.textContent.trim().slice(0, 4);
+                    if (year) counts[year] = (counts[year] || 0) + 1;
+                    return counts;
+                }, {});
+
+                document.querySelector('.year-timeline').setAttribute(
+                    'aria-label',
+                    isChinese ? '年度阅读统计' : 'Books by year'
+                );
+                document.getElementById('year-timeline-list').innerHTML = Object.entries(yearCounts)
+                    .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
+                    .map(([year, count]) => `
+                        <li class="year-timeline-item">
+                            <span class="year-timeline-year">${year}</span>
+                            <span class="year-timeline-count">${isChinese ? `阅读 ${count} 本` : `${count} books`}</span>
+                        </li>
+                    `).join('');
+            }
+
             updateBookCounts();
+            updateYearTimeline();
 
             const originalSetLanguage = window.setLanguage;
             window.setLanguage = function(lang) {
                 originalSetLanguage(lang);
                 updateBookCounts();
+                updateYearTimeline();
             };
 
             function setActiveBook(selectedBook) {
