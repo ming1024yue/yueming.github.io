@@ -9,7 +9,7 @@ function initializeSiteLogo() {
         document.head.appendChild(favicon);
     }
     favicon.type = 'image/png';
-    favicon.href = 'images/site_logo.png';
+    favicon.href = 'images/site_favicon.png';
 
     const menu = document.querySelector('.menu-group');
     if (!menu) return;
