@@ -608,12 +608,10 @@
             }
             
             // Update navigation links
-            const navLinks = document.querySelectorAll('.menu-group a');
+            const navLinks = document.querySelectorAll('.menu-group a:not(.site-logo)');
             navLinks.forEach(link => {
                 const href = link.getAttribute('href');
-                if (href === 'index.html') {
-                    link.textContent = currentLang === 'zh' ? '关于我' : 'about me';
-                } else if (href === 'thoughts.html') {
+                if (href === 'thoughts.html') {
                     link.textContent = currentLang === 'zh' ? '想法' : 'Thoughts';
                 } else if (href === 'books.html') {
                     link.textContent = currentLang === 'zh' ? '阅读' : 'Books';

@@ -1,6 +1,27 @@
 // Apply the saved theme before the page renders to reduce color flashing.
 document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
 
+function initializeSiteLogo() {
+    let favicon = document.querySelector('link[rel="icon"]');
+    if (!favicon) {
+        favicon = document.createElement('link');
+        favicon.rel = 'icon';
+        document.head.appendChild(favicon);
+    }
+    favicon.type = 'image/png';
+    favicon.href = 'images/site_logo.png';
+
+    const menu = document.querySelector('.menu-group');
+    if (!menu) return;
+
+    const homeLink = menu.querySelector('a[href="index.html"]');
+    if (!homeLink) return;
+
+    homeLink.className = 'site-logo';
+    homeLink.setAttribute('aria-label', 'Home');
+    homeLink.innerHTML = '<img src="images/site_logo.png" alt="">';
+}
+
 function getCurrentTheme() {
     return document.documentElement.getAttribute('data-theme') || 'light';
 }
@@ -110,7 +131,7 @@ const translations = {
         
         // Products page
         'products.title': '我的产品',
-        'products.deepfocus.title': 'Deep Focus 深度对焦',
+        'products.deepfocus.title': 'Deep Focus 深度聚焦',
         'products.deepfocus.description': '一款帮助你高效专注、提升生产力的极简 App。',
         'products.deepfocus.tags': 'App,效率',
         'products.deepfocus.learnmore': '了解更多',
@@ -304,7 +325,7 @@ function updatePageContent() {
     const currentLang = getCurrentLanguage();
     
     // Update navigation
-    const navLinks = document.querySelectorAll('.menu-group a');
+    const navLinks = document.querySelectorAll('.menu-group a:not(.site-logo)');
     navLinks.forEach(link => {
         const href = link.getAttribute('href');
         if (href === 'index.html') {
@@ -651,7 +672,7 @@ function updatePageSpecificContent() {
         if (sectorTitle) sectorTitle.textContent = translate('investment.sector.title');
         
         // Update navigation items
-        const navLinks = document.querySelectorAll('.menu-group a');
+        const navLinks = document.querySelectorAll('.menu-group a:not(.site-logo)');
         navLinks.forEach(link => {
             if (link.getAttribute('href') === 'investment.html') {
                 link.textContent = currentLang === 'zh' ? '投资' : 'Investment';
@@ -662,6 +683,7 @@ function updatePageSpecificContent() {
 
 // Initialize language on page load
 document.addEventListener('DOMContentLoaded', () => {
+    initializeSiteLogo();
     initializeThemeToggle();
     const savedLang = getCurrentLanguage();
     document.documentElement.lang = savedLang;
