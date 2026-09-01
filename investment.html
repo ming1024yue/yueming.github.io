@@ -1096,15 +1096,16 @@
                 currentChart.destroy();
             }
             
-            // Extract colors from data, using brand colors if available
-            const colors = data.map(h => h.color || '#999999');
+            // Keep chart segments in descending order by holding percentage.
+            const sortedData = [...data].sort((a, b) => b.percentage - a.percentage);
+            const colors = sortedData.map(h => h.color || '#999999');
             
             currentChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: data.map(h => `${h.company}`),
+                    labels: sortedData.map(h => `${h.company}`),
                     datasets: [{
-                        data: data.map(h => h.percentage),
+                        data: sortedData.map(h => h.percentage),
                         backgroundColor: colors,
                         borderWidth: 3,
                         borderColor: '#fff'
@@ -1132,10 +1133,10 @@
                             bodyFont: { size: 13 },
                             callbacks: {
                                 title: function(context) {
-                                    return data[context[0].dataIndex].company;
+                                    return sortedData[context[0].dataIndex].company;
                                 },
                                 label: function(context) {
-                                    const holding = data[context.dataIndex];
+                                    const holding = sortedData[context.dataIndex];
                                     const currentLang = getCurrentLanguage();
                                     return currentLang === 'zh'
                                         ? [`${holding.ticker}`, `持仓比例: ${context.parsed}%`]
@@ -1148,7 +1149,7 @@
             });
 
             // Generate custom legend with logos
-            generateCustomLegend(data);
+            generateCustomLegend(sortedData);
         }
 
         function generateCustomLegend(data) {
