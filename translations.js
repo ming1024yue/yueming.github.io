@@ -141,6 +141,9 @@ const translations = {
         'products.deepfocus.feature2': '格子化追踪你的进步',
         'products.deepfocus.feature3': '支持iOS17+, 已上线App store',
         'products.deepfocus.download': '前往 App Store 下载',
+        'products.allwrite.title': 'All Write 写作',
+        'products.allwrite.description': '一款专为 Mac 设计的写作软件，为严肃写作者打造专注的创作环境。',
+        'products.allwrite.cover.alt': 'All Write 封面',
         'products.wordzen.title': 'WordZen 单词禅',
         'products.wordzen.description': '一款专注于学习单词的App，像修禅一样学习单词。',
         'products.wordzen.description.detail': '学习单词就像修禅一样，需要专注和坚持。WordZen帮助你以最纯粹的方式学习单词。',
@@ -250,6 +253,9 @@ const translations = {
         'products.deepfocus.feature2': 'Grid-based progress tracking',
         'products.deepfocus.feature3': 'Supports iOS17+, available on App Store',
         'products.deepfocus.download': 'Download on App Store',
+        'products.allwrite.title': 'All Write',
+        'products.allwrite.description': 'A writing app designed for Mac, providing serious writers with a focused creative environment.',
+        'products.allwrite.cover.alt': 'All Write cover',
         'products.wordzen.title': 'WordZen',
         'products.wordzen.description': 'A vocabulary learning app that focuses on learning words like practicing Zen meditation.',
         'products.wordzen.description.detail': 'Learning vocabulary is like practicing Zen - it requires focus and persistence. WordZen helps you learn words in the purest way.',
@@ -537,30 +543,32 @@ function updatePageSpecificContent() {
         });
         
         // Update Deep Focus product
-        const deepFocusTitle = document.querySelector('.product-card h3');
+        const deepFocusCard = document.querySelector('[data-product="deepfocus"]');
+        const deepFocusTitle = deepFocusCard?.querySelector('h3');
         if (deepFocusTitle) deepFocusTitle.textContent = translate('products.deepfocus.title');
         
-        const deepFocusDesc = document.querySelector('.product-card p');
+        const deepFocusDesc = deepFocusCard?.querySelector('p');
         if (deepFocusDesc) deepFocusDesc.textContent = translate('products.deepfocus.description');
         
-        const deepFocusLink = document.querySelector('.product-link');
+        const deepFocusLink = deepFocusCard?.querySelector('.product-link');
         if (deepFocusLink) deepFocusLink.textContent = translate('products.deepfocus.learnmore');
         
-        const deepFocusImg = document.querySelector('.product-card img');
+        const deepFocusImg = deepFocusCard?.querySelector('img');
         if (deepFocusImg) deepFocusImg.alt = translate('products.deepfocus.cover.alt');
         
-        // Update WordZen product
-        const wordZenTitle = document.querySelectorAll('.product-card h3')[1];
-        if (wordZenTitle) wordZenTitle.textContent = translate('products.wordzen.title');
+        // Update All Write product
+        const allWriteCard = document.querySelector('[data-product="allwrite"]');
+        const allWriteTitle = allWriteCard?.querySelector('h3');
+        if (allWriteTitle) allWriteTitle.textContent = translate('products.allwrite.title');
         
-        const wordZenDesc = document.querySelectorAll('.product-card p')[1];
-        if (wordZenDesc) wordZenDesc.textContent = translate('products.wordzen.description');
+        const allWriteDesc = allWriteCard?.querySelector('p');
+        if (allWriteDesc) allWriteDesc.textContent = translate('products.allwrite.description');
         
-        const wordZenLink = document.querySelectorAll('.product-link')[1];
-        if (wordZenLink) wordZenLink.textContent = translate('products.deepfocus.learnmore');
+        const allWriteLink = allWriteCard?.querySelector('.product-link');
+        if (allWriteLink) allWriteLink.textContent = translate('products.deepfocus.learnmore');
         
-        const wordZenImg = document.querySelectorAll('.product-card img')[1];
-        if (wordZenImg) wordZenImg.alt = translate('products.wordzen.cover.alt');
+        const allWriteImg = allWriteCard?.querySelector('img');
+        if (allWriteImg) allWriteImg.alt = translate('products.allwrite.cover.alt');
         
         // Update product tags
         const productTags = document.querySelectorAll('.product-tags .tag');
@@ -576,6 +584,8 @@ function updatePageSpecificContent() {
                 tag.textContent = currentLang === 'zh' ? '学习' : 'Learning';
             } else if (tagText === 'Learning') {
                 tag.textContent = currentLang === 'zh' ? '学习' : 'Learning';
+            } else if (tagText === '写作' || tagText === 'Writing') {
+                tag.textContent = currentLang === 'zh' ? '写作' : 'Writing';
             }
         });
         
