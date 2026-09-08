@@ -230,6 +230,15 @@
             flex-shrink: 0;
         }
 
+        .legend-logo-fallback {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
         .legend-info {
             flex: 1;
             min-width: 0;
@@ -489,6 +498,12 @@
     <script>
         // Portfolio data by quarter - Add your quarterly holdings here
         const quarterlyData = {
+            '2026-Q4': [
+                { company: "标普500ETF", ticker: "VOO", percentage: 37, sector: "etf", market: "美股", color: "#8A2423", logo: "images/company/sp500.png" },
+                { company: "泡泡玛特", ticker: "HK9992", percentage: 31.2, sector: "consumer", market: "港股", color: "#F58220", logo: "images/company/pop_mart.png" },
+                { company: "特斯拉", ticker: "TSLA", percentage: 18.5, sector: "tech", market: "美股", color: "#E82127", logo: "images/company/tesla.png" },
+                { company: "伯克希尔.哈撒韦", ticker: "BKR-B", percentage: 13.2, sector: "finance", market: "美股", color: "#1D4F91", logoText: "BH" }
+            ],
             '2026-Q3': [
                 { company: "泡泡玛特", ticker: "HK9992", percentage: 31.3, sector: "consumer", market: "港股", color: "#F58220", logo: "images/company/pop_mart.png" },
                 { company: "可口可乐", ticker: "KO", percentage: 11.8, sector: "consumer", market: "美股", color: "#000000", logo: "images/company/coca.jpeg" },
@@ -1164,11 +1179,15 @@
             const sortedData = [...data].sort((a, b) => b.percentage - a.percentage);
 
             sortedData.forEach((holding, index) => {
+                const logoMarkup = holding.logo
+                    ? `<img src="${holding.logo}" alt="${holding.company}" class="legend-logo">`
+                    : `<div class="legend-logo legend-logo-fallback" style="background: ${holding.color}" aria-hidden="true">${holding.logoText || holding.company.charAt(0)}</div>`;
+
                 // Desktop legend item
                 const legendItem = document.createElement('div');
                 legendItem.className = 'legend-item';
                 legendItem.innerHTML = `
-                    <img src="${holding.logo}" alt="${holding.company}" class="legend-logo">
+                    ${logoMarkup}
                     <div class="legend-info">
                         <div class="legend-company">${holding.company}</div>
                         <div class="legend-ticker">${holding.ticker}</div>
@@ -1181,7 +1200,7 @@
                 const mobileLegendItem = document.createElement('div');
                 mobileLegendItem.className = 'legend-item';
                 mobileLegendItem.innerHTML = `
-                    <img src="${holding.logo}" alt="${holding.company}" class="legend-logo">
+                    ${logoMarkup}
                     <div class="legend-info">
                         <div class="legend-company">${holding.company}</div>
                         <div class="legend-ticker">${holding.ticker}</div>
