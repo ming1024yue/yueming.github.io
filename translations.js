@@ -144,6 +144,10 @@ const translations = {
         'products.allwrite.title': 'All Write 写作',
         'products.allwrite.description': '一款专为 Mac 设计的写作软件，为严肃写作者打造专注的创作环境。',
         'products.allwrite.cover.alt': 'All Write 封面',
+        'products.selftaught.title': '自学坊',
+        'products.selftaught.description': '一个开源的自学网站，帮助学习者探索适合自己的学习路径。',
+        'products.selftaught.visit': '访问网站',
+        'products.selftaught.link.label': '访问自学坊网站',
         'products.wordzen.title': 'WordZen 单词禅',
         'products.wordzen.description': '一款专注于学习单词的App，像修禅一样学习单词。',
         'products.wordzen.description.detail': '学习单词就像修禅一样，需要专注和坚持。WordZen帮助你以最纯粹的方式学习单词。',
@@ -256,6 +260,10 @@ const translations = {
         'products.allwrite.title': 'All Write',
         'products.allwrite.description': 'A writing app designed for Mac, providing serious writers with a focused creative environment.',
         'products.allwrite.cover.alt': 'All Write cover',
+        'products.selftaught.title': 'Self-Taught Workshop',
+        'products.selftaught.description': 'An open-source self-learning website that helps learners explore a path that works for them.',
+        'products.selftaught.visit': 'Visit Website',
+        'products.selftaught.link.label': 'Visit the Self-Taught Workshop website',
         'products.wordzen.title': 'WordZen',
         'products.wordzen.description': 'A vocabulary learning app that focuses on learning words like practicing Zen meditation.',
         'products.wordzen.description.detail': 'Learning vocabulary is like practicing Zen - it requires focus and persistence. WordZen helps you learn words in the purest way.',
@@ -569,6 +577,23 @@ function updatePageSpecificContent() {
         
         const allWriteImg = allWriteCard?.querySelector('img');
         if (allWriteImg) allWriteImg.alt = translate('products.allwrite.cover.alt');
+
+        // Update Self-Taught Workshop website
+        const selfTaughtCard = document.querySelector('[data-product="selftaught"]');
+        const selfTaughtTitle = selfTaughtCard?.querySelector('h3');
+        if (selfTaughtTitle) selfTaughtTitle.textContent = translate('products.selftaught.title');
+
+        const selfTaughtDesc = selfTaughtCard?.querySelector('p');
+        if (selfTaughtDesc) selfTaughtDesc.textContent = translate('products.selftaught.description');
+
+        const selfTaughtCover = selfTaughtCard?.querySelector('.product-site-cover');
+        if (selfTaughtCover) {
+            selfTaughtCover.textContent = translate('products.selftaught.title');
+            selfTaughtCover.setAttribute('aria-label', translate('products.selftaught.link.label'));
+        }
+
+        const selfTaughtLink = selfTaughtCard?.querySelector('.product-link');
+        if (selfTaughtLink) selfTaughtLink.textContent = translate('products.selftaught.visit');
         
         // Update product tags
         const productTags = document.querySelectorAll('.product-tags .tag');
@@ -586,6 +611,10 @@ function updatePageSpecificContent() {
                 tag.textContent = currentLang === 'zh' ? '学习' : 'Learning';
             } else if (tagText === '写作' || tagText === 'Writing') {
                 tag.textContent = currentLang === 'zh' ? '写作' : 'Writing';
+            } else if (tagText === '网站' || tagText === 'Website') {
+                tag.textContent = currentLang === 'zh' ? '网站' : 'Website';
+            } else if (tagText === '开源' || tagText === 'Open Source') {
+                tag.textContent = currentLang === 'zh' ? '开源' : 'Open Source';
             }
         });
         

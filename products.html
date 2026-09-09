@@ -6,7 +6,7 @@
     <title>我的产品</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="translations.js?v=20260903"></script>
+    <script src="translations.js?v=20260908"></script>
     <style>
         .products-showcase {
             max-width: 1100px;
@@ -56,6 +56,20 @@
             height: 180px;
             object-fit: cover;
             border-bottom: 1px solid var(--border-color);
+        }
+
+        .product-site-cover {
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--header-color);
+            background: var(--hover-bg);
+            border-bottom: 1px solid var(--border-color);
+            font-size: 1.4rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-decoration: none;
         }
 
         .product-info {
@@ -167,6 +181,19 @@
                             <span class="tag">写作</span>
                         </div>
                         <a href="product-allwrite.html" class="product-link">了解更多</a>
+                    </div>
+                </div>
+
+                <div class="product-card" data-product="selftaught">
+                    <a class="product-site-cover" href="https://selftaught.fun/" target="_blank" rel="noopener noreferrer" aria-label="访问自学坊网站">自学坊</a>
+                    <div class="product-info">
+                        <h3>自学坊</h3>
+                        <p>一个开源的自学网站，帮助学习者探索适合自己的学习路径。</p>
+                        <div class="product-tags">
+                            <span class="tag">网站</span>
+                            <span class="tag">开源</span>
+                        </div>
+                        <a href="https://selftaught.fun/" target="_blank" rel="noopener noreferrer" class="product-link">访问网站</a>
                     </div>
                 </div>
             </div>
