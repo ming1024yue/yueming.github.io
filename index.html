@@ -44,10 +44,35 @@
             font-weight: 500;
         }
 
+        .home-essay-count {
+            margin-left: 0.65rem;
+            color: var(--secondary-text);
+            font-size: 0.72rem;
+            font-weight: 400;
+            vertical-align: middle;
+        }
+
         .home-essay-list {
+            display: flex;
+            overflow-x: auto;
+            overscroll-behavior-inline: contain;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .home-essay-list::-webkit-scrollbar {
+            display: none;
+        }
+
+        .home-essay-page {
+            flex: 0 0 100%;
+            min-width: 0;
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 2.75rem 1.5rem;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
         }
 
         .home-essay-link {
@@ -111,7 +136,7 @@
         }
 
         @media (max-width: 820px) {
-            .home-essay-list {
+            .home-essay-page {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
@@ -121,7 +146,7 @@
                 padding-top: 1.5rem;
             }
 
-            .home-essay-list {
+            .home-essay-page {
                 grid-template-columns: 1fr;
                 gap: 2.25rem;
             }
@@ -261,19 +286,30 @@
 
             function renderHomeEssays() {
                 const isChinese = getCurrentLanguage() === 'zh';
-                document.getElementById('home-articles-title').textContent = isChinese
-                    ? '我的文章'
-                    : 'My Essays';
+                document.getElementById('home-articles-title').innerHTML = `
+                    ${isChinese ? '我的文章' : 'My Essays'}
+                    <span class="home-essay-count">${isChinese ? `共${homeEssays.length}篇` : `${homeEssays.length} essays`}</span>
+                `;
 
-                document.getElementById('home-essay-list').innerHTML = homeEssays.map(essay => `
-                    <a class="home-essay-link" href="essay-detail.html?id=${essay.id}">
-                        <div class="home-essay-image-wrap">
-                            <img class="home-essay-image" src="${essay.image}" alt="${isChinese ? essay.title : essay.titleEn}" loading="lazy">
-                        </div>
-                        <time class="home-essay-date" datetime="${essay.date}">${essay.date}</time>
-                        <h3 class="home-essay-title">${isChinese ? essay.title : essay.titleEn}</h3>
-                        <p class="home-essay-description">${isChinese ? essay.description : essay.descriptionEn}</p>
-                    </a>
+                const pageSize = 6;
+                const pages = [];
+                for (let index = 0; index < homeEssays.length; index += pageSize) {
+                    pages.push(homeEssays.slice(index, index + pageSize));
+                }
+
+                document.getElementById('home-essay-list').innerHTML = pages.map((page, pageIndex) => `
+                    <div class="home-essay-page" role="group" aria-label="${isChinese ? `第 ${pageIndex + 1} 页` : `Page ${pageIndex + 1}`}">
+                        ${page.map(essay => `
+                            <a class="home-essay-link" href="essay-detail.html?id=${essay.id}">
+                                <div class="home-essay-image-wrap">
+                                    <img class="home-essay-image" src="${essay.image}" alt="${isChinese ? essay.title : essay.titleEn}" loading="lazy">
+                                </div>
+                                <time class="home-essay-date" datetime="${essay.date}">${essay.date}</time>
+                                <h3 class="home-essay-title">${isChinese ? essay.title : essay.titleEn}</h3>
+                                <p class="home-essay-description">${isChinese ? essay.description : essay.descriptionEn}</p>
+                            </a>
+                        `).join('')}
+                    </div>
                 `).join('');
             }
 
