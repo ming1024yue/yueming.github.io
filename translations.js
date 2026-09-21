@@ -83,7 +83,6 @@ const translations = {
         'nav.thoughts': '想法',
         'nav.books': '阅读',
         'nav.products': '我的产品',
-        'nav.investment': '投资',
         
         // aboutme page
         'aboutme.title': '岳铭',
@@ -165,27 +164,6 @@ const translations = {
         'support.qr.alt': '支付宝支持二维码',
         'support.buycoffee.alt': 'Buy Me a Coffee',
         
-        // Investment page
-        'investment.title': '我的投资组合',
-        'investment.timeline.info': '点击时间轴上的节点查看该季度的持仓情况',
-        'investment.portfolio.title': '持仓分布',
-        'investment.portfolio.companies': '家公司',
-        'investment.portfolio.sectors': '个行业',
-        'investment.sector.title': '行业分布',
-        'investment.sector.subtitle': '按行业分组的持仓比例分布',
-        'investment.details.title': '持仓详情',
-        'investment.quarter.q1': '第1季度',
-        'investment.quarter.q2': '第2季度', 
-        'investment.quarter.q3': '第3季度',
-        'investment.quarter.q4': '第4季度',
-        'investment.tooltip.holding': '持仓比例',
-        'investment.tooltip.companies': '公司数量',
-        'investment.tooltip.contains': '包含',
-        'investment.sector.tech': '科技',
-        'investment.sector.finance': '金融',
-        'investment.sector.consumer': '消费',
-        'investment.sector.healthcare': '医疗',
-        'investment.sector.energy': '能源',
         
         // Language switcher
         'lang.switch': '切换语言',
@@ -199,7 +177,6 @@ const translations = {
         'nav.thoughts': 'Thoughts',
         'nav.books': 'Books',
         'nav.products': 'Products',
-        'nav.investment': 'Investment',
         
         // aboutme page
         'aboutme.title': 'Yue, Ming',
@@ -281,27 +258,6 @@ const translations = {
         'support.qr.alt': 'Alipay support QR code',
         'support.buycoffee.alt': 'Buy Me a Coffee',
         
-        // Investment page
-        'investment.title': 'My Investment Portfolio',
-        'investment.timeline.info': 'Click on the timeline nodes to view holdings for that quarter',
-        'investment.portfolio.title': 'Portfolio Allocation',
-        'investment.portfolio.companies': 'companies',
-        'investment.portfolio.sectors': 'sectors',
-        'investment.sector.title': 'Sector Distribution',
-        'investment.sector.subtitle': 'Portfolio allocation grouped by sectors',
-        'investment.details.title': 'Holdings Details',
-        'investment.quarter.q1': 'Q1',
-        'investment.quarter.q2': 'Q2',
-        'investment.quarter.q3': 'Q3',
-        'investment.quarter.q4': 'Q4',
-        'investment.tooltip.holding': 'Holdings',
-        'investment.tooltip.companies': 'Companies',
-        'investment.tooltip.contains': 'Includes',
-        'investment.sector.tech': 'Technology',
-        'investment.sector.finance': 'Finance',
-        'investment.sector.consumer': 'Consumer',
-        'investment.sector.healthcare': 'Healthcare',
-        'investment.sector.energy': 'Energy',
         
         // Language switcher
         'lang.switch': 'Switch Language',
@@ -350,8 +306,6 @@ function updatePageContent() {
             link.textContent = translate('nav.books');
         } else if (href === 'products.html') {
             link.textContent = translate('nav.products');
-        } else if (href === 'investment.html') {
-            link.textContent = translate('nav.investment');
         }
     });
     
@@ -690,33 +644,6 @@ function updatePageSpecificContent() {
         const buyCoffeeImg = document.querySelector('.coffee-btn-img');
         if (buyCoffeeImg) buyCoffeeImg.alt = translate('support.buycoffee.alt');
         
-    } else if (path.includes('investment.html')) {
-        // Investment page
-        const title = document.querySelector('#investment h2');
-        if (title) title.textContent = translate('investment.title');
-        
-        const timelineInfo = document.querySelector('.timeline-info');
-        if (timelineInfo) timelineInfo.textContent = translate('investment.timeline.info');
-        
-        const chartTitle = document.querySelector('#chart-title');
-        if (chartTitle && chartTitle.textContent.includes('持仓分布')) {
-            chartTitle.textContent = translate('investment.portfolio.title') + ' - ' + 
-                chartTitle.textContent.split(' - ')[1];
-        }
-        
-        const detailsTitle = document.querySelector('#mobile-legend-container h3');
-        if (detailsTitle) detailsTitle.textContent = translate('investment.details.title');
-        
-        const sectorTitle = document.querySelector('#sector-container h3');
-        if (sectorTitle) sectorTitle.textContent = translate('investment.sector.title');
-        
-        // Update navigation items
-        const navLinks = document.querySelectorAll('.menu-group a:not(.site-logo)');
-        navLinks.forEach(link => {
-            if (link.getAttribute('href') === 'investment.html') {
-                link.textContent = currentLang === 'zh' ? '投资' : 'Investment';
-            }
-        });
     }
 }
 
