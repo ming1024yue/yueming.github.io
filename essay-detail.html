@@ -619,6 +619,15 @@
             // essay data (same as in essay.html)
             const essayData = {
 
+                'token_efficiency': {
+                    title: '未来企业和个人的竞争力：token成本效益',
+                    titleEn: 'Future Competitiveness: Token Cost Efficiency',
+                    author: '岳铭',
+                    authorEn: 'Yue Ming',
+                    date: '2026-09-20',
+                    image: 'images/research/token_efficiency.png',
+                    file: 'essay/token_efficiency.md'
+                },
                 'berkshire-after-buffett': {
                     title: '后巴菲特时代的伯克希尔',
                     titleEn: 'Berkshire in the Post-Buffett Era',
@@ -794,9 +803,15 @@
                 } catch (error) {
                     console.error('Error loading essay content:', error);
                     const currentLang = getCurrentLanguage();
-                    const errorContent = currentLang === 'zh' 
-                        ? '<p>加载文章内容时出错，请稍后再试。</p>'
-                        : '<p>Error loading essay content, please try again later.</p>';
+                    const isLocalFile = window.location.protocol === 'file:';
+                    const localUrl = `http://localhost:8000/essay-detail.html${window.location.search}`;
+                    const errorContent = isLocalFile
+                        ? (currentLang === 'zh'
+                            ? `<p>浏览器无法直接读取本地文章文件。请通过 <a href="${localUrl}">localhost:8000</a> 打开网站。</p>`
+                            : `<p>Browsers cannot load local article files directly. Please open the site through <a href="${localUrl}">localhost:8000</a>.</p>`)
+                        : (currentLang === 'zh'
+                            ? '<p>加载文章内容时出错，请稍后再试。</p>'
+                            : '<p>Error loading essay content, please try again later.</p>');
                     document.getElementById('essay-content').innerHTML = errorContent;
                 }
                 
