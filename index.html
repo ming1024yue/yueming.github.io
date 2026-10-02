@@ -15,7 +15,7 @@
         .home-page .resume-header h1 { margin: 30px 0 0; font-size: 1.55rem; font-weight: 400; text-align: left; }
         .avatar-nav { position: relative; display: flex; align-items: center; width: 100%; min-height: 88px; }
         .avatar-trigger { flex: 0 0 88px; width: 88px; height: 88px; border: 0; padding: 0; border-radius: 50%; overflow: hidden; cursor: pointer; background: var(--hover-bg); z-index: 1; }
-        .avatar-trigger img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 43% 45%; transform: scale(1.8); }
+        .avatar-trigger img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
         .home-page .top-links { position: static; width: auto; min-width: 0; right: auto; padding: 0; background: transparent; overflow: hidden; box-shadow: none; }
         .home-page .avatar-banner { position: absolute; left: 88px; right: 0; top: 50%; transform: translateY(-50%); opacity: 0; visibility: hidden; clip-path: inset(0 100% 0 0); pointer-events: none; transition: clip-path .35s ease, opacity .2s ease; }
         .avatar-nav.is-open .avatar-banner { opacity: 1; visibility: visible; clip-path: inset(0 0 0 0); pointer-events: auto; }
@@ -70,7 +70,7 @@
         <div class="resume-header">
             <div class="avatar-nav" id="avatar-nav">
                 <button class="avatar-trigger" id="avatar-trigger" type="button" aria-label="展开菜单" aria-expanded="false" aria-controls="avatar-banner">
-                    <img src="images/profile.png" alt="岳铭" width="88" height="88">
+                    <img src="images/profile_bot.png" alt="岳铭" width="88" height="88">
                 </button>
                 <div class="avatar-banner" id="avatar-banner" inert>
                     <nav class="top-links" aria-label="主菜单">
@@ -95,6 +95,11 @@
                 <a href="https://space.bilibili.com/3546678013463098?spm_id_from=333.1007.0.0" target="_blank" rel="noopener noreferrer" aria-label="Bilibili" class="bilibili-link">
                     <svg viewBox="0 0 24 24" width="24" height="24">
                         <path fill="currentColor" d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c0-.373.129-.689.386-.947.258-.257.574-.386.947-.386zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373Z"/>
+                    </svg>
+                </a>
+                <a href="https://x.com/MingYue36773846" target="_blank" rel="noopener noreferrer" aria-label="X">
+                    <svg viewBox="0 0 24 24" width="21" height="21" fill="currentColor" aria-hidden="true">
+                        <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.64 7.584H.47l8.6-9.835L0 1.154h7.594l5.243 6.932 6.064-6.933Zm-1.29 19.49h2.039L6.487 3.24H4.3l13.311 17.403Z" />
                     </svg>
                 </a>
             </div>
