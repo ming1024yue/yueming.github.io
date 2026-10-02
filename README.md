@@ -1,37 +1,24 @@
-# Python Terminal Server
+# Yue Ming's personal site
 
-A simple HTTP server implementation in Python that can be run from the terminal.
+A static personal website containing essays, thoughts, reading notes, products, and an investment page.
 
-## Features
+## Local preview
 
-- Serves files from the current directory
-- Logs all requests to the terminal
-- Easy to run and customize
-
-## Requirements
-
-- Python 3.6 or higher
-
-## Usage
-
-1. Run the server:
+Run a local server from the project directory:
 
 ```bash
-python server.py
+python3 -m http.server 8000
 ```
 
-2. Access the server in your browser at http://localhost:8000
+Then open [http://localhost:8000](http://localhost:8000). A local server is required for loading Markdown articles through `fetch`.
 
-3. To stop the server, press Ctrl+C in the terminal
+## Main files
 
-## Customization
-
-You can modify the `server.py` file to:
-
-- Change the port number (default: 8000)
-- Change the directory to serve files from
-- Add custom request handling logic
-
-## License
-
-MIT 
+- `index.html`: homepage and essay list
+- `essay-detail.html`: Markdown essay renderer
+- `thoughts.html`: short-form thoughts
+- `books.html`: reading list
+- `products.html`: product showcase
+- `investment.html`: investment portfolio
+- `styles.css`: shared styles
+- `translations.js`: shared language and theme behavior

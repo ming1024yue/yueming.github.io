@@ -79,23 +79,12 @@ function initializeThemeToggle() {
 const translations = {
     zh: {
         // Navigation
-        'nav.aboutme': '关于我',
         'nav.thoughts': '想法',
         'nav.books': '阅读',
         'nav.products': '我的产品',
         
         // aboutme page
         'aboutme.title': '岳铭',
-        'aboutme.bio': '致力于研究方法/工具，思维方式，让每个人都能够学会任何事情，创造属于自己的价值。',
-        'aboutme.profile.alt': '岳铭的照片',
-        'aboutme.intro.education': '我目前从事教育工作。教授中学生数学，物理，计算机（主要是国际学科）',
-        'aboutme.intro.content': '我是一名Up主（下方的按钮访问bilibili），主要分享AI工具的使用',
-        'aboutme.intro.developer': '同时我还是一名独立开发者，开发网页，App及其他有意思的内容',
-        'aboutme.intro.experience': '我之前有游戏引擎开发的经历。我热爱编程,但不喜欢把编程当成工作',
-        'aboutme.intro.goal': '我的目标是创立一种全新的教育/学习体系，让每个人都能够享受学习，创造价值',
-        'aboutme.intro.hobbies': '我喜欢阅读和户外运动,以及各种口味的饮料（咖啡，茶，汽水...）',
-        'aboutme.intro.belief': '我<b>不是</b>无神论者',
-        'aboutme.intro.quote': '做正确的事情',
         
         // Thoughts page
         'thoughts.title': '想法',
@@ -124,15 +113,10 @@ const translations = {
         'books.source_code.author': 'by Bill Gates',
         'books.source_code.comment': '"The autobiography written by Microsoft founder Bill Gates."',
         
-        // Research page
-        'research.title': '我的文章',
-        'research.readmore': '阅读全文',
-        
         // Products page
         'products.title': '我的产品',
         'products.deepfocus.title': 'Deep Focus 深度聚焦',
         'products.deepfocus.description': '一款帮助你高效专注、提升生产力的极简 App。',
-        'products.deepfocus.tags': 'App,效率',
         'products.deepfocus.learnmore': '了解更多',
         'products.deepfocus.cover.alt': 'Deep Focus封面',
         'products.deepfocus.description.detail': '专注是一种习惯和能力，你可以在这里训练它。',
@@ -147,14 +131,6 @@ const translations = {
         'products.selftaught.description': '一个开源的自学网站，帮助学习者探索适合自己的学习路径。',
         'products.selftaught.visit': '访问网站',
         'products.selftaught.link.label': '访问自学坊网站',
-        'products.wordzen.title': 'WordZen 单词禅',
-        'products.wordzen.description': '一款专注于学习单词的App，像修禅一样学习单词。',
-        'products.wordzen.description.detail': '学习单词就像修禅一样，需要专注和坚持。WordZen帮助你以最纯粹的方式学习单词。',
-        'products.wordzen.feature1': '每日只学习少量精选单词',
-        'products.wordzen.feature2': '禅意界面设计，减少干扰',
-        'products.wordzen.feature3': '支持iOS17+, 已上线App store',
-        'products.wordzen.download': '前往 App Store 下载',
-        'products.wordzen.cover.alt': 'WordZen封面',
         
         // Footer
         'footer.copyright': '© 2026 岳铭. All rights reserved.',
@@ -162,34 +138,17 @@ const translations = {
         // Support section
         'support.title': '如果你喜欢我的作品，欢迎自愿打赏一杯咖啡的钱（建议不超过 10 元）。小小支持，大大鼓励',
         'support.qr.alt': '支付宝支持二维码',
-        'support.buycoffee.alt': 'Buy Me a Coffee',
-        
-        
-        // Language switcher
-        'lang.switch': '切换语言',
-        'lang.zh': '中文',
-        'lang.en': 'English'
+        'support.buycoffee.alt': 'Buy Me a Coffee'
     },
     
     en: {
         // Navigation
-        'nav.aboutme': 'about me',
         'nav.thoughts': 'Thoughts',
         'nav.books': 'Books',
         'nav.products': 'Products',
         
         // aboutme page
         'aboutme.title': 'Yue, Ming',
-        'aboutme.bio': 'Dedicated to researching methods/tools and ways of thinking, enabling everyone to learn anything and create their own value.',
-        'aboutme.profile.alt': 'Yue Ming\'s photo',
-        'aboutme.intro.education': 'I currently work in education field, teaching mathematics, physics, and computer science to middle school students (mainly international curricula).',
-        'aboutme.intro.content': 'I am a content creator (you can access my bilibili through the button below), mainly sharing the use of AI tools.',
-        'aboutme.intro.developer': 'I am also an indie developer, creating websites, apps, and other interesting content.',
-        'aboutme.intro.experience': 'I have previous experience in game engine development. I love programming, but I don\'t like making programming my job.',
-        'aboutme.intro.goal': 'My goal is to create a completely new education/learning system that allows everyone to enjoy learning and create value.',
-        'aboutme.intro.hobbies': 'I enjoy reading and outdoor sports, as well as beverages of all kinds (coffee, tea, soda...).',
-        'aboutme.intro.belief': 'I am <b>not</b> an atheist.',
-        'aboutme.intro.quote': 'Do the right thing.',
         
         // Thoughts page
         'thoughts.title': 'Thoughts',
@@ -218,15 +177,10 @@ const translations = {
         'books.source_code.author': 'by Bill Gates',
         'books.source_code.comment': '"The autobiography written by Microsoft founder Bill Gates."',
         
-        // Research page
-        'research.title': 'My Essays',
-        'research.readmore': 'Read More',
-        
         // Products page
         'products.title': 'My Products',
         'products.deepfocus.title': 'Deep Focus',
         'products.deepfocus.description': 'A minimalist app that helps you focus efficiently and boost productivity.',
-        'products.deepfocus.tags': 'App,Productivity',
         'products.deepfocus.learnmore': 'Learn More',
         'products.deepfocus.cover.alt': 'Deep Focus cover',
         'products.deepfocus.description.detail': 'Focus is a habit and ability that you can train here.',
@@ -241,14 +195,6 @@ const translations = {
         'products.selftaught.description': 'An open-source self-learning website that helps learners explore a path that works for them.',
         'products.selftaught.visit': 'Visit Website',
         'products.selftaught.link.label': 'Visit the Self-Taught Workshop website',
-        'products.wordzen.title': 'WordZen',
-        'products.wordzen.description': 'A vocabulary learning app that focuses on learning words like practicing Zen meditation.',
-        'products.wordzen.description.detail': 'Learning vocabulary is like practicing Zen - it requires focus and persistence. WordZen helps you learn words in the purest way.',
-        'products.wordzen.feature1': 'Learn only a few carefully selected words each day',
-        'products.wordzen.feature2': 'Zen-inspired interface design to reduce distractions',
-        'products.wordzen.feature3': 'Supports iOS17+, available on App Store',
-        'products.wordzen.download': 'Download on App Store',
-        'products.wordzen.cover.alt': 'WordZen cover',
         
         // Footer
         'footer.copyright': '© 2026 Yue Ming. All rights reserved.',
@@ -256,13 +202,7 @@ const translations = {
         // Support section
         'support.title': 'If you like my work, feel free to buy me a coffee (suggested amount: no more than ¥10). Small support, big encouragement.',
         'support.qr.alt': 'Alipay support QR code',
-        'support.buycoffee.alt': 'Buy Me a Coffee',
-        
-        
-        // Language switcher
-        'lang.switch': 'Switch Language',
-        'lang.zh': '中文',
-        'lang.en': 'English'
+        'support.buycoffee.alt': 'Buy Me a Coffee'
     }
 };
 
@@ -292,15 +232,11 @@ function translate(key) {
 }
 
 function updatePageContent() {
-    const currentLang = getCurrentLanguage();
-    
     // Update navigation
     const navLinks = document.querySelectorAll('.menu-group a:not(.site-logo)');
     navLinks.forEach(link => {
         const href = link.getAttribute('href');
-        if (href === 'index.html') {
-            link.textContent = translate('nav.aboutme');
-        } else if (href === 'thoughts.html') {
+        if (href === 'thoughts.html') {
             link.textContent = translate('nav.thoughts');
         } else if (href === 'books.html') {
             link.textContent = translate('nav.books');
@@ -324,46 +260,8 @@ function updatePageSpecificContent() {
     const path = window.location.pathname;
     
     if (path.includes('index.html') || path === '/') {
-        // aboutme page
         const title = document.querySelector('h1');
         if (title) title.textContent = translate('aboutme.title');
-
-        const introQuote = document.querySelector('.intro-text');
-        if (introQuote) introQuote.textContent = translate('aboutme.intro.quote');
-        
-        const bio = document.querySelector('.bio p');
-        if (bio) bio.textContent = translate('aboutme.bio');
-        
-        const profileImg = document.querySelector('.profile-image img');
-        if (profileImg) profileImg.alt = translate('aboutme.profile.alt');
-        
-        // Update intro list
-        const introList = document.querySelector('.intro-list');
-        if (introList) {
-            const listItems = introList.querySelectorAll('li');
-            if (currentLang === 'en') {
-                if (listItems.length >= 7) {
-                    listItems[0].textContent = translate('aboutme.intro.education');
-                    listItems[1].textContent = translate('aboutme.intro.content');
-                    listItems[2].textContent = translate('aboutme.intro.developer');
-                    listItems[3].textContent = translate('aboutme.intro.experience');
-                    listItems[4].textContent = translate('aboutme.intro.goal');
-                    listItems[5].textContent = translate('aboutme.intro.hobbies');
-                    listItems[6].innerHTML = translate('aboutme.intro.belief');
-                }
-            } else {
-                // Use Chinese translations
-                if (listItems.length >= 7) {
-                    listItems[0].textContent = translate('aboutme.intro.education');
-                    listItems[1].textContent = translate('aboutme.intro.content');
-                    listItems[2].textContent = translate('aboutme.intro.developer');
-                    listItems[3].textContent = translate('aboutme.intro.experience');
-                    listItems[4].textContent = translate('aboutme.intro.goal');
-                    listItems[5].textContent = translate('aboutme.intro.hobbies');
-                    listItems[6].innerHTML = translate('aboutme.intro.belief');
-                }
-            }
-        }
         
     } else if (path.includes('thoughts.html')) {
         // Thoughts page
@@ -373,11 +271,6 @@ function updatePageSpecificContent() {
         // Update "All" tag
         const allTag = document.querySelector('.tag-filter[data-tag="all"]');
         if (allTag) allTag.textContent = translate('thoughts.all');
-        
-    } else if (path.includes('research.html')) {
-        // Research page
-        const title = document.querySelector('#research h2');
-        if (title) title.textContent = translate('research.title');
         
     } else if (path.includes('books.html')) {
         // Books page
@@ -602,37 +495,6 @@ function updatePageSpecificContent() {
         
         const productImg = document.querySelector('.product-detail img');
         if (productImg) productImg.alt = translate('products.deepfocus.cover.alt');
-        
-        // Update support section
-        const supportText = document.querySelector('.coffee-thank');
-        if (supportText) supportText.textContent = translate('support.title');
-        
-        const qrImg = document.querySelector('.coffee-qr-card img');
-        if (qrImg) qrImg.alt = translate('support.qr.alt');
-        
-        const buyCoffeeImg = document.querySelector('.coffee-btn-img');
-        if (buyCoffeeImg) buyCoffeeImg.alt = translate('support.buycoffee.alt');
-        
-    } else if (path.includes('product-wordzen.html')) {
-        // WordZen product detail page
-        const title = document.querySelector('.product-detail h2');
-        if (title) title.textContent = translate('products.wordzen.title');
-        
-        const description = document.querySelector('.product-detail p');
-        if (description) description.textContent = translate('products.wordzen.description.detail');
-        
-        const features = document.querySelectorAll('.product-detail ul li');
-        if (features.length >= 3) {
-            features[0].textContent = translate('products.wordzen.feature1');
-            features[1].textContent = translate('products.wordzen.feature2');
-            features[2].textContent = translate('products.wordzen.feature3');
-        }
-        
-        const downloadLink = document.querySelector('.product-link');
-        if (downloadLink) downloadLink.textContent = translate('products.wordzen.download');
-        
-        const productImg = document.querySelector('.product-detail img');
-        if (productImg) productImg.alt = translate('products.wordzen.cover.alt');
         
         // Update support section
         const supportText = document.querySelector('.coffee-thank');

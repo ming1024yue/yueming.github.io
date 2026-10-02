@@ -616,7 +616,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const essayId = urlParams.get('id');
 
-            // essay data (same as in essay.html)
+            // Essay metadata used to load the matching Markdown file.
             const essayData = {
 
                 'token_efficiency': {
@@ -728,7 +728,7 @@
                     // Update back link text
                     const backLinkSpan = document.querySelector('.back-link span');
                     if (backLinkSpan) {
-                        backLinkSpan.textContent = currentLang === 'zh' ? '返回文章列表' : 'Back to Essays';
+                        backLinkSpan.textContent = currentLang === 'zh' ? '返回主页' : 'Back to home';
                     }
                 }
 
