@@ -15,7 +15,7 @@
         .home-page .resume-header h1 { margin: 30px 0 0; font-size: 1.55rem; font-weight: 400; text-align: left; }
         .avatar-nav { position: relative; display: flex; align-items: center; width: 100%; min-height: 88px; }
         .avatar-trigger { flex: 0 0 88px; width: 88px; height: 88px; border: 0; padding: 0; border-radius: 50%; overflow: hidden; cursor: pointer; background: var(--hover-bg); z-index: 1; }
-        .avatar-trigger img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+        .avatar-trigger img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; transform: scale(3.0) translateY(-10%); }
         .home-page .top-links { position: static; width: auto; min-width: 0; right: auto; padding: 0; background: transparent; overflow: hidden; box-shadow: none; }
         .home-page .avatar-banner { position: absolute; left: 88px; right: 0; top: 50%; transform: translateY(-50%); opacity: 0; visibility: hidden; clip-path: inset(0 100% 0 0); pointer-events: none; transition: clip-path .35s ease, opacity .2s ease; }
         .avatar-nav.is-open .avatar-banner { opacity: 1; visibility: visible; clip-path: inset(0 0 0 0); pointer-events: auto; }
@@ -70,7 +70,7 @@
         <div class="resume-header">
             <div class="avatar-nav" id="avatar-nav">
                 <button class="avatar-trigger" id="avatar-trigger" type="button" aria-label="展开菜单" aria-expanded="false" aria-controls="avatar-banner">
-                    <img src="images/profile_bot.PNG" alt="岳铭" width="88" height="88">
+                    <img src="images/profile.png" alt="岳铭" width="88" height="88">
                 </button>
                 <div class="avatar-banner" id="avatar-banner" inert>
                     <nav class="top-links" aria-label="主菜单">
