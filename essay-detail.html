@@ -619,6 +619,15 @@
             // Essay metadata used to load the matching Markdown file.
             const essayData = {
 
+                'all_longterm': {
+                    title: '一切围绕长期主义',
+                    titleEn: 'It’s All About the Long Term',
+                    author: '岳铭',
+                    authorEn: 'Yue Ming',
+                    date: '2026-10-07',
+                    image: 'images/research/longterm.jpg',
+                    file: 'essay/all_longterm.md'
+                },
                 'token_efficiency': {
                     title: '未来企业和个人的竞争力：token成本效益',
                     titleEn: 'Future Competitiveness: Token Cost Efficiency',
@@ -761,7 +770,7 @@
                 try {
                     const response = await fetch(essay.file);
                     if (response.ok) {
-                        const markdown = await response.text();
+                        const markdown = (await response.text()).replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, '');
                         const mathExpressions = [];
                         const protectedMarkdown = markdown.replace(
                             /\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)/g,
