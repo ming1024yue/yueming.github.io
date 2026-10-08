@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>漫步星球 · ROAM - 产品介绍</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="translations.js?v=20261008"></script>
+    <style>
+        body .product-detail.roam-detail { max-width: 920px; }
+        body .product-detail.roam-detail img {
+            width: min(100%, 320px);
+            margin-inline: auto;
+            border-radius: 22%;
+        }
+    </style>
+</head>
+<body>
+    <div class="language-switcher">
+        <button onclick="setLanguage('zh')" id="lang-zh">中文</button>
+        <button onclick="setLanguage('en')" id="lang-en">English</button>
+    </div>
+
+    <div class="top-links">
+        <div class="menu-group">
+            <a href="index.html">关于我</a>
+            <a href="thoughts.html">想法</a>
+            <a href="books.html">阅读</a>
+            <a href="products.html">我的产品</a>
+        </div>
+    </div>
+
+    <main>
+        <section class="product-detail roam-detail">
+            <a href="products.html" class="product-back">← 返回产品列表</a>
+            <h2>漫步星球 · ROAM</h2>
+            <img src="images/product/roam.png" alt="漫步星球应用图标">
+            <p>把日常步数变成一场可视化的星球旅程。选择起点与目的地，在星球上看见每一步带来的进展。</p>
+            <ul>
+                <li>读取 Apple 健康中的步数与步行距离，也支持手动记录</li>
+                <li>用可旋转、可缩放的星球展示真实城市间距离</li>
+                <li>支持 Apple Watch，并可保存旅程、解锁距离奖章</li>
+                <li>与朋友并肩前行，或从路线两端相向奔赴</li>
+            </ul>
+            <a href="https://roam-walk-invite.m1024.chatgpt.site/" class="product-link" target="_blank" rel="noopener noreferrer">访问产品网站</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 岳铭. All rights reserved.</p>
+    </footer>
+</body>
+</html>

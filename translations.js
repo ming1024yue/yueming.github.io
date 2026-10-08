@@ -115,6 +115,16 @@ const translations = {
         
         // Products page
         'products.title': '我的产品',
+        'products.roam.title': '漫步星球 · ROAM',
+        'products.roam.description': '把日常步数变成一场可视化的星球旅程，每一步都在把远方拉近。',
+        'products.roam.cover.alt': '漫步星球应用图标',
+        'products.roam.description.detail': '把日常步数变成一场可视化的星球旅程。选择起点与目的地，在星球上看见每一步带来的进展。',
+        'products.roam.feature1': '读取 Apple 健康中的步数与步行距离，也支持手动记录',
+        'products.roam.feature2': '用可旋转、可缩放的星球展示真实城市间距离',
+        'products.roam.feature3': '支持 Apple Watch，并可保存旅程、解锁距离奖章',
+        'products.roam.feature4': '与朋友并肩前行，或从路线两端相向奔赴',
+        'products.roam.visit': '访问产品网站',
+        'products.roam.back': '← 返回产品列表',
         'products.deepfocus.title': 'Deep Focus 深度聚焦',
         'products.deepfocus.description': '一款帮助你高效专注、提升生产力的极简 App。',
         'products.deepfocus.learnmore': '了解更多',
@@ -179,6 +189,16 @@ const translations = {
         
         // Products page
         'products.title': 'My Products',
+        'products.roam.title': 'ROAM: Walk the World',
+        'products.roam.description': 'Turn everyday steps into a visual journey across the planet. Every step brings the world closer.',
+        'products.roam.cover.alt': 'ROAM app icon',
+        'products.roam.description.detail': 'Turn everyday steps into a journey you can see. Choose a start and destination, then watch every step move you across the planet.',
+        'products.roam.feature1': 'Read steps and walking distance from Apple Health, or record them manually',
+        'products.roam.feature2': 'Explore realistic city-to-city distances on a globe you can rotate and zoom',
+        'products.roam.feature3': 'Use it on Apple Watch, keep past journeys, and earn distance medals',
+        'products.roam.feature4': 'Walk side by side with friends or meet halfway from opposite ends',
+        'products.roam.visit': 'Visit Product Website',
+        'products.roam.back': '← Back to Products',
         'products.deepfocus.title': 'Deep Focus',
         'products.deepfocus.description': 'A minimalist app that helps you focus efficiently and boost productivity.',
         'products.deepfocus.learnmore': 'Learn More',
@@ -396,6 +416,20 @@ function updatePageSpecificContent() {
             const key = element.getAttribute('data-translate');
             element.textContent = translate(key);
         });
+
+        // Update ROAM product
+        const roamCard = document.querySelector('[data-product="roam"]');
+        const roamTitle = roamCard?.querySelector('h3');
+        if (roamTitle) roamTitle.textContent = translate('products.roam.title');
+
+        const roamDesc = roamCard?.querySelector('p');
+        if (roamDesc) roamDesc.textContent = translate('products.roam.description');
+
+        const roamLink = roamCard?.querySelector('.product-link');
+        if (roamLink) roamLink.textContent = translate('products.deepfocus.learnmore');
+
+        const roamImg = roamCard?.querySelector('img');
+        if (roamImg) roamImg.alt = translate('products.roam.cover.alt');
         
         // Update Deep Focus product
         const deepFocusCard = document.querySelector('[data-product="deepfocus"]');
@@ -456,6 +490,8 @@ function updatePageSpecificContent() {
                 tag.textContent = currentLang === 'zh' ? '学习' : 'Learning';
             } else if (tagText === 'Learning') {
                 tag.textContent = currentLang === 'zh' ? '学习' : 'Learning';
+            } else if (tagText === '健康' || tagText === 'Health') {
+                tag.textContent = currentLang === 'zh' ? '健康' : 'Health';
             } else if (tagText === '写作' || tagText === 'Writing') {
                 tag.textContent = currentLang === 'zh' ? '写作' : 'Writing';
             } else if (tagText === '网站' || tagText === 'Website') {
@@ -475,6 +511,32 @@ function updatePageSpecificContent() {
         const buyCoffeeImg = document.querySelector('.coffee-btn-img');
         if (buyCoffeeImg) buyCoffeeImg.alt = translate('support.buycoffee.alt');
         
+    } else if (path.includes('product-roam.html')) {
+        const title = document.querySelector('.product-detail h2');
+        if (title) title.textContent = translate('products.roam.title');
+
+        const description = document.querySelector('.product-detail p');
+        if (description) description.textContent = translate('products.roam.description.detail');
+
+        const features = document.querySelectorAll('.product-detail ul li');
+        if (features.length >= 4) {
+            features[0].textContent = translate('products.roam.feature1');
+            features[1].textContent = translate('products.roam.feature2');
+            features[2].textContent = translate('products.roam.feature3');
+            features[3].textContent = translate('products.roam.feature4');
+        }
+
+        const productLink = document.querySelector('.product-link');
+        if (productLink) productLink.textContent = translate('products.roam.visit');
+
+        const productBack = document.querySelector('.product-back');
+        if (productBack) productBack.textContent = translate('products.roam.back');
+
+        const productImg = document.querySelector('.product-detail img');
+        if (productImg) productImg.alt = translate('products.roam.cover.alt');
+
+        document.title = `${translate('products.roam.title')} - ${currentLang === 'zh' ? '产品介绍' : 'Product'}`;
+
     } else if (path.includes('product-deep-focus.html')) {
         // Deep Focus product detail page
         const title = document.querySelector('.product-detail h2');
