@@ -119,15 +119,11 @@ const translations = {
         'products.category.tools': '工具',
         'products.googletranslate.title': 'Google Translate Menu',
         'products.googletranslate.cover.alt': 'Google Translate Menu 应用图标',
-        'products.googletranslate.description': '原生 Mac 菜单栏翻译工具，快捷键随时唤起 Google 翻译，支持 M 系列芯片。',
-        'products.googletranslate.opensource': '开源',
-        'products.googletranslate.download': '下载 Mac 版',
         'products.googletranslate.dialog.title': '下载 Google Translate Menu？',
         'products.googletranslate.dialog.message': '即将下载适用于 Apple 芯片 Mac 的安装包，是否继续？',
         'products.googletranslate.dialog.cancel': '取消',
         'products.googletranslate.dialog.confirm': '确认下载',
         'products.roam.title': '漫步星球 · ROAM',
-        'products.roam.description': '把日常步数变成一场可视化的星球旅程，每一步都在把远方拉近。',
         'products.roam.cover.alt': '漫步星球应用图标',
         'products.roam.description.detail': '把日常步数变成一场可视化的星球旅程。选择起点与目的地，在星球上看见每一步带来的进展。',
         'products.roam.feature1': '读取 Apple 健康中的步数与步行距离，也支持手动记录',
@@ -137,8 +133,6 @@ const translations = {
         'products.roam.visit': '在 App Store 下载',
         'products.roam.back': '← 返回产品列表',
         'products.deepfocus.title': 'Deep Focus 深度聚焦',
-        'products.deepfocus.description': '一款帮助你高效专注、提升生产力的极简 App。',
-        'products.deepfocus.learnmore': '了解更多',
         'products.deepfocus.cover.alt': 'Deep Focus 应用图标',
         'products.deepfocus.description.detail': '专注是一种习惯和能力，你可以在这里训练它。',
         'products.deepfocus.feature1': '一次只能设立一个目标，且不能修改',
@@ -146,21 +140,12 @@ const translations = {
         'products.deepfocus.feature3': '支持iOS17+, 已上线App store',
         'products.deepfocus.download': '前往 App Store 下载',
         'products.allwrite.title': 'All Write 写作',
-        'products.allwrite.description': '一款专为 Mac 设计的写作软件，为严肃写作者打造专注的创作环境。',
         'products.allwrite.cover.alt': 'All Write 应用图标',
         'products.selftaught.title': '自学坊',
         'products.selftaught.cover.alt': '自学坊网站图标',
-        'products.selftaught.description': '一个开源的自学网站，帮助学习者探索适合自己的学习路径。',
-        'products.selftaught.visit': '访问网站',
-        'products.selftaught.link.label': '访问自学坊网站',
         
         // Footer
-        'footer.copyright': '© 2026 岳铭. All rights reserved.',
-        
-        // Support section
-        'support.title': '如果你喜欢我的作品，欢迎自愿打赏一杯咖啡的钱（建议不超过 10 元）。小小支持，大大鼓励',
-        'support.qr.alt': '支付宝支持二维码',
-        'support.buycoffee.alt': 'Buy Me a Coffee'
+        'footer.copyright': '© 2026 岳铭. All rights reserved.'
     },
     
     en: {
@@ -205,15 +190,11 @@ const translations = {
         'products.category.tools': 'Tools',
         'products.googletranslate.title': 'Google Translate Menu',
         'products.googletranslate.cover.alt': 'Google Translate Menu app icon',
-        'products.googletranslate.description': 'A native Mac menu bar app for quick access to Google Translate, with a global shortcut and Apple Silicon support.',
-        'products.googletranslate.opensource': 'Open Source',
-        'products.googletranslate.download': 'Download for Mac',
         'products.googletranslate.dialog.title': 'Download Google Translate Menu?',
         'products.googletranslate.dialog.message': 'This will download the installer for Apple silicon Macs. Would you like to continue?',
         'products.googletranslate.dialog.cancel': 'Cancel',
         'products.googletranslate.dialog.confirm': 'Download',
         'products.roam.title': 'ROAM: Walk the World',
-        'products.roam.description': 'Turn everyday steps into a visual journey across the planet. Every step brings the world closer.',
         'products.roam.cover.alt': 'ROAM app icon',
         'products.roam.description.detail': 'Turn everyday steps into a journey you can see. Choose a start and destination, then watch every step move you across the planet.',
         'products.roam.feature1': 'Read steps and walking distance from Apple Health, or record them manually',
@@ -223,8 +204,6 @@ const translations = {
         'products.roam.visit': 'Download on the App Store',
         'products.roam.back': '← Back to Products',
         'products.deepfocus.title': 'Deep Focus',
-        'products.deepfocus.description': 'A minimalist app that helps you focus efficiently and boost productivity.',
-        'products.deepfocus.learnmore': 'Learn More',
         'products.deepfocus.cover.alt': 'Deep Focus app icon',
         'products.deepfocus.description.detail': 'Focus is a habit and ability that you can train here.',
         'products.deepfocus.feature1': 'You can only set one goal at a time and cannot modify it',
@@ -232,21 +211,12 @@ const translations = {
         'products.deepfocus.feature3': 'Supports iOS17+, available on App Store',
         'products.deepfocus.download': 'Download on App Store',
         'products.allwrite.title': 'All Write',
-        'products.allwrite.description': 'A writing app designed for Mac, providing serious writers with a focused creative environment.',
         'products.allwrite.cover.alt': 'All Write app icon',
         'products.selftaught.title': 'Self-Taught Workshop',
         'products.selftaught.cover.alt': 'Self-Taught Workshop website icon',
-        'products.selftaught.description': 'An open-source self-learning website that helps learners explore a path that works for them.',
-        'products.selftaught.visit': 'Visit Website',
-        'products.selftaught.link.label': 'Visit the Self-Taught Workshop website',
         
         // Footer
-        'footer.copyright': '© 2026 Yue Ming. All rights reserved.',
-        
-        // Support section
-        'support.title': 'If you like my work, feel free to buy me a coffee (suggested amount: no more than ¥10). Small support, big encouragement.',
-        'support.qr.alt': 'Alipay support QR code',
-        'support.buycoffee.alt': 'Buy Me a Coffee'
+        'footer.copyright': '© 2026 Yue Ming. All rights reserved.'
     }
 };
 
@@ -497,16 +467,6 @@ function updatePageSpecificContent() {
         
         const productImg = document.querySelector('.product-detail img');
         if (productImg) productImg.alt = translate('products.deepfocus.cover.alt');
-        
-        // Update support section
-        const supportText = document.querySelector('.coffee-thank');
-        if (supportText) supportText.textContent = translate('support.title');
-        
-        const qrImg = document.querySelector('.coffee-qr-card img');
-        if (qrImg) qrImg.alt = translate('support.qr.alt');
-        
-        const buyCoffeeImg = document.querySelector('.coffee-btn-img');
-        if (buyCoffeeImg) buyCoffeeImg.alt = translate('support.buycoffee.alt');
         
     }
 }

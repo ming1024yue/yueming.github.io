@@ -381,11 +381,6 @@ footer p {
 }
 /* Responsive Design */
 @media (max-width: 768px) {
-    .bio {
-        flex-direction: column;
-        text-align: center;
-    }
-    
     nav ul {
         flex-direction: column;
         text-align: center;
@@ -473,15 +468,6 @@ footer p {
     }
 }
 
-html[lang="en"] h1[data-en],
-html[lang="en"] h2[data-en],
-html[lang="en"] p[data-en],
-html[lang="zh"] h1[data-zh],
-html[lang="zh"] h2[data-zh],
-html[lang="zh"] p[data-zh] {
-    display: block !important;
-}
-
 /* Tag System */
 .tag {
     font-size: 0.7em;
@@ -492,8 +478,6 @@ html[lang="zh"] p[data-zh] {
 
 /* Tag Colors */
 .tag-all { background-color: #f5f5f5; color: #424242; }
-.tag-writing { background-color: #bbdefb; color: #1565c0; }
-.tag-life { background-color: #c8e6c9; color: #2e7d32; }
 .tag-tech { background-color: #e1bee7; color: #6a1b9a; }
 .tag-tools { background-color: #ffe0b2; color: #e65100; }
 .tag-programming { background-color: #c5cae9; color: #283593; }
@@ -526,68 +510,11 @@ html[lang="zh"] p[data-zh] {
 }
 
 .tag-filters {
+    width: 100%;
     margin-bottom: 2rem;
     display: flex;
     gap: 0.8rem;
     flex-wrap: wrap;
-}
-
-/* Markdown Content */
-.markdown-content {
-    max-height: 800px;  /* Increased from 300px to 800px */
-    overflow-y: auto;
-    padding-right: 1rem;
-    line-height: 1.6;
-    color: var(--text-color);
-}
-
-/* Markdown Elements */
-.markdown-content h2 { font-size: 1.4rem; margin: 1.5rem 0 1rem; }
-.markdown-content h3 { font-size: 1.2rem; margin: 1.2rem 0 0.8rem; }
-.markdown-content p { margin: 1rem 0; }
-.markdown-content ul, 
-.markdown-content ol { margin: 1rem 0; padding-left: 2rem; }
-.markdown-content li { margin: 0.5rem 0; }
-.markdown-content blockquote {
-    border-left: 3px solid var(--border-color);
-    margin: 1rem 0;
-    padding-left: 1rem;
-    color: var(--blockquote-color);
-}
-
-/* Code Blocks */
-.markdown-content code {
-    font-family: monospace;
-    background: var(--code-bg);
-    padding: 0.2rem 0.4rem;
-    border-radius: 3px;
-    font-size: 0.9em;
-}
-
-.markdown-content pre {
-    background: var(--code-bg);
-    padding: 1rem;
-    border-radius: 5px;
-    overflow-x: auto;
-}
-
-/* Scrollbar Styling */
-.markdown-content::-webkit-scrollbar {
-    width: 8px;
-}
-
-.markdown-content::-webkit-scrollbar-track {
-    background: var(--hover-bg);
-    border-radius: 4px;
-}
-
-.markdown-content::-webkit-scrollbar-thumb {
-    background: var(--secondary-text);
-    border-radius: 4px;
-}
-
-.markdown-content::-webkit-scrollbar-thumb:hover {
-    background: var(--text-color);
 }
 
 .bilibili-link {
@@ -675,16 +602,6 @@ html[lang="zh"] p[data-zh] {
     }
 }
 
-.reading-section {
-    margin-bottom: 3rem;
-}
-
-.reading-section h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: #444;
-}
-
 .book-list {
     list-style: none;
     padding: 0;
@@ -766,15 +683,6 @@ html[lang="zh"] p[data-zh] {
     margin: 0 auto;
 }
 
-/* Tag filters alignment */
-.tag-filters {
-    width: 100%;
-    margin-bottom: 2rem;
-    display: flex;
-    gap: 0.8rem;
-    flex-wrap: wrap;
-}
-
 /* Left align the section title with content */
 #thoughts h2 {
     text-align: left;
@@ -819,8 +727,14 @@ html[lang="zh"] p[data-zh] {
 }
 
 .markdown-content {
+    max-height: 800px;
+    overflow-y: auto;
+    padding-right: 1rem;
     width: 100%;
     line-height: 1.8;
+    color: var(--text-color);
+    scrollbar-width: thin;
+    scrollbar-color: var(--hover-bg) var(--hover-bg);
 }
 
 .markdown-content h2 {
@@ -924,18 +838,6 @@ html[lang="zh"] p[data-zh] {
     background: var(--text-color);
 }
 
-/* For Firefox */
-.markdown-content {
-    scrollbar-width: thin;
-    scrollbar-color: var(--hover-bg) var(--hover-bg);
-}
-
-/* Apply theme colors */
-body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-}
-
 /* Media query for smaller screens */
 @media (max-width: 1200px) {
     .menu-group {
@@ -969,156 +871,8 @@ body {
     }
 }
 
-/* Update existing styles with variables */
-.top-links {
-    right: 5rem;
-}
-
-.top-links a {
-    color: var(--text-color);
-}
-
-h1, h2, h3 {
-    color: var(--header-color);
-}
-
-.book-author, .date {
-    color: var(--secondary-text);
-}
-
-.book-comment {
-    color: var(--secondary-text);
-}
-
-.thought {
-    border-color: var(--border-color);
-}
-
-.markdown-content {
-    color: var(--text-color);
-}
-
-.markdown-content a {
-    color: var(--link-color);
-}
-
-.markdown-content blockquote {
-    border-left-color: var(--border-color);
-    color: var(--blockquote-color);
-}
-
-.markdown-content code {
-    background: var(--code-bg);
-}
-
-.markdown-content pre {
-    background: var(--code-bg);
-}
-
-/* Scrollbar colors */
-.markdown-content::-webkit-scrollbar-track {
-    background: var(--hover-bg);
-}
-
-.markdown-content::-webkit-scrollbar-thumb {
-    background: var(--secondary-text);
-}
-
-.markdown-content::-webkit-scrollbar-thumb:hover {
-    background: var(--text-color);
-}
-
-/* Status colors remain the same for better visibility */
-
-.tag {
-    font-size: 0.7em;
-    padding: 0.2rem 0.4rem;
-    border-radius: 12px;
-    font-weight: 500;
-}
-
-/* Tag color variants */
-.tag-all {
-    background-color: #f5f5f5;
-    color: #424242;
-}
-
-.tag-writing {
-    background-color: #bbdefb;
-    color: #1565c0;
-}
-
-.tag-life {
-    background-color: #c8e6c9;
-    color: #2e7d32;
-}
-
-.tag-tech {
-    background-color: #e1bee7;
-    color: #6a1b9a;
-}
-
-.tag-tools {
-    background-color: #ffe0b2;
-    color: #e65100;
-}
-
-.tag-programming {
-    background-color: #c5cae9;
-    color: #283593;
-}
-
-.tag-learning {
-    background-color: #f8bbd0;
-    color: #ad1457;
-}
-
-.tag-filter {
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.tag-filter:hover {
-    opacity: 0.8;
-    transform: translateY(-1px);
-}
-
-.tag-filter.active {
-    box-shadow: 0 0 0 2px currentColor;
-}
-
-.tags {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-}
-
-.tag-filters {
-    margin-bottom: 2rem;
-    display: flex;
-    gap: 0.8rem;
-    flex-wrap: wrap;
-}
-
-.tag-creative {
-    background-color: #FFB6C1;
-    color: #8B4513;
-}
-
-.tag-innovation {
-    background-color: #E6E6FA;
-    color: #483D8B;
-}
-
-/* Add these new styles */
 #thoughts, #books {
     margin-top: 4rem;
-}
-
-.thoughts-grid, .books-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
 }
 
 /* Lightbox styles */
