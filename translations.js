@@ -115,6 +115,11 @@ const translations = {
         
         // Products page
         'products.title': '我的产品',
+        'products.googletranslate.description': '原生 Mac 菜单栏翻译工具，快捷键随时唤起 Google 翻译，支持 M 系列芯片。',
+        'products.googletranslate.opensource': '开源',
+        'products.googletranslate.note': 'v0.1.0 预发布 · 已通过 Apple 公证。需能访问 Google 翻译，翻译内容由 Google 处理。独立开发，非 Google 官方应用。',
+        'products.googletranslate.download': '下载 Mac 版',
+        'products.googletranslate.source': '查看源码与使用说明',
         'products.roam.title': '漫步星球 · ROAM',
         'products.roam.description': '把日常步数变成一场可视化的星球旅程，每一步都在把远方拉近。',
         'products.roam.cover.alt': '漫步星球应用图标',
@@ -189,6 +194,11 @@ const translations = {
         
         // Products page
         'products.title': 'My Products',
+        'products.googletranslate.description': 'A native Mac menu bar app for quick access to Google Translate, with a global shortcut and Apple Silicon support.',
+        'products.googletranslate.opensource': 'Open Source',
+        'products.googletranslate.note': 'v0.1.0 preview · Apple notarized. Requires access to Google Translate; translation text is processed by Google. Independently developed, not an official Google app.',
+        'products.googletranslate.download': 'Download for Mac',
+        'products.googletranslate.source': 'Source Code & Guide',
         'products.roam.title': 'ROAM: Walk the World',
         'products.roam.description': 'Turn everyday steps into a visual journey across the planet. Every step brings the world closer.',
         'products.roam.cover.alt': 'ROAM app icon',
