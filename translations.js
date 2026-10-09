@@ -115,10 +115,17 @@ const translations = {
         
         // Products page
         'products.title': '我的产品',
+        'products.category.selfimprovement': '自我提升',
+        'products.category.tools': '工具',
+        'products.googletranslate.title': 'Google Translate Menu',
+        'products.googletranslate.cover.alt': 'Google Translate Menu 应用图标',
         'products.googletranslate.description': '原生 Mac 菜单栏翻译工具，快捷键随时唤起 Google 翻译，支持 M 系列芯片。',
         'products.googletranslate.opensource': '开源',
-
         'products.googletranslate.download': '下载 Mac 版',
+        'products.googletranslate.dialog.title': '下载 Google Translate Menu？',
+        'products.googletranslate.dialog.message': '即将下载适用于 Apple 芯片 Mac 的安装包，是否继续？',
+        'products.googletranslate.dialog.cancel': '取消',
+        'products.googletranslate.dialog.confirm': '确认下载',
         'products.roam.title': '漫步星球 · ROAM',
         'products.roam.description': '把日常步数变成一场可视化的星球旅程，每一步都在把远方拉近。',
         'products.roam.cover.alt': '漫步星球应用图标',
@@ -132,7 +139,7 @@ const translations = {
         'products.deepfocus.title': 'Deep Focus 深度聚焦',
         'products.deepfocus.description': '一款帮助你高效专注、提升生产力的极简 App。',
         'products.deepfocus.learnmore': '了解更多',
-        'products.deepfocus.cover.alt': 'Deep Focus封面',
+        'products.deepfocus.cover.alt': 'Deep Focus 应用图标',
         'products.deepfocus.description.detail': '专注是一种习惯和能力，你可以在这里训练它。',
         'products.deepfocus.feature1': '一次只能设立一个目标，且不能修改',
         'products.deepfocus.feature2': '格子化追踪你的进步',
@@ -140,8 +147,9 @@ const translations = {
         'products.deepfocus.download': '前往 App Store 下载',
         'products.allwrite.title': 'All Write 写作',
         'products.allwrite.description': '一款专为 Mac 设计的写作软件，为严肃写作者打造专注的创作环境。',
-        'products.allwrite.cover.alt': 'All Write 封面',
+        'products.allwrite.cover.alt': 'All Write 应用图标',
         'products.selftaught.title': '自学坊',
+        'products.selftaught.cover.alt': '自学坊网站图标',
         'products.selftaught.description': '一个开源的自学网站，帮助学习者探索适合自己的学习路径。',
         'products.selftaught.visit': '访问网站',
         'products.selftaught.link.label': '访问自学坊网站',
@@ -193,9 +201,17 @@ const translations = {
         
         // Products page
         'products.title': 'My Products',
+        'products.category.selfimprovement': 'Self-improvement',
+        'products.category.tools': 'Tools',
+        'products.googletranslate.title': 'Google Translate Menu',
+        'products.googletranslate.cover.alt': 'Google Translate Menu app icon',
         'products.googletranslate.description': 'A native Mac menu bar app for quick access to Google Translate, with a global shortcut and Apple Silicon support.',
         'products.googletranslate.opensource': 'Open Source',
         'products.googletranslate.download': 'Download for Mac',
+        'products.googletranslate.dialog.title': 'Download Google Translate Menu?',
+        'products.googletranslate.dialog.message': 'This will download the installer for Apple silicon Macs. Would you like to continue?',
+        'products.googletranslate.dialog.cancel': 'Cancel',
+        'products.googletranslate.dialog.confirm': 'Download',
         'products.roam.title': 'ROAM: Walk the World',
         'products.roam.description': 'Turn everyday steps into a visual journey across the planet. Every step brings the world closer.',
         'products.roam.cover.alt': 'ROAM app icon',
@@ -209,7 +225,7 @@ const translations = {
         'products.deepfocus.title': 'Deep Focus',
         'products.deepfocus.description': 'A minimalist app that helps you focus efficiently and boost productivity.',
         'products.deepfocus.learnmore': 'Learn More',
-        'products.deepfocus.cover.alt': 'Deep Focus cover',
+        'products.deepfocus.cover.alt': 'Deep Focus app icon',
         'products.deepfocus.description.detail': 'Focus is a habit and ability that you can train here.',
         'products.deepfocus.feature1': 'You can only set one goal at a time and cannot modify it',
         'products.deepfocus.feature2': 'Grid-based progress tracking',
@@ -217,8 +233,9 @@ const translations = {
         'products.deepfocus.download': 'Download on App Store',
         'products.allwrite.title': 'All Write',
         'products.allwrite.description': 'A writing app designed for Mac, providing serious writers with a focused creative environment.',
-        'products.allwrite.cover.alt': 'All Write cover',
+        'products.allwrite.cover.alt': 'All Write app icon',
         'products.selftaught.title': 'Self-Taught Workshop',
+        'products.selftaught.cover.alt': 'Self-Taught Workshop website icon',
         'products.selftaught.description': 'An open-source self-learning website that helps learners explore a path that works for them.',
         'products.selftaught.visit': 'Visit Website',
         'products.selftaught.link.label': 'Visit the Self-Taught Workshop website',
@@ -413,86 +430,27 @@ function updatePageSpecificContent() {
         });
         
     } else if (path.includes('products.html')) {
-        // Products page
-        const title = document.querySelector('.products-showcase h2');
-        if (title) title.textContent = translate('products.title');
-        
-        // Update elements with data-translate attribute
         const translatableElements = document.querySelectorAll('[data-translate]');
         translatableElements.forEach(element => {
             const key = element.getAttribute('data-translate');
             element.textContent = translate(key);
         });
 
-        // Update ROAM product
-        const roamCard = document.querySelector('[data-product="roam"]');
-        const roamTitle = roamCard?.querySelector('h3');
-        if (roamTitle) roamTitle.textContent = translate('products.roam.title');
-
-        const roamDesc = roamCard?.querySelector('p');
-        if (roamDesc) roamDesc.textContent = translate('products.roam.description');
-
-        const roamLink = roamCard?.querySelector('.product-link');
-        if (roamLink) roamLink.textContent = translate('products.deepfocus.learnmore');
-
-        const roamImg = roamCard?.querySelector('img');
+        const roamImg = document.querySelector('[data-product="roam"] img');
         if (roamImg) roamImg.alt = translate('products.roam.cover.alt');
-        
-        // Update Deep Focus product
-        const deepFocusCard = document.querySelector('[data-product="deepfocus"]');
-        const deepFocusTitle = deepFocusCard?.querySelector('h3');
-        if (deepFocusTitle) deepFocusTitle.textContent = translate('products.deepfocus.title');
-        
-        const deepFocusDesc = deepFocusCard?.querySelector('p');
-        if (deepFocusDesc) deepFocusDesc.textContent = translate('products.deepfocus.description');
-        
-        const deepFocusLink = deepFocusCard?.querySelector('.product-link');
-        if (deepFocusLink) deepFocusLink.textContent = translate('products.deepfocus.learnmore');
-        
-        const deepFocusImg = deepFocusCard?.querySelector('img');
+
+        const deepFocusImg = document.querySelector('[data-product="deepfocus"] img');
         if (deepFocusImg) deepFocusImg.alt = translate('products.deepfocus.cover.alt');
-        
-        // Update All Write product
-        const allWriteCard = document.querySelector('[data-product="allwrite"]');
-        const allWriteTitle = allWriteCard?.querySelector('h3');
-        if (allWriteTitle) allWriteTitle.textContent = translate('products.allwrite.title');
-        
-        const allWriteDesc = allWriteCard?.querySelector('p');
-        if (allWriteDesc) allWriteDesc.textContent = translate('products.allwrite.description');
-        
-        const allWriteLink = allWriteCard?.querySelector('.product-link');
-        if (allWriteLink) allWriteLink.textContent = translate('products.deepfocus.learnmore');
-        
-        const allWriteImg = allWriteCard?.querySelector('img');
+
+        const allWriteImg = document.querySelector('[data-product="allwrite"] img');
         if (allWriteImg) allWriteImg.alt = translate('products.allwrite.cover.alt');
 
-        // Update Self-Taught Workshop website
-        const selfTaughtCard = document.querySelector('[data-product="selftaught"]');
-        const selfTaughtTitle = selfTaughtCard?.querySelector('h3');
-        if (selfTaughtTitle) selfTaughtTitle.textContent = translate('products.selftaught.title');
+        const googleTranslateImg = document.querySelector('[data-product="googletranslate"] img');
+        if (googleTranslateImg) googleTranslateImg.alt = translate('products.googletranslate.cover.alt');
 
-        const selfTaughtDesc = selfTaughtCard?.querySelector('p');
-        if (selfTaughtDesc) selfTaughtDesc.textContent = translate('products.selftaught.description');
+        const selfTaughtImg = document.querySelector('[data-product="selftaught"] img');
+        if (selfTaughtImg) selfTaughtImg.alt = translate('products.selftaught.cover.alt');
 
-        const selfTaughtCover = selfTaughtCard?.querySelector('.product-site-cover');
-        if (selfTaughtCover) {
-            selfTaughtCover.textContent = translate('products.selftaught.title');
-            selfTaughtCover.setAttribute('aria-label', translate('products.selftaught.link.label'));
-        }
-
-        const selfTaughtLink = selfTaughtCard?.querySelector('.product-link');
-        if (selfTaughtLink) selfTaughtLink.textContent = translate('products.selftaught.visit');
-        
-        // Update support section
-        const supportText = document.querySelector('.coffee-thank');
-        if (supportText) supportText.textContent = translate('support.title');
-        
-        const qrImg = document.querySelector('.coffee-qr-card img');
-        if (qrImg) qrImg.alt = translate('support.qr.alt');
-        
-        const buyCoffeeImg = document.querySelector('.coffee-btn-img');
-        if (buyCoffeeImg) buyCoffeeImg.alt = translate('support.buycoffee.alt');
-        
     } else if (path.includes('product-roam.html')) {
         const title = document.querySelector('.product-detail h2');
         if (title) title.textContent = translate('products.roam.title');
