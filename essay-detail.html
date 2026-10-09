@@ -7,12 +7,8 @@
     <title>essay Detail</title>
     <link rel="icon" href="data:,">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
-    <script src="translations.js?v=20260903"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script>
+    <script defer src="translations.js?v=20260903"></script>
+    <script defer src="vendor/marked.min.js?v=15.0.12"></script>
     <style>
         .essay-detail {
             max-width: 900px;
@@ -136,15 +132,6 @@
             letter-spacing: 0.5px;
         }
 
-        .essay-author::before {
-            content: '\f007';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            font-size: 0.7rem;
-        }
-
-
-
         .essay-date {
             color: var(--secondary-text);
             font-size: 0.85rem;
@@ -155,11 +142,11 @@
             letter-spacing: 0.5px;
         }
 
-        .essay-date::before {
-            content: '\f073';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            font-size: 0.7rem;
+        .essay-meta-icon,
+        .back-icon {
+            width: 0.85rem;
+            height: 0.85rem;
+            flex: 0 0 auto;
         }
 
         .essay-content {
@@ -562,15 +549,27 @@
     <main>
         <div class="essay-detail">
             <a href="index.html#articles" class="back-link">
-                <i class="fas fa-arrow-left"></i>
+                <svg class="back-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="m14.5 5-7 7 7 7M8 12h11"/>
+                </svg>
                 <span>返回文章列表</span>
             </a>
             
             <div class="essay-header">
                 <h1 id="essay-title">文章标题</h1>
                 <div class="essay-meta">
-                    <div class="essay-author" id="essay-author">岳铭</div>
+                    <div class="essay-author">
+                        <svg class="essay-meta-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                            <path d="M5.5 20c.5-4 2.7-6 6.5-6s6 2 6.5 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                        <span id="essay-author">岳铭</span>
+                    </div>
                     <div class="essay-date">
+                        <svg class="essay-meta-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="4" y="5.5" width="16" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                            <path d="M8 3.5v4M16 3.5v4M4 9.5h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
                         <span id="essay-date">2025-01-01</span>
                     </div>
                 </div>
@@ -612,6 +611,50 @@
                 enBtn.classList.toggle('active', currentLang === 'en');
             }
 
+            let katexAssetsPromise;
+
+            function loadStylesheet(href) {
+                return new Promise((resolve, reject) => {
+                    const existing = document.querySelector(`link[href="${href}"]`);
+                    if (existing) {
+                        resolve();
+                        return;
+                    }
+
+                    const link = document.createElement('link');
+                    link.rel = 'stylesheet';
+                    link.href = href;
+                    link.onload = resolve;
+                    link.onerror = reject;
+                    document.head.appendChild(link);
+                });
+            }
+
+            function loadScript(src) {
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = src;
+                    script.onload = resolve;
+                    script.onerror = reject;
+                    document.head.appendChild(script);
+                });
+            }
+
+            function ensureKatexLoaded() {
+                if (typeof renderMathInElement === 'function') {
+                    return Promise.resolve();
+                }
+
+                if (!katexAssetsPromise) {
+                    katexAssetsPromise = Promise.all([
+                        loadStylesheet('vendor/katex/katex.min.css?v=0.16.22'),
+                        loadScript('vendor/katex/katex.min.js?v=0.16.22')
+                    ]).then(() => loadScript('vendor/katex/contrib/auto-render.min.js?v=0.16.22'));
+                }
+
+                return katexAssetsPromise;
+            }
+
             // Get essay ID from URL
             const urlParams = new URLSearchParams(window.location.search);
             const essayId = urlParams.get('id');
@@ -625,7 +668,7 @@
                     author: '岳铭',
                     authorEn: 'Yue Ming',
                     date: '2026-10-07',
-                    image: 'images/research/longterm.jpg',
+                    image: 'images/research/longterm.webp',
                     file: 'essay/all_longterm.md'
                 },
                 'token_efficiency': {
@@ -634,7 +677,7 @@
                     author: '岳铭',
                     authorEn: 'Yue Ming',
                     date: '2026-10-01',
-                    image: 'images/research/token_efficiency.png',
+                    image: 'images/research/token_efficiency.webp',
                     file: 'essay/token_efficiency.md'
                 },
                 'berkshire-after-buffett': {
@@ -643,7 +686,7 @@
                     author: '岳铭',
                     authorEn: 'Yue Ming',
                     date: '2026-09-19',
-                    image: 'images/research/buffett_berkshire.png',
+                    image: 'images/research/buffett_berkshire.webp',
                     file: 'essay/berkshire-after-buffett.md'
                 },
                 'popmart2': {
@@ -652,7 +695,7 @@
                     author: '岳铭',
                     authorEn: 'Yue Ming',
                     date: '2026-08-21',
-                    image: 'images/research/pop2cover.jpg',
+                    image: 'images/research/pop2cover.webp',
                     file: 'essay/popmart2.md'
                 },
                 'sp500': {
@@ -661,7 +704,7 @@
                     author: '岳铭',
                     authorEn: 'Yue Ming',
                     date: '2026-08-17',
-                    image: 'images/research/sp500.png',
+                    image: 'images/research/sp500.webp',
                     file: 'essay/sp500.md'
                 },
                 'invest_speculate': {
@@ -670,7 +713,7 @@
                     author: '岳铭',
                     authorEn: 'Yue Ming',
                     date: '2026-08-09',
-                    image: 'images/research/invest_speculate.jpg',
+                    image: 'images/research/invest_speculate.webp',
                     file: 'essay/invest_speculate.md'
                 },
                 
@@ -680,7 +723,7 @@
                     author: '岳铭',
                     authorEn: 'Yue Ming',
                     date: '2026-05-20',
-                    image: 'images/research/pop.jpg',
+                    image: 'images/research/pop.webp',
                     file: 'essay/popmart.md'
                 },
                 'pangdonglai': {
@@ -689,7 +732,7 @@
                     author: '岳铭',
                     authorEn: 'Yue Ming',
                     date: '2026-04-12',
-                    image: 'images/research/dl.jpeg',
+                    image: 'images/research/dl.webp',
                     file: 'essay/dl.md'
                 },
 
@@ -699,7 +742,7 @@
                     author: '岳铭',
                     authorEn: 'Yue Ming',
                     date: '2024-12-24',
-                    image: 'images/research/programming.jpg',
+                    image: 'images/research/programming.webp',
                     file: 'essay/how_to_learn_programming.md'
                 }
             };
@@ -789,15 +832,25 @@
                         const essayContent = document.getElementById('essay-content');
                         essayContent.innerHTML = html;
 
-                        if (typeof renderMathInElement === 'function') {
-                            renderMathInElement(essayContent, {
-                                delimiters: [
-                                    { left: '$$', right: '$$', display: true },
-                                    { left: '\\[', right: '\\]', display: true },
-                                    { left: '\\(', right: '\\)', display: false }
-                                ],
-                                throwOnError: false
-                            });
+                        essayContent.querySelectorAll('img').forEach(img => {
+                            img.loading = 'lazy';
+                            img.decoding = 'async';
+                        });
+
+                        if (mathExpressions.length > 0) {
+                            try {
+                                await ensureKatexLoaded();
+                                renderMathInElement(essayContent, {
+                                    delimiters: [
+                                        { left: '$$', right: '$$', display: true },
+                                        { left: '\\[', right: '\\]', display: true },
+                                        { left: '\\(', right: '\\)', display: false }
+                                    ],
+                                    throwOnError: false
+                                });
+                            } catch (mathError) {
+                                console.error('Error loading math renderer:', mathError);
+                            }
                         }
                         initializeImageZoom();
                         

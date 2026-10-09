@@ -7,8 +7,7 @@
     <title>Yue Ming's site</title>
     <link rel="icon" href="data:,">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="translations.js?v=20260903"></script>
+    <script defer src="translations.js?v=20260903"></script>
     <style>
         .home-page main { max-width: 800px; padding: 88px 32px 48px; }
         .home-page .resume-header { margin: 0 0 64px; padding: 0; max-width: none; text-align: left; border: 0; }
@@ -52,14 +51,31 @@
         }
         @media (prefers-reduced-motion: reduce) { .home-page .avatar-banner { transition: none; } }
     </style>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KX6P75PEJL"></script>
+    <!-- Load analytics after the page's critical content is ready. -->
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
 
-    gtag('config', 'G-KX6P75PEJL');
+    function loadAnalytics() {
+        if (document.getElementById('google-analytics-script')) return;
+
+        const script = document.createElement('script');
+        script.id = 'google-analytics-script';
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-KX6P75PEJL';
+        document.head.appendChild(script);
+
+        gtag('js', new Date());
+        gtag('config', 'G-KX6P75PEJL');
+    }
+
+    window.addEventListener('load', () => {
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(loadAnalytics, { timeout: 3000 });
+        } else {
+            setTimeout(loadAnalytics, 1000);
+        }
+    }, { once: true });
     </script>
 </head>
 <body class="home-page">
@@ -74,7 +90,7 @@
         <div class="resume-header">
             <div class="avatar-nav" id="avatar-nav">
                 <button class="avatar-trigger" id="avatar-trigger" type="button" aria-label="展开菜单" aria-expanded="false" aria-controls="avatar-banner">
-                    <img src="images/profile.png" alt="岳铭" width="88" height="88">
+                    <img src="images/profile.webp" alt="岳铭" width="88" height="88" decoding="async" fetchpriority="high">
                 </button>
                 <div class="avatar-banner" id="avatar-banner" inert>
                     <nav class="top-links" aria-label="主菜单">
@@ -95,14 +111,20 @@
 
         <section id="connect">
             <div class="social-links">
-                <a href="https://github.com/ming1024yue" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://github.com/ming1024yue" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true">
+                        <path fill="currentColor" d="M12 .7a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2.23c-3.22.7-3.9-1.37-3.9-1.37-.53-1.34-1.29-1.69-1.29-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.74-1.55-2.57-.29-5.28-1.29-5.28-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.47.11-3.05 0 0 .97-.31 3.16 1.18a10.96 10.96 0 0 1 5.76 0c2.2-1.49 3.16-1.18 3.16-1.18.63 1.58.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.71 5.39-5.29 5.68.42.36.79 1.06.79 2.14v3.18c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .7Z"/>
+                    </svg>
+                </a>
                 <a href="https://space.bilibili.com/3546678013463098?spm_id_from=333.1007.0.0" target="_blank" rel="noopener noreferrer" aria-label="Bilibili" class="bilibili-link">
                     <svg viewBox="0 0 24 24" width="24" height="24">
                         <path fill="currentColor" d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c0-.373.129-.689.386-.947.258-.257.574-.386.947-.386zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373Z"/>
                     </svg>
                 </a>
                 <a href="mailto:mingyueoct24@gmail.com" class="email-link" aria-label="发送邮件至 mingyueoct24@gmail.com" aria-describedby="email-tooltip">
-                    <i class="far fa-envelope" aria-hidden="true"></i>
+                    <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true">
+                        <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3.5 5.5h17v13h-17zM4.5 7l7.5 6 7.5-6"/>
+                    </svg>
                     <span class="email-tooltip" id="email-tooltip" role="tooltip" onclick="event.preventDefault(); event.stopPropagation();">mingyueoct24@gmail.com</span>
                 </a>
             </div>
@@ -132,7 +154,7 @@
                     description: '从目标、利他和噪音三个角度，理解长期主义的含义与实践。',
                     descriptionEn: 'Understanding long-term thinking through goals, altruism, and noise.',
                     date: '2026-10-07',
-                    image: 'images/research/longterm.jpg'
+                    image: 'images/research/longterm.webp'
                 },
                 {
                     id: 'token_efficiency',
@@ -141,7 +163,7 @@
                     description: '在AI时代，token的成本效益将成为企业和个人竞争力的核心衡量指标。',
                     descriptionEn: 'In the AI era, token cost efficiency becomes a core metric for competitive advantage for both companies and individuals.',
                     date: '2026-10-01',
-                    image: 'images/research/token_efficiency.png'
+                    image: 'images/research/token_efficiency.webp'
                 },
                 {
                     id: 'berkshire-after-buffett',
@@ -150,7 +172,7 @@
                     description: '从现有业务、制度文化与管理层交接，理解后巴菲特时代的伯克希尔。',
                     descriptionEn: 'Understanding post-Buffett Berkshire through its businesses, institutional culture, and leadership transition.',
                     date: '2026-09-19',
-                    image: 'images/research/buffett_berkshire.png'
+                    image: 'images/research/buffett_berkshire.webp'
                 },
                 {
                     id: 'popmart2',
@@ -159,7 +181,7 @@
                     description: '从IP结构、海外业务、线下扩张和管理层表现重新审视泡泡玛特的长期逻辑。',
                     descriptionEn: 'A renewed look at Pop Mart’s long-term thesis through its IP mix, overseas business, offline expansion, and management.',
                     date: '2026-08-21',
-                    image: 'images/research/pop2cover.jpg'
+                    image: 'images/research/pop2cover.webp'
                 },
                 {
                     id: 'sp500',
@@ -168,7 +190,7 @@
                     description: '我投资标普500的原因、买入策略与长期持有思路。',
                     descriptionEn: 'My reasons, buying strategy, and long-term approach to investing in the S&P 500.',
                     date: '2026-08-17',
-                    image: 'images/research/sp500.png'
+                    image: 'images/research/sp500.webp'
                 },
                 {
                     id: 'invest_speculate',
@@ -177,7 +199,7 @@
                     description: '个人对投资和投机的理解。',
                     descriptionEn: 'My understanding of investment and speculation.',
                     date: '2026-08-09',
-                    image: 'images/research/invest_speculate.jpg'
+                    image: 'images/research/invest_speculate.webp'
                 },
                 {
                     id: 'popmart',
@@ -186,7 +208,7 @@
                     description: '泡泡玛特的商业模式、核心护城河以及未来发展的机会与风险。',
                     descriptionEn: 'Pop Mart’s business model, moat, opportunities, and risks.',
                     date: '2026-05-20',
-                    image: 'images/research/pop.jpg'
+                    image: 'images/research/pop.webp'
                 },
                 {
                     id: 'pangdonglai',
@@ -195,7 +217,7 @@
                     description: '对于胖东来商超商业模式的分析。',
                     descriptionEn: 'An analysis of Pangdonglai’s supermarket business model.',
                     date: '2026-04-12',
-                    image: 'images/research/dl.jpeg'
+                    image: 'images/research/dl.webp'
                 },
                 {
                     id: 'how_to_learn_programming',
@@ -204,7 +226,7 @@
                     description: '如何成为一个真正的 programmer。',
                     descriptionEn: 'How to become a real programmer.',
                     date: '2024-12-24',
-                    image: 'images/research/programming.jpg'
+                    image: 'images/research/programming.webp'
                 }
             ];
 

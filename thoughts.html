@@ -6,9 +6,9 @@
     <meta http-equiv="Content-Security-Policy" content="img-src 'self' data: https: http:;">
     <title>My Thoughts</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="translations.js?v=20260903"></script>
+    <script defer src="translations.js?v=20260903"></script>
     
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script defer src="vendor/marked.min.js?v=15.0.12"></script>
     <style>
         .thought {
             max-width: none;
@@ -241,10 +241,10 @@
             // Pagination settings
             const ITEMS_PER_PAGE = 5;
             let currentPage = 1;
-            let allThoughts = [];
             let filteredThoughts = [];
             let currentTag = 'all';
-            let isLoading = false;
+            let renderRequestId = 0;
+            const thoughtCache = new Map();
 
             const thoughtsList = document.querySelector('.thoughts-list');
             
@@ -295,9 +295,16 @@
             thoughtsList.parentElement.insertBefore(tagFilterSection, thoughtsList);
 
             // Function to load a single thought
-            async function loadThought(thought) {
-                try {
+            function loadThought(thought) {
+                if (thoughtCache.has(thought.file)) {
+                    return thoughtCache.get(thought.file);
+                }
+
+                const request = (async () => {
                     const response = await fetch(thought.file);
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
                     const markdown = await response.text();
                     
                     const titleMatch = markdown.match(/^#\s+(.*?)(\r?\n|$)/);
@@ -317,50 +324,30 @@
                         tags: thought.tags,
                         tagsHtml
                     };
-                } catch (error) {
+                })().catch(error => {
                     console.error(`Error loading thought: ${thought.file}`, error);
+                    thoughtCache.delete(thought.file);
                     return null;
-                }
-            }
+                });
 
-            // Load all thoughts in background
-            async function loadAllThoughts() {
-                isLoading = true;
-                
-                // Load first page immediately
-                const firstPageThoughts = thoughts.slice(0, ITEMS_PER_PAGE);
-                for (const thought of firstPageThoughts) {
-                    const loadedThought = await loadThought(thought);
-                    if (loadedThought) {
-                        allThoughts.push(loadedThought);
-                    }
-                }
-                
-                filteredThoughts = [...allThoughts];
-                renderThoughts();
-                renderPagination();
-                
-                // Load remaining thoughts in background
-                const remainingThoughts = thoughts.slice(ITEMS_PER_PAGE);
-                for (const thought of remainingThoughts) {
-                    const loadedThought = await loadThought(thought);
-                    if (loadedThought) {
-                        allThoughts.push(loadedThought);
-                        filteredThoughts = [...allThoughts];
-                        // Update pagination if needed
-                        renderPagination();
-                    }
-                }
-                
-                isLoading = false;
+                thoughtCache.set(thought.file, request);
+                return request;
             }
 
             // Function to render thoughts for current page
-            function renderThoughts() {
-                thoughtsList.innerHTML = '';
+            async function renderThoughts({ scrollToTop = true } = {}) {
+                const requestId = ++renderRequestId;
                 const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
                 const endIndex = startIndex + ITEMS_PER_PAGE;
-                const pageThoughts = filteredThoughts.slice(startIndex, endIndex);
+                const pageSources = filteredThoughts.slice(startIndex, endIndex);
+
+                thoughtsList.setAttribute('aria-busy', 'true');
+                thoughtsList.innerHTML = `<p>${getCurrentLanguage() === 'zh' ? '加载中…' : 'Loading…'}</p>`;
+
+                const pageThoughts = (await Promise.all(pageSources.map(loadThought))).filter(Boolean);
+                if (requestId !== renderRequestId) return;
+
+                thoughtsList.innerHTML = '';
 
                 pageThoughts.forEach(thought => {
                     const article = document.createElement('article');
@@ -377,14 +364,20 @@
                             ${thought.html}
                         </div>
                     `;
+                    article.querySelectorAll('img').forEach(img => {
+                        img.loading = 'lazy';
+                        img.decoding = 'async';
+                    });
                     thoughtsList.appendChild(article);
                 });
 
-                // Re-initialize lightbox for new images
-                setTimeout(initLightbox, 100);
+                thoughtsList.removeAttribute('aria-busy');
+                initLightbox();
                 
                 // Scroll to top
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                if (scrollToTop) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
             }
 
             // Function to render pagination controls
@@ -458,8 +451,8 @@
                     currentPage = parseInt(page);
                 }
 
-                renderThoughts();
                 renderPagination();
+                renderThoughts();
             }
 
             // Add click handlers for tag filters
@@ -473,20 +466,22 @@
                     currentPage = 1;
 
                     if (currentTag === 'all') {
-                        filteredThoughts = [...allThoughts];
+                        filteredThoughts = [...thoughts];
                     } else {
-                        filteredThoughts = allThoughts.filter(thought => 
+                        filteredThoughts = thoughts.filter(thought =>
                             thought.tags.includes(currentTag)
                         );
                     }
 
-                    renderThoughts();
                     renderPagination();
+                    renderThoughts();
                 });
             });
 
-            // Start loading thoughts
-            loadAllThoughts();
+            // Load only the current page; later pages are fetched on demand.
+            filteredThoughts = [...thoughts];
+            renderPagination();
+            renderThoughts({ scrollToTop: false });
         });
     </script>
     

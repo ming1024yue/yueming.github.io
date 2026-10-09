@@ -7,10 +7,10 @@
 
 <div style="display: flex; gap: 1.5rem; margin: 2rem 0; flex-wrap: wrap;">
     <div style="flex: 1; min-width: 300px;">
-        <img src="/images/research/china-robot.png" style="width: 100%; object-fit: cover; border-radius: 8px;">
+        <img src="/images/research/china-robot.webp" style="width: 100%; object-fit: cover; border-radius: 8px;">
     </div>
     <div style="flex: 1; min-width: 300px;">
-        <img src="/images/research/robot-rank.png" style="width: 100%; object-fit: cover; border-radius: 8px;">
+        <img src="/images/research/robot-rank.webp" style="width: 100%; object-fit: cover; border-radius: 8px;">
     </div>
 </div>
 
@@ -26,16 +26,16 @@
 
 <div style="display: flex; gap: 1.5rem; margin: 2rem 0; flex-wrap: wrap;">
     <div style="flex: 1; min-width: 500px;">
-        <img src="/images/research/beijing-robot.jpeg" style="width: 100%; object-fit: cover; border-radius: 8px;">
+        <img src="/images/research/beijing-robot.webp" style="width: 100%; object-fit: cover; border-radius: 8px;">
     </div>
     <div style="flex: 1; min-width: 500px;">
-        <img src="/images/research/shanghai-robot.jpeg" style="width: 100%; object-fit: cover; border-radius: 8px;">
+        <img src="/images/research/shanghai-robot.webp" style="width: 100%; object-fit: cover; border-radius: 8px;">
     </div>
         <div style="flex: 1; min-width: 500px;">
-        <img src="/images/research/hangzhou-robot.jpeg" style="width: 100%; object-fit: cover; border-radius: 8px;">
+        <img src="/images/research/hangzhou-robot.webp" style="width: 100%; object-fit: cover; border-radius: 8px;">
     </div>
         <div style="flex: 1; min-width: 500px;">
-        <img src="/images/research/shenzhen-robot.jpeg" style="width: 100%; object-fit: cover; border-radius: 8px;">
+        <img src="/images/research/shenzhen-robot.webp" style="width: 100%; object-fit: cover; border-radius: 8px;">
     </div>
 </div>
 
@@ -66,4 +66,4 @@ Morgan Stanley对中国人形机器人市场的长期预测几乎没有变化：
 ## 最近新闻
 
 马斯克对宇树机器人在王力宏演唱会的表现 - 2025.12.20
-<img src="/images/research/robots_news.png" style="width: 50%;">
+<img src="/images/research/robots_news.webp" style="width: 50%;">
