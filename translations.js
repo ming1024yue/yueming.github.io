@@ -483,31 +483,6 @@ function updatePageSpecificContent() {
         const selfTaughtLink = selfTaughtCard?.querySelector('.product-link');
         if (selfTaughtLink) selfTaughtLink.textContent = translate('products.selftaught.visit');
         
-        // Update product tags
-        const productTags = document.querySelectorAll('.product-tags .tag');
-        productTags.forEach(tag => {
-            const tagText = tag.textContent.trim();
-            if (tagText === 'App') {
-                tag.textContent = 'App'; // App stays the same in both languages
-            } else if (tagText === '效率') {
-                tag.textContent = currentLang === 'zh' ? '效率' : 'Productivity';
-            } else if (tagText === 'Productivity') {
-                tag.textContent = currentLang === 'zh' ? '效率' : 'Productivity';
-            } else if (tagText === '学习') {
-                tag.textContent = currentLang === 'zh' ? '学习' : 'Learning';
-            } else if (tagText === 'Learning') {
-                tag.textContent = currentLang === 'zh' ? '学习' : 'Learning';
-            } else if (tagText === '健康' || tagText === 'Health') {
-                tag.textContent = currentLang === 'zh' ? '健康' : 'Health';
-            } else if (tagText === '写作' || tagText === 'Writing') {
-                tag.textContent = currentLang === 'zh' ? '写作' : 'Writing';
-            } else if (tagText === '网站' || tagText === 'Website') {
-                tag.textContent = currentLang === 'zh' ? '网站' : 'Website';
-            } else if (tagText === '开源' || tagText === 'Open Source') {
-                tag.textContent = currentLang === 'zh' ? '开源' : 'Open Source';
-            }
-        });
-        
         // Update support section
         const supportText = document.querySelector('.coffee-thank');
         if (supportText) supportText.textContent = translate('support.title');
