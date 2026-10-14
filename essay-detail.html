@@ -11,9 +11,13 @@
     <script defer src="vendor/marked.min.js?v=15.0.12"></script>
     <style>
         .essay-detail {
-            max-width: 900px;
+            max-width: 820px;
             margin: 0 auto;
-            padding: 2rem 1rem;
+            padding: 1.5rem 1rem 3rem;
+        }
+
+        .essay-page main {
+            padding-top: 1rem;
         }
 
         .back-link {
@@ -142,18 +146,71 @@
             letter-spacing: 0.5px;
         }
 
-        .essay-meta-icon,
-        .back-icon {
+        .essay-meta-icon {
             width: 0.85rem;
             height: 0.85rem;
             flex: 0 0 auto;
         }
 
         .essay-content {
+            width: min(100%, 700px);
+            margin: 0 auto;
             line-height: 1.8;
             color: var(--text-color);
             background: var(--thought-bg);
             padding: 2rem 0;
+        }
+
+        .essay-navigation {
+            position: static;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 2rem;
+            width: min(100%, 700px);
+            margin: 4rem auto 0;
+            padding: 1.5rem 0 0;
+            background: transparent;
+            border-top: 1px solid var(--border-color);
+            box-shadow: none;
+        }
+
+        .essay-navigation a {
+            min-width: 0;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .essay-navigation a:last-child {
+            text-align: right;
+        }
+
+        #next-essay {
+            grid-column: 2;
+        }
+
+        .essay-navigation a[hidden] {
+            display: none;
+        }
+
+        .essay-navigation-label {
+            display: block;
+            margin-bottom: 0.35rem;
+            color: var(--secondary-text);
+            font-size: 0.75rem;
+        }
+
+        .essay-navigation-title {
+            display: block;
+            overflow: hidden;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .essay-navigation a:hover .essay-navigation-title {
+            text-decoration: underline;
+            text-underline-offset: 4px;
         }
 
         .essay-content h1 {
@@ -506,7 +563,7 @@
             }
 
             .essay-content {
-                padding: 2rem 1.5rem;
+                padding: 2rem 0;
             }
 
             .essay-content h1 {
@@ -518,8 +575,21 @@
             }
 
             .back-link {
-                padding: 0.6rem 1.2rem;
+                padding: 0.6rem 0;
                 font-size: 0.9rem;
+            }
+
+            .essay-navigation {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .essay-navigation a:last-child {
+                text-align: left;
+            }
+
+            #next-essay {
+                grid-column: 1;
             }
 
         }
@@ -527,21 +597,7 @@
 
     </style>
 </head>
-<body>
-    <!-- Language Switcher -->
-    <div class="language-switcher">
-        <button onclick="setLanguage('zh')" id="lang-zh">中文</button>
-        <button onclick="setLanguage('en')" id="lang-en">English</button>
-    </div>
-
-    <div class="top-links">
-        <div class="menu-group">
-            <a href="index.html">关于我</a>
-            <a href="thoughts.html">想法</a>
-            <a href="books.html">阅读</a>
-            <a href="products.html">我的产品</a>
-        </div>
-    </div>
+<body class="essay-page">
 
     <!-- Reading progress bar -->
     <div class="reading-progress" id="reading-progress"></div>
@@ -549,9 +605,6 @@
     <main>
         <div class="essay-detail">
             <a href="index.html#articles" class="back-link">
-                <svg class="back-icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="m14.5 5-7 7 7 7M8 12h11"/>
-                </svg>
                 <span>返回文章列表</span>
             </a>
             
@@ -578,6 +631,17 @@
             <div class="essay-content" id="essay-content">
                 <!-- Content will be loaded dynamically -->
             </div>
+
+            <nav class="essay-navigation" id="essay-navigation" aria-label="文章导航">
+                <a id="previous-essay" hidden>
+                    <span class="essay-navigation-label"></span>
+                    <span class="essay-navigation-title"></span>
+                </a>
+                <a id="next-essay" hidden>
+                    <span class="essay-navigation-label"></span>
+                    <span class="essay-navigation-title"></span>
+                </a>
+            </nav>
         </div>
     </main>
 
@@ -602,15 +666,6 @@
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
             
-            // Update language switcher active state
-            const currentLang = getCurrentLanguage();
-            const zhBtn = document.getElementById('lang-zh');
-            const enBtn = document.getElementById('lang-en');
-            if (zhBtn && enBtn) {
-                zhBtn.classList.toggle('active', currentLang === 'zh');
-                enBtn.classList.toggle('active', currentLang === 'en');
-            }
-
             let katexAssetsPromise;
 
             function loadStylesheet(href) {
@@ -747,8 +802,48 @@
                 }
             };
 
+            const essayIds = Object.keys(essayData);
+
             if (essayId && essayData[essayId]) {
                 const essay = essayData[essayId];
+                const essayIndex = essayIds.indexOf(essayId);
+                const previousEssayId = essayIndex > 0 ? essayIds[essayIndex - 1] : null;
+                const nextEssayId = essayIndex < essayIds.length - 1 ? essayIds[essayIndex + 1] : null;
+
+                function updateEssayLink(linkId, targetId, label, isChinese) {
+                    const link = document.getElementById(linkId);
+                    if (!targetId) {
+                        link.hidden = true;
+                        link.removeAttribute('href');
+                        return;
+                    }
+
+                    const targetEssay = essayData[targetId];
+                    link.hidden = false;
+                    link.href = `essay-detail.html?id=${targetId}`;
+                    link.querySelector('.essay-navigation-label').textContent = label;
+                    link.querySelector('.essay-navigation-title').textContent = isChinese
+                        ? targetEssay.title
+                        : targetEssay.titleEn;
+                }
+
+                function updateEssayNavigation(currentLang) {
+                    const isChinese = currentLang === 'zh';
+                    const navigation = document.getElementById('essay-navigation');
+                    navigation.setAttribute('aria-label', isChinese ? '文章导航' : 'Essay navigation');
+                    updateEssayLink(
+                        'previous-essay',
+                        previousEssayId,
+                        isChinese ? '上一篇' : 'Previous',
+                        isChinese
+                    );
+                    updateEssayLink(
+                        'next-essay',
+                        nextEssayId,
+                        isChinese ? '下一篇' : 'Next',
+                        isChinese
+                    );
+                }
                 
                 // Update page content
                 function updateContent() {
@@ -782,6 +877,8 @@
                     if (backLinkSpan) {
                         backLinkSpan.textContent = currentLang === 'zh' ? '返回主页' : 'Back to home';
                     }
+
+                    updateEssayNavigation(currentLang);
                 }
 
                 // Reading progress indicator
