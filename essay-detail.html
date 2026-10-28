@@ -161,6 +161,50 @@
             padding: 2rem 0;
         }
 
+        .footnote-reference {
+            position: relative;
+            top: -0.15em;
+            font-size: 0.72em;
+            line-height: 0;
+        }
+
+        .footnote-reference a {
+            color: var(--secondary-text);
+            text-decoration: none;
+        }
+
+        .footnote-reference a:hover {
+            color: var(--text-color);
+        }
+
+        .footnotes {
+            margin-top: 3.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--secondary-text);
+            font-size: 0.86rem;
+        }
+
+        .essay-content .footnotes ol {
+            margin: 0;
+            padding-left: 1.6rem;
+        }
+
+        .essay-content .footnotes li {
+            margin: 0.55rem 0;
+            scroll-margin-top: 2rem;
+        }
+
+        .essay-content .footnotes li:target {
+            color: var(--text-color);
+        }
+
+        .essay-content .footnotes p {
+            display: inline;
+            margin: 0;
+            text-align: left;
+        }
+
         .essay-navigation {
             position: static;
             display: grid;
@@ -710,6 +754,98 @@
                 return katexAssetsPromise;
             }
 
+            function escapeHtml(value) {
+                return value
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
+            }
+
+            function parseFootnotes(markdown) {
+                const lines = markdown.replace(/\r\n?/g, '\n').split('\n');
+                const definitions = new Map();
+                const bodyLines = [];
+
+                for (let index = 0; index < lines.length; index += 1) {
+                    const definition = lines[index].match(/^\[\^([^\]]+)\]:[ \t]*(.*)$/);
+                    if (!definition) {
+                        bodyLines.push(lines[index]);
+                        continue;
+                    }
+
+                    const label = definition[1].trim();
+                    const definitionLines = [definition[2]];
+
+                    while (index + 1 < lines.length) {
+                        const nextLine = lines[index + 1];
+                        const continuation = nextLine.match(/^(?: {2,}|\t)(.*)$/);
+                        if (continuation) {
+                            definitionLines.push(continuation[1]);
+                            index += 1;
+                            continue;
+                        }
+
+                        const followingLine = lines[index + 2];
+                        if (
+                            nextLine.trim() === '' &&
+                            followingLine !== undefined &&
+                            /^(?: {2,}|\t)/.test(followingLine)
+                        ) {
+                            definitionLines.push('');
+                            index += 1;
+                            continue;
+                        }
+
+                        break;
+                    }
+
+                    definitions.set(label, definitionLines.join('\n').trim());
+                }
+
+                const definitionIds = new Map(
+                    Array.from(definitions.keys(), (label, index) => [label, `footnote-${index + 1}`])
+                );
+                const referenceCounts = new Map();
+                const usedLabels = [];
+                const content = bodyLines.join('\n').replace(/\[\^([^\]\r\n]+)\]/g, (match, rawLabel) => {
+                    const label = rawLabel.trim();
+                    if (!definitions.has(label)) {
+                        return match;
+                    }
+
+                    if (!usedLabels.includes(label)) {
+                        usedLabels.push(label);
+                    }
+
+                    const referenceCount = (referenceCounts.get(label) || 0) + 1;
+                    referenceCounts.set(label, referenceCount);
+                    const footnoteId = definitionIds.get(label);
+                    const escapedLabel = escapeHtml(label);
+                    return `<sup class="footnote-reference" id="${footnoteId}-ref-${referenceCount}"><a href="#${footnoteId}" aria-label="引用 ${escapedLabel}">${escapedLabel}</a></sup>`;
+                });
+
+                return { content, definitions, definitionIds, usedLabels };
+            }
+
+            function renderFootnotes(footnoteData, protectMath) {
+                if (footnoteData.usedLabels.length === 0) {
+                    return '';
+                }
+
+                const items = footnoteData.usedLabels.map(label => {
+                    const footnoteId = footnoteData.definitionIds.get(label);
+                    const numericValue = /^\d+$/.test(label) ? ` value="${Number(label)}"` : '';
+                    const labelPrefix = numericValue ? '' : `<strong>${escapeHtml(label)}.</strong> `;
+                    const content = marked.parse(protectMath(footnoteData.definitions.get(label)));
+                    return `<li id="${footnoteId}"${numericValue}>${labelPrefix}${content}</li>`;
+                }).join('');
+
+                const ariaLabel = getCurrentLanguage() === 'zh' ? '引用' : 'References';
+                return `<section class="footnotes" aria-label="${ariaLabel}"><ol>${items}</ol></section>`;
+            }
+
             // Get essay ID from URL
             const urlParams = new URLSearchParams(window.location.search);
             const essayId = urlParams.get('id');
@@ -912,14 +1048,16 @@
                     if (response.ok) {
                         const markdown = (await response.text()).replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, '');
                         const mathExpressions = [];
-                        const protectedMarkdown = markdown.replace(
+                        const protectMath = source => source.replace(
                             /\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)/g,
                             expression => {
                                 const index = mathExpressions.push(expression) - 1;
                                 return `KATEXMATHPLACEHOLDER${index}END`;
                             }
                         );
-                        let html = marked.parse(protectedMarkdown);
+                        const footnoteData = parseFootnotes(markdown);
+                        let html = marked.parse(protectMath(footnoteData.content));
+                        html += renderFootnotes(footnoteData, protectMath);
                         html = html.replace(/KATEXMATHPLACEHOLDER(\d+)END/g, (_, index) =>
                             mathExpressions[Number(index)]
                                 .replace(/&/g, '&amp;')
