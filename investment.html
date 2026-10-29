@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Security-Policy" content="img-src 'self' data: https: http:;">
     <title>我的投资 - Investment Portfolio</title>
     <link rel="stylesheet" href="styles.css">
-    <script defer src="translations.js?v=20260903"></script>
+    <script defer src="translations.js?v=20261029-2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     
     <style>
@@ -424,8 +424,8 @@
 <body>
     <!-- Language Switcher -->
     <div class="language-switcher">
-        <button onclick="setLanguage('zh')" id="lang-zh">中文</button>
-        <button onclick="setLanguage('en')" id="lang-en">English</button>
+        <button onclick="setInvestmentLanguage('zh')" id="lang-zh">中文</button>
+        <button onclick="setInvestmentLanguage('en')" id="lang-en">English</button>
     </div>
 
     <div class="top-links">
@@ -498,11 +498,11 @@
         // Portfolio data by quarter - Add your quarterly holdings here
         const quarterlyData = {
             '2026-Q4': [
-                { company: "泡泡玛特", ticker: "HK9992", percentage: 29.8, sector: "consumer", market: "港股", color: "#F58220", logo: "images/company/pop_mart.png" },
-                { company: "伯克希尔", ticker: "BRK-B", percentage: 20.1, sector: "finance", market: "美股", color: "#1D4F91", logoText: "BH" },
-                { company: "特斯拉", ticker: "TSLA", percentage: 14.4, sector: "tech", market: "美股", color: "#E82127", logo: "images/company/tesla.png" },
-                { company: "拼多多", ticker: "PDD", percentage: 7.9, sector: "consumer", market: "美股", color: "#E02E24", logo: "images/company/pdd.png" },
-                { company: "标普500ETF", ticker: "VOO", percentage: 27.8, sector: "etf", market: "美股", color: "#8A2423", logo: "images/company/sp500.png" }
+                { company: "泡泡玛特", ticker: "HK9992", percentage: 25.0, sector: "consumer", market: "港股", color: "#F58220", logo: "images/company/pop_mart.png" },
+                { company: "伯克希尔", ticker: "BRK-B", percentage: 16.8, sector: "finance", market: "美股", color: "#1D4F91", logoText: "BH" },
+                { company: "谷歌", ticker: "GOOG", percentage: 30.0, sector: "tech", market: "美股", color: "#4285F4", logo: "images/company/goog.png" },
+                { company: "拼多多", ticker: "PDD", percentage: 6.0, sector: "consumer", market: "美股", color: "#E02E24", logo: "images/company/pdd.png" },
+                { company: "标普500ETF", ticker: "VOO", percentage: 22.1, sector: "etf", market: "美股", color: "#8A2423", logo: "images/company/sp500.png" }
             ],
             '2026-Q3': [
                 { company: "泡泡玛特", ticker: "HK9992", percentage: 31.3, sector: "consumer", market: "港股", color: "#F58220", logo: "images/company/pop_mart.png" },
@@ -566,32 +566,17 @@
             updateInvestmentPageLanguage();
         });
 
-        // Override setLanguage function for investment page
-        const originalSetLanguage = window.setLanguage;
-        window.setLanguage = function(lang) {
-            if (originalSetLanguage) {
-                originalSetLanguage(lang);
-            } else {
-                localStorage.setItem('language', lang);
-                document.documentElement.lang = lang;
-                
-                // Update language switcher active state
-                const zhBtn = document.getElementById('lang-zh');
-                const enBtn = document.getElementById('lang-en');
-                if (zhBtn && enBtn) {
-                    zhBtn.classList.toggle('active', lang === 'zh');
-                    enBtn.classList.toggle('active', lang === 'en');
-                }
-            }
-            
+        function setInvestmentLanguage(lang) {
+            setLanguage(lang);
+
             // Update investment page content
             updateInvestmentPageLanguage();
-            
+
             // Reload current quarter data to update chart labels
             if (currentQuarter) {
                 loadQuarter(currentQuarter);
             }
-        };
+        }
 
         function updateInvestmentPageLanguage() {
             const currentLang = getCurrentLanguage();
