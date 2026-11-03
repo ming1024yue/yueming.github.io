@@ -22,18 +22,6 @@ function initializeSiteLogo() {
     homeLink.innerHTML = '<img src="images/site_logo.png" alt="">';
 }
 
-function initializeInvestmentLink() {
-    const menu = document.querySelector('.menu-group');
-    if (!menu || menu.querySelector('a[href="investment.html"]')) return;
-
-    const link = document.createElement('a');
-    link.href = 'investment.html';
-    link.textContent = getCurrentLanguage() === 'zh' ? '投资' : 'Investment';
-
-    const controls = menu.querySelector('.menu-controls');
-    menu.insertBefore(link, controls || null);
-}
-
 function getCurrentTheme() {
     return document.documentElement.getAttribute('data-theme') || 'light';
 }
@@ -94,7 +82,6 @@ const translations = {
         'nav.thoughts': '想法',
         'nav.books': '阅读',
         'nav.products': '我的产品',
-        'nav.investment': '投资',
         
         // aboutme page
         'aboutme.title': '岳铭',
@@ -166,7 +153,6 @@ const translations = {
         'nav.thoughts': 'Thoughts',
         'nav.books': 'Books',
         'nav.products': 'Products',
-        'nav.investment': 'Investment',
         
         // aboutme page
         'aboutme.title': 'Yue, Ming',
@@ -270,8 +256,6 @@ function updatePageContent() {
             link.textContent = translate('nav.books');
         } else if (href === 'products.html') {
             link.textContent = translate('nav.products');
-        } else if (href === 'investment.html') {
-            link.textContent = translate('nav.investment');
         }
     });
     
@@ -490,7 +474,6 @@ function updatePageSpecificContent() {
 // Initialize language on page load
 document.addEventListener('DOMContentLoaded', () => {
     initializeSiteLogo();
-    initializeInvestmentLink();
     initializeThemeToggle();
     const savedLang = getCurrentLanguage();
     document.documentElement.lang = savedLang;
