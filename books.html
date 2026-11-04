@@ -23,6 +23,44 @@
             margin-bottom: 0;
         }
 
+        .reading-stats-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            padding: 0;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            color: var(--secondary-text);
+            background: transparent;
+            font: inherit;
+            font-size: 0.72rem;
+            line-height: 1;
+            cursor: pointer;
+            transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .reading-stats-button:hover,
+        .reading-stats-button:focus-visible {
+            color: var(--text-color);
+            border-color: var(--secondary-text);
+            background: var(--hover-bg);
+        }
+
+        .reading-stats-button:focus-visible,
+        .reading-stats-close:focus-visible,
+        .category-legend-item:focus-visible,
+        .category-slice:focus-visible {
+            outline: 2px solid var(--link-color);
+            outline-offset: 2px;
+        }
+
+        .reading-stats-button svg {
+            width: 0.9rem;
+            height: 0.9rem;
+        }
+
         .book-counts {
             display: flex;
             align-items: center;
@@ -35,6 +73,185 @@
 
         .book-counts-separator {
             color: var(--border-color);
+        }
+
+        .reading-stats-dialog {
+            width: min(720px, calc(100% - 2rem));
+            max-height: calc(100vh - 2rem);
+            margin: auto;
+            padding: 0;
+            overflow: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            color: var(--text-color);
+            background: var(--bg-color);
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+        }
+
+        .reading-stats-dialog::backdrop {
+            background: rgba(0, 0, 0, 0.42);
+            backdrop-filter: blur(3px);
+        }
+
+        .reading-stats-panel {
+            padding: 1.5rem;
+        }
+
+        .reading-stats-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .reading-stats-kicker {
+            margin: 0 0 0.15rem;
+            color: var(--secondary-text);
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+        }
+
+        .reading-stats-title {
+            margin: 0;
+            color: var(--header-color);
+            font-size: 1.35rem;
+            line-height: 1.35;
+        }
+
+        .reading-stats-close {
+            display: grid;
+            flex: 0 0 auto;
+            width: 2rem;
+            height: 2rem;
+            padding: 0;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            color: var(--secondary-text);
+            background: transparent;
+            font: inherit;
+            font-size: 1.2rem;
+            line-height: 1;
+            place-items: center;
+            cursor: pointer;
+        }
+
+        .reading-stats-close:hover {
+            color: var(--text-color);
+            background: var(--hover-bg);
+        }
+
+        .category-chart-layout {
+            display: grid;
+            grid-template-columns: minmax(220px, 0.9fr) minmax(260px, 1.1fr);
+            gap: 1.75rem;
+            align-items: center;
+        }
+
+        .category-chart-visual {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 0;
+        }
+
+        .category-pie-chart {
+            display: block;
+            width: min(100%, 260px);
+            height: auto;
+            overflow: visible;
+        }
+
+        .category-slice {
+            cursor: pointer;
+            transform-box: fill-box;
+            transform-origin: center;
+            transition: opacity 0.18s ease, transform 0.18s ease, filter 0.18s ease;
+        }
+
+        .category-slice:hover,
+        .category-slice:focus-visible,
+        .category-slice.is-active {
+            filter: saturate(1.15) brightness(1.04);
+            transform: scale(1.025);
+        }
+
+        .category-slice.is-muted {
+            opacity: 0.28;
+        }
+
+        .category-chart-summary {
+            min-height: 3.1rem;
+            margin-top: 0.8rem;
+            text-align: center;
+        }
+
+        .category-chart-value,
+        .category-chart-label {
+            margin: 0;
+        }
+
+        .category-chart-value {
+            color: var(--header-color);
+            font-size: 1.15rem;
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .category-chart-label {
+            color: var(--secondary-text);
+            font-size: 0.76rem;
+        }
+
+        .category-legend {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.25rem 0.75rem;
+        }
+
+        .category-legend-item {
+            display: grid;
+            grid-template-columns: 0.6rem minmax(0, 1fr) auto;
+            gap: 0.45rem;
+            align-items: center;
+            min-width: 0;
+            padding: 0.42rem 0.35rem;
+            border: 0;
+            border-radius: 6px;
+            color: var(--text-color);
+            background: transparent;
+            font: inherit;
+            font-size: 0.76rem;
+            text-align: left;
+            cursor: pointer;
+            transition: opacity 0.18s ease, background-color 0.18s ease;
+        }
+
+        .category-legend-item:hover,
+        .category-legend-item:focus-visible,
+        .category-legend-item.is-active {
+            background: var(--hover-bg);
+        }
+
+        .category-legend-item.is-muted {
+            opacity: 0.4;
+        }
+
+        .category-legend-swatch {
+            width: 0.6rem;
+            height: 0.6rem;
+            border-radius: 50%;
+        }
+
+        .category-legend-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .category-legend-count {
+            color: var(--secondary-text);
+            font-variant-numeric: tabular-nums;
         }
 
         .books-layout {
@@ -227,6 +444,25 @@
                 padding: 0 0.5rem;
             }
 
+            .reading-stats-dialog {
+                width: calc(100% - 1rem);
+                max-height: calc(100vh - 1rem);
+                border-radius: 12px;
+            }
+
+            .reading-stats-panel {
+                padding: 1.1rem;
+            }
+
+            .category-chart-layout {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .category-pie-chart {
+                width: min(70vw, 230px);
+            }
+
             .book-counts {
                 padding-bottom: 0.2rem;
                 font-size: 0.7rem;
@@ -309,6 +545,20 @@
                 line-clamp: 3;
             }
         }
+
+        @media (max-width: 380px) {
+            .category-legend {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .category-slice,
+            .category-legend-item,
+            .reading-stats-button {
+                transition: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -333,6 +583,12 @@
     <main>
         <section id="books">
             <div class="books-heading">
+                <button class="reading-stats-button" id="reading-stats-button" type="button" aria-haspopup="dialog" aria-controls="reading-stats-dialog">
+                    <svg viewBox="0 0 20 20" aria-hidden="true">
+                        <circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+                        <path d="M10 2.5V10H17.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
                 <h2 data-translate="books.title">阅读列表</h2>
                 <div class="book-counts" aria-live="polite">
                     <span id="reading-count"></span>
@@ -343,7 +599,7 @@
             <div class="books-layout">
             <ul class="book-list">
 
-                <li>
+                <li data-category="文学">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">卡拉玛佐夫兄弟</span>
@@ -358,7 +614,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li data-category="文学">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">罪与罚</span>
@@ -372,7 +628,7 @@
                         <p class="book-comment">“人什么都能习惯，真是个卑鄙的东西。”</p>
                     </div>
                 </li>
-                <li>
+                <li data-category="文学">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">红楼梦</span>
@@ -387,7 +643,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li data-category="历史">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">中国历代政治得失</span>
@@ -401,7 +657,7 @@
                         <p class="book-comment">"就历史经验论，任何一制度，绝不能有利而无弊。任何一制度，亦绝不能历久而不变。"</p>
                     </div>
                 </li>
-                <li>
+                <li data-category="哲学">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">Walden</span>
@@ -415,7 +671,7 @@
                         <p class="book-comment">"A man who has at length found something to do will not need to get a new suit to do it in. If there is not a new man, how can the new clothes be made to fit? All men want, not something to do with, but something to do, or rather something to be. Perhaps we should never procure a new suit until we have so conducted that we feel like new men in the old"</p>
                     </div>
                 </li>
-                <li>
+                <li data-category="社会">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">中县干部</span>
@@ -429,7 +685,7 @@
                         <p class="book-comment">"干部的权力是人民给的"</p>
                     </div>
                 </li>
-                <li>
+                <li data-category="科技">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">Deep Learning</span>
@@ -443,7 +699,7 @@
                         <p class="book-comment">"The book introduce deep learning concepts, which covers data, algorithms,models and their training."</p>
                     </div>
                 </li>
-                <li>
+                <li data-category="传记">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">Source Code-My Beginnings</span>
@@ -457,7 +713,7 @@
                         <p class="book-comment">"The autobiography written by Microsoft founder Bill Gates."</p>
                     </div>
                 </li>
-                <li>
+                <li data-category="投资">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">大道-段永平投资回答录</span>
@@ -471,7 +727,7 @@
                         <p class="book-comment">"做正确的事情"</p>
                     </div>
                 </li>
-                <li>
+                <li data-category="科普">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">微积分的力量</span>
@@ -485,7 +741,7 @@
                         <p class="book-comment">"当我们在凝视圆的时候，圆实际上也在注视着我们"</p>
                     </div>
                 </li>
-                <li>
+                <li data-category="投资">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">芒格之道</span>
@@ -499,7 +755,7 @@
                         <p class="book-comment">"强迫自己与众不同，做事踏实和诚信，才能长期走下去"</p>
                     </div>
                 </li>
-                <li>
+                <li data-category="投资">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">随机漫步的傻瓜</span>
@@ -513,7 +769,7 @@
                         <p class="book-comment">"如果失败的代价过于沉重、难以承受，那么这件事成功的概率有多高根本无关紧要"</p>
                     </div>
                 </li>
-                <li>
+                <li data-category="传记">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">Steve Jobs</span>
@@ -527,7 +783,7 @@
                         <p class="book-comment">"Stay hungery, stay foolish."</p>
                     </div>
                 </li>
-                <li>
+                <li data-category="思维">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">反脆弱</span>
@@ -542,7 +798,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li data-category="传记">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">On Writing: A Memoir of the Craft</span>
@@ -558,7 +814,7 @@
                 </li>
 
 
-                <li>
+                <li data-category="经济">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">雇佣资本与劳动</span>
@@ -573,7 +829,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li data-category="传记">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">我在伊朗长大</span>
@@ -588,7 +844,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li data-category="传记">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">郭鹤年自传</span>
@@ -603,21 +859,7 @@
                             那些采用复杂方式的人永远不会出人头地，因为他们在作茧自缚。"</p>
                     </div>
                 </li>
-                <li>
-                    <div class="book-info">
-                        <div class="book-header">
-                            <span class="book-title">文明、现代化、价值投资与中国</span>
-                            <span class="book-status reading">reading</span>
-                            <span class="date">2026-04</span>
-                        </div>
-                        <span class="book-author">—— 李录</span>
-                        <div class="book-cover">
-                            <img src="images/book_cover/lilu.webp" alt="Source code book cover" class="cover-image" width="140" height="198" decoding="async" loading="lazy">
-                        </div>
-                        <p class="book-comment">""</p>
-                    </div>
-                </li>
-                <li>
+                <li data-category="商业">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">逐利而生：3000年公司演变史</span>
@@ -631,7 +873,7 @@
                         <p class="book-comment">""</p>
                     </div>
                 </li>
-                <li>
+                <li data-category="科技">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">技术与文明</span>
@@ -646,7 +888,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li data-category="商业">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">因为独特</span>
@@ -661,7 +903,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li data-category="传记">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">币安人生</span>
@@ -676,7 +918,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li data-category="经济">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">国家为什么会破产</span>
@@ -691,22 +933,7 @@
                     </div>
                 </li>
 
-                <li>
-                    <div class="book-info">
-                        <div class="book-header">
-                            <span class="book-title">地缘政治投资大局观</span>
-                            <span class="book-status reading">reading</span>
-                            <span class="date">2026-05</span>
-                        </div>
-                        <span class="book-author">—— 马可.帕皮奇</span>
-                        <div class="book-cover">
-                            <img src="images/book_cover/diyuan.webp" alt="Source code book cover" class="cover-image" width="140" height="198" decoding="async" loading="lazy">
-                        </div>
-                        <p class="book-comment">""</p>
-                    </div>
-                </li>
-
-                <li>
+                <li data-category="经济">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">因果推断实用计量方法</span>
@@ -722,7 +949,7 @@
                 </li>
 
 
-                <li>
+                <li data-category="投资">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">Berkshire Hathaway Letters to Shareholders: 1965-2024</span>
@@ -737,7 +964,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li data-category="传记">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">The book of Elon</span>
@@ -752,7 +979,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li data-category="科技">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">The Infinity Machine: Demis Hassabis, DeepMind, and the Quest for Superintelligence</span>
@@ -767,7 +994,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li data-category="传记">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">张忠谋自传</span>
@@ -782,7 +1009,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li data-category="投资">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">Margin of Safety</span>
@@ -798,7 +1025,7 @@
                 </li>
 
 
-                <li>
+                <li data-category="投资">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">何为道：段永平问答录</span>
@@ -813,7 +1040,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li data-category="投资">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">Richer, Wiser, Happier: How the World's Greatest Investors Win in Markets and Life</span>
@@ -828,7 +1055,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li data-category="社会">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">新教伦理与资本主义精神</span>
@@ -843,7 +1070,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li data-category="商业">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">目标</span>
@@ -858,7 +1085,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li data-category="传记">
                     <div class="book-info">
                         <div class="book-header">
                             <span class="book-title">Why I Write</span>
@@ -872,6 +1099,53 @@
                         <p class="book-comment"></p>
                     </div>
                 </li>
+
+                <li data-category="历史">
+                    <div class="book-info">
+                        <div class="book-header">
+                            <span class="book-title">The history of Peloponnesian War</span>
+                            <span class="book-status reading">reading</span>
+                            <span class="date">2026-11</span>
+                        </div>
+                        <span class="book-author">—— Thucydides</span>
+                        <div class="book-cover">
+                            <img src="images/book_cover/pelo.png" alt="Source code book cover" class="cover-image" width="140" height="198" decoding="async" loading="lazy">
+                        </div>
+                        <p class="book-comment"></p>
+                    </div>
+                </li>
+
+
+                <li data-category="科技">
+                    <div class="book-info">
+                        <div class="book-header">
+                            <span class="book-title">Structure and Interpretation of Computer Programs</span>
+                            <span class="book-status reading">reading</span>
+                            <span class="date">2026-11</span>
+                        </div>
+                        <span class="book-author">—— Harold Abelson and Gerald Jay Sussman with Julie Sussman</span>
+                        <div class="book-cover">
+                            <img src="images/book_cover/sicp.jpg" alt="Source code book cover" class="cover-image" width="140" height="198" decoding="async" loading="lazy">
+                        </div>
+                        <p class="book-comment"></p>
+                    </div>
+                </li>
+
+
+                <li data-category="社会">
+                    <div class="book-info">
+                        <div class="book-header">
+                            <span class="book-title">小镇喧嚣</span>
+                            <span class="book-status reading">reading</span>
+                            <span class="date">2026-11</span>
+                        </div>
+                        <span class="book-author">—— 吴毅</span>
+                        <div class="book-cover">
+                            <img src="images/book_cover/xiaozhen.webp" alt="Source code book cover" class="cover-image" width="140" height="198" decoding="async" loading="lazy">
+                        </div>
+                        <p class="book-comment"></p>
+                    </div>
+                </li>
             </ul>
                 <aside class="year-timeline" aria-label="年度阅读统计">
                     <ol class="year-timeline-list" id="year-timeline-list"></ol>
@@ -880,6 +1154,32 @@
 
         </section>
     </main>
+
+    <dialog class="reading-stats-dialog" id="reading-stats-dialog" aria-labelledby="reading-stats-title">
+        <div class="reading-stats-panel">
+            <header class="reading-stats-header">
+                <div>
+                    <p class="reading-stats-kicker" id="reading-stats-kicker">阅读统计</p>
+                    <h3 class="reading-stats-title" id="reading-stats-title">图书类别</h3>
+                </div>
+                <button class="reading-stats-close" id="reading-stats-close" type="button" aria-label="关闭统计窗口">×</button>
+            </header>
+            <div class="category-chart-layout">
+                <div class="category-chart-visual">
+                    <svg class="category-pie-chart" id="category-pie-chart" viewBox="0 0 240 240" role="img" aria-labelledby="category-chart-title category-chart-description">
+                        <title id="category-chart-title">图书类别饼图</title>
+                        <desc id="category-chart-description">按图书类别统计阅读数量</desc>
+                        <g id="category-pie-slices"></g>
+                    </svg>
+                    <div class="category-chart-summary" aria-live="polite">
+                        <p class="category-chart-value" id="category-chart-value"></p>
+                        <p class="category-chart-label" id="category-chart-label"></p>
+                    </div>
+                </div>
+                <div class="category-legend" id="category-legend" aria-label="图书类别图例"></div>
+            </div>
+        </div>
+    </dialog>
 
     <footer>
         <p>&copy; 2025 岳铭. All rights reserved.</p>
@@ -945,14 +1245,255 @@
                     `).join('');
             }
 
+            const statsButton = document.getElementById('reading-stats-button');
+            const statsDialog = document.getElementById('reading-stats-dialog');
+            const statsClose = document.getElementById('reading-stats-close');
+            const statsKicker = document.getElementById('reading-stats-kicker');
+            const statsTitle = document.getElementById('reading-stats-title');
+            const chartTitle = document.getElementById('category-chart-title');
+            const chartDescription = document.getElementById('category-chart-description');
+            const pieSlices = document.getElementById('category-pie-slices');
+            const categoryLegend = document.getElementById('category-legend');
+            const chartValue = document.getElementById('category-chart-value');
+            const chartLabel = document.getElementById('category-chart-label');
+            const svgNamespace = 'http://www.w3.org/2000/svg';
+            const categoryColors = {
+                '文学': '#9b6b6b',
+                '历史': '#a77b45',
+                '哲学': '#6f729b',
+                '社会': '#6c8796',
+                '科技': '#4f7f8d',
+                '科普': '#4d8b75',
+                '商业': '#9a775a',
+                '思维': '#7d728c',
+                '投资': '#5e8063',
+                '经济': '#6d7890',
+                '传记': '#a06f84',
+                '写作': '#8c6f5a'
+            };
+            const categoryEnglishNames = {
+                '文学': 'Literature',
+                '历史': 'History',
+                '哲学': 'Philosophy',
+                '社会': 'Society',
+                '科技': 'Technology',
+                '科普': 'Popular Science',
+                '商业': 'Business',
+                '思维': 'Ideas',
+                '投资': 'Investing',
+                '经济': 'Economics',
+                '传记': 'Biography',
+                '写作': 'Writing',
+                '其他': 'Other'
+            };
+            const fallbackColors = ['#778899', '#8f7e6a', '#73806a', '#7d6e80'];
+            let selectedCategory = null;
+            let categoryData = [];
+
+            function localizeCategory(category) {
+                return getCurrentLanguage() === 'zh'
+                    ? category
+                    : (categoryEnglishNames[category] || category);
+            }
+
+            function getCategoryData() {
+                const counts = books.reduce((result, book) => {
+                    const category = book.dataset.category || '其他';
+                    result[category] = (result[category] || 0) + 1;
+                    return result;
+                }, {});
+
+                return Object.entries(counts)
+                    .map(([category, count], index) => ({
+                        category,
+                        count,
+                        color: categoryColors[category] || fallbackColors[index % fallbackColors.length]
+                    }))
+                    .sort((a, b) => b.count - a.count || a.category.localeCompare(b.category, 'zh-CN'));
+            }
+
+            function createPiePath(startAngle, endAngle) {
+                const center = 120;
+                const radius = 102;
+                const pointAt = angle => ({
+                    x: center + radius * Math.cos(angle),
+                    y: center + radius * Math.sin(angle)
+                });
+                const start = pointAt(startAngle);
+                const end = pointAt(endAngle);
+                const largeArc = endAngle - startAngle > Math.PI ? 1 : 0;
+
+                return [
+                    `M ${center} ${center}`,
+                    `L ${start.x.toFixed(3)} ${start.y.toFixed(3)}`,
+                    `A ${radius} ${radius} 0 ${largeArc} 1 ${end.x.toFixed(3)} ${end.y.toFixed(3)}`,
+                    'Z'
+                ].join(' ');
+            }
+
+            function showCategory(category = null) {
+                const total = books.length;
+                const selected = categoryData.find(item => item.category === category);
+
+                document.querySelectorAll('[data-chart-category]').forEach(element => {
+                    const isActive = Boolean(category) && element.dataset.chartCategory === category;
+                    element.classList.toggle('is-active', isActive);
+                    element.classList.toggle('is-muted', Boolean(category) && !isActive);
+                    element.setAttribute('aria-pressed', String(selectedCategory === element.dataset.chartCategory));
+                });
+
+                if (selected) {
+                    const percentage = ((selected.count / total) * 100).toFixed(1);
+                    chartValue.textContent = localizeCategory(selected.category);
+                    chartLabel.textContent = getCurrentLanguage() === 'zh'
+                        ? `${selected.count} 本 · ${percentage}%`
+                        : `${selected.count} books · ${percentage}%`;
+                } else {
+                    chartValue.textContent = getCurrentLanguage() === 'zh'
+                        ? `共 ${total} 本`
+                        : `${total} books`;
+                    chartLabel.textContent = getCurrentLanguage() === 'zh'
+                        ? `${categoryData.length} 个类别`
+                        : `${categoryData.length} categories`;
+                }
+            }
+
+            function toggleCategory(category) {
+                selectedCategory = selectedCategory === category ? null : category;
+                showCategory(selectedCategory);
+            }
+
+            function bindCategoryInteraction(element, category, isSvgPath = false) {
+                element.addEventListener('mouseenter', () => showCategory(category));
+                element.addEventListener('mouseleave', () => showCategory(selectedCategory));
+                element.addEventListener('focus', () => showCategory(category));
+                element.addEventListener('blur', () => showCategory(selectedCategory));
+                element.addEventListener('click', () => toggleCategory(category));
+
+                if (isSvgPath) {
+                    element.addEventListener('keydown', event => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            toggleCategory(category);
+                        }
+                    });
+                }
+            }
+
+            function updateStatsCopy() {
+                const isChinese = getCurrentLanguage() === 'zh';
+                statsButton.setAttribute('aria-label', isChinese ? '查看阅读统计' : 'View reading statistics');
+                statsKicker.textContent = isChinese ? '阅读统计' : 'Reading statistics';
+                statsTitle.textContent = isChinese ? '图书类别' : 'Book categories';
+                statsClose.setAttribute('aria-label', isChinese ? '关闭统计窗口' : 'Close statistics');
+                chartTitle.textContent = isChinese ? '图书类别饼图' : 'Book category pie chart';
+                chartDescription.textContent = isChinese
+                    ? '按图书类别统计阅读数量'
+                    : 'Number of books grouped by category';
+                categoryLegend.setAttribute('aria-label', isChinese ? '图书类别图例' : 'Book category legend');
+            }
+
+            function renderCategoryChart() {
+                categoryData = getCategoryData();
+                const total = books.length;
+                let currentAngle = -Math.PI / 2;
+
+                pieSlices.replaceChildren();
+                categoryLegend.replaceChildren();
+
+                categoryData.forEach(item => {
+                    const angleSize = (item.count / total) * Math.PI * 2;
+                    const endAngle = currentAngle + angleSize;
+                    const path = document.createElementNS(svgNamespace, 'path');
+                    const accessibleLabel = `${localizeCategory(item.category)}: ${item.count}`;
+
+                    path.setAttribute('d', createPiePath(currentAngle, endAngle));
+                    path.setAttribute('fill', item.color);
+                    path.setAttribute('stroke', 'var(--bg-color)');
+                    path.setAttribute('stroke-width', '2');
+                    path.setAttribute('role', 'button');
+                    path.setAttribute('tabindex', '0');
+                    path.setAttribute('aria-label', accessibleLabel);
+                    path.setAttribute('aria-pressed', 'false');
+                    path.classList.add('category-slice');
+                    path.dataset.chartCategory = item.category;
+
+                    const pathTitle = document.createElementNS(svgNamespace, 'title');
+                    pathTitle.textContent = accessibleLabel;
+                    path.appendChild(pathTitle);
+                    bindCategoryInteraction(path, item.category, true);
+                    pieSlices.appendChild(path);
+
+                    const legendButton = document.createElement('button');
+                    const legendSwatch = document.createElement('span');
+                    const legendName = document.createElement('span');
+                    const legendCount = document.createElement('span');
+
+                    legendButton.type = 'button';
+                    legendButton.className = 'category-legend-item';
+                    legendButton.dataset.chartCategory = item.category;
+                    legendButton.setAttribute('aria-pressed', 'false');
+                    legendSwatch.className = 'category-legend-swatch';
+                    legendSwatch.style.backgroundColor = item.color;
+                    legendSwatch.setAttribute('aria-hidden', 'true');
+                    legendName.className = 'category-legend-name';
+                    legendName.textContent = localizeCategory(item.category);
+                    legendCount.className = 'category-legend-count';
+                    legendCount.textContent = item.count;
+                    legendButton.append(legendSwatch, legendName, legendCount);
+                    bindCategoryInteraction(legendButton, item.category);
+                    categoryLegend.appendChild(legendButton);
+
+                    currentAngle = endAngle;
+                });
+
+                showCategory(selectedCategory);
+            }
+
+            function closeStatsDialog() {
+                if (!statsDialog.hasAttribute('open')) return;
+                if (typeof statsDialog.close === 'function') {
+                    statsDialog.close();
+                } else {
+                    statsDialog.removeAttribute('open');
+                }
+            }
+
+            statsButton.addEventListener('click', () => {
+                selectedCategory = null;
+                renderCategoryChart();
+                if (typeof statsDialog.showModal === 'function') {
+                    statsDialog.showModal();
+                } else {
+                    statsDialog.setAttribute('open', '');
+                }
+            });
+
+            statsClose.addEventListener('click', closeStatsDialog);
+            statsDialog.addEventListener('click', event => {
+                if (event.target !== statsDialog) return;
+                const bounds = statsDialog.getBoundingClientRect();
+                const isOutside = event.clientX < bounds.left || event.clientX > bounds.right
+                    || event.clientY < bounds.top || event.clientY > bounds.bottom;
+                if (isOutside) closeStatsDialog();
+            });
+            statsDialog.addEventListener('close', () => {
+                selectedCategory = null;
+                showCategory();
+            });
+
             updateBookCounts();
             updateYearTimeline();
+            updateStatsCopy();
+            renderCategoryChart();
 
             const originalSetLanguage = window.setLanguage;
             window.setLanguage = function(lang) {
                 originalSetLanguage(lang);
                 updateBookCounts();
                 updateYearTimeline();
+                updateStatsCopy();
+                renderCategoryChart();
             };
 
             function setActiveBook(selectedBook) {
