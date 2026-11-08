@@ -95,4 +95,4 @@ What I’ve learned from these brilliant investors is that we should think indep
 
 [^4]: Warren E. Buffett, “[2009 Chairman’s Letter](https://www.berkshirehathaway.com/letters/2009ltr.pdf),” *Berkshire Hathaway Inc. Annual Report 2009*.
 
-[^5]: Warren E. Buffett, “[1997 Chairman’s Letter](https://www.berkshirehathaway.com/letters/1997.html),” *Berkshire Hathaway Inc. Annual Report 1997*, February 27, 1998.
+[^5]: Warren E. Buffett, “[1997 Chairman’s Letter](https://www.berkshirehathaway.com/letters/1997.html),” *Berkshire Hathaway Inc. Annual Report 1997*.
